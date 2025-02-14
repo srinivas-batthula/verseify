@@ -1,0 +1,229 @@
+/* Container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+}
+
+/* Profile Card */
+.profileCard {
+    margin-top: 0.1rem;
+    margin-bottom: 5rem;
+    width: 45rem;
+    padding: 1.5rem;
+    border-radius: 25px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition-property: all;
+    transition-duration: 0.45s;
+}
+
+/* Profile Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+/* Profile Image */
+.imageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.profileImage {
+    width: 7.5rem;
+    height: 7.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(86, 56, 219, 0.284);
+    transition: 0.2s ease;
+}
+
+.profileImage:hover {
+    border-color: #6e6e6e;
+}
+
+/* Edit Profile Button */
+.editProfile {
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: bold;
+}
+
+.editProfile:hover {
+    color: #2293d0;
+    text-shadow: 0 0 0.5rem #2766884a;
+}
+
+/* User Info */
+.name {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.bio {
+    font-size: 1.2rem;
+    margin: 0.4rem 0;
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 3rem 0;
+}
+
+.statItem {
+    text-align: center;
+    cursor: pointer;
+}
+.statItem:hover{
+    text-shadow: 0 0 1.5rem #a9ddf9;
+}
+
+.statItem strong {
+    display: block;
+    font-size: 1.4rem;
+    transition-duration: 0.35s;
+    transition-property: all;
+}
+.statItem strong:hover {
+    color: #09a9ff;
+}
+
+.statItem span {
+    font-size: 1rem;
+    color: rgb(142, 142, 142);
+}
+.statItem span:hover {
+    color: #00a6ff;
+}
+
+
+
+/* Social Links */
+.socialLinks {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    margin-top: 0.5rem;
+}
+
+.socialIcon {
+    cursor: pointer;
+    font-size: 2rem;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.socialIcon:hover{
+    transform: scale(1.15);
+}
+
+.personal:hover{
+    color: black;
+}
+.linkedin:hover {
+    color: #0077b5;
+}
+.instagram:hover{
+    color: red;
+}
+.x:hover{
+    color: rgb(0, 136, 255);
+}
+
+/* Navigation Buttons */
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.navButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Logout Button */
+.logout {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 0.6rem;
+    background: rgb(135, 131, 131);
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+}
+
+.logout:hover {
+    background: rgba(255, 0, 0, 0.7);
+}
+
+
+
+
+
+
+
+
+@media screen and (max-width:740px) {
+    .profileCard{
+        width: 100%;
+        border-radius: 0;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .profileCard{
+        width: 100%;
+        border-radius: 0;
+    }
+    .editProfile{
+        font-size: 1rem;
+    }
+    .profileImage{
+        width: 6.5rem;
+        height: 6.5rem;
+    }
+    .header{
+        margin-bottom: 2rem;
+    }
+    .name{
+        font-size: 1.8rem;
+    }
+    .bio{
+        font-size: 1.15rem;
+    }
+    .statItem strong{
+        font-size: 1.3rem;
+    }
+}

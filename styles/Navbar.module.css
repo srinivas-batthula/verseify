@@ -1,0 +1,390 @@
+/* Navbar Styles */
+.navbar {
+    background-color: white;
+    color: black;
+    /* box-shadow: 0 0 1rem rgb(127, 61, 226); */
+    position: fixed;
+    width: 100%;
+    height: 4.1rem;
+    top: 0;
+    left: 0;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 50;
+}
+
+/* Icons */
+.icon {
+    font-size: 2.5rem;
+    padding: 0 0.45rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out, transform 0.1s ease-in-out;
+}
+.icon:hover {
+    color: rgba(86, 56, 219, 0.925);
+    background-color: rgba(86, 56, 219, 0.19);
+    transform: scale(1.03);
+}
+
+.notificationContainer {
+    position: relative;
+    /* Makes the badge position relative to this */
+    display: inline-block;
+}
+.notificationBadge {
+    position: absolute;
+    top: -4px;
+    /* Adjust for better placement */
+    right: -3px;
+    background-color: rgb(255, 0, 0);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 0.2rem 0.35rem;
+    min-width: 1.2rem;
+    text-align: center;
+    line-height: 1;
+    box-shadow: 0 0 0.8rem rgba(204, 15, 15, 0.3);
+}
+
+.leftContainer {
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+    margin-left: 3.5rem;
+}
+
+.logo {
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.logoImg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 6.5rem;
+    height: 4.1rem;
+    transition-duration: 0.25s;
+    transition-property: all;
+}
+
+/* Search Bar */
+.searchContainer {
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+}
+
+.searchContainer:hover > .searchInput {
+    box-shadow: 0 0 0.8rem rgba(86, 56, 219, 0.284);
+}
+
+.searchInput {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: black;
+    padding: 0.5rem 0.7rem;
+    border-radius: 2rem;
+    outline: none;
+    border: 2px solid rgba(60, 60, 60, 0.814);
+    width: 6.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.searchInput:focus {
+    width: 9rem;
+    background-color: white;
+}
+
+.searchIcon {
+    position: absolute;
+    right: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: black;
+}
+
+.searchMobile{
+    display: none;
+}
+
+/* Right Section */
+.rightSection {
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+    margin-right: 3.5rem;
+}
+
+/* Profile Dropdown */
+.profileIcon {
+    font-size: 2.2rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+.profileIcon:hover {
+    transform: scale(1.03);
+    outline: rgba(86, 56, 219, 0.433) solid 4px;
+}
+
+.dropdown {
+    position: absolute;
+    right: 0;
+    background: white;
+    border: 0.01rem solid #7a7a7a;
+    border-radius: 1.5rem;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    width: 13.8rem;
+    padding: 0.8rem;
+    right: 0.4rem;
+    z-index: 100;
+}
+
+/* Profile Header */
+.profileHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.2rem;
+    text-align: center;
+    border-bottom: 1px solid #333;
+    transition: all 0.15s ease-in-out;
+    border-radius: 0.5rem;
+}
+
+.username {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.viewProfile {
+    font-size: 0.8rem;
+}
+
+.profileHeader:hover {
+    color: rgba(86, 56, 219, 0.925);
+    background-color: rgba(86, 56, 219, 0.19);
+}
+
+.profileHeader:hover>.viewProfile {
+    color: rgba(86, 56, 219, 0.925);
+    text-decoration: underline;
+}
+
+
+/* Dropdown Menu */
+.dropdownMenu {
+    list-style: none;
+    padding: 0;
+    margin: 0.3rem 0 0 0;
+}
+
+.dropdownItem {
+    padding: 0.6rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.1s ease-in-out;
+}
+
+/* .dropdownItem:hover {
+    color: white;
+    background: rgba(0, 0, 0, 0.805);
+} */
+
+.dropdownItem:active {
+    background-color: rgba(127, 127, 127, 0.805);
+}
+
+.dropdownItemLogout {
+    padding: 0.6rem;
+    color: red;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 500;
+    border-top: 1px solid #333;
+    transition: background 0.15s ease-in-out;
+}
+
+.dropdownItemLogout:hover {
+    background: rgba(165, 13, 13, 0.322);
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 16rem;
+    padding: 23px;
+    z-index: 100;
+    box-shadow: 0px 0px 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+.closeIcon {
+    font-size: 3rem;
+    padding: 0.4rem;
+    border-radius: 6px;
+    cursor: pointer;
+    position: absolute;
+    right: 0.5rem;
+    top: 1rem;
+    transition: all 0.15s ease-in-out, transform 0.15s ease-in-out;
+}
+
+.closeIcon:hover {
+    color: rgba(86, 56, 219, 0.925);
+    background-color: rgba(86, 56, 219, 0.19);
+    transform: scale(1.03);
+}
+
+.sidebar ul {
+    list-style: none;
+    margin-top: 0.7rem;
+    margin-bottom: 2rem;
+}
+
+.sidebarItem {
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+    padding-left: 0.5rem;
+    padding-right: 0.3rem;
+    cursor: pointer;
+    font-weight: 500;
+    border-bottom-left-radius: 1.3rem;
+    border-top-right-radius: 1.3rem;
+    transition: background 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.sidebarItem:hover {
+    background: #505050;
+    color: white;
+    transform: scale(1.03);
+}
+
+.sidebarItem:active {
+    background-color: #565656;
+}
+
+.sidebarIcons {
+    font-size: 1rem;
+    margin-right: 0.4rem;
+}
+
+.sidebarItem:hover>.sidebarIcons {
+    color: white;
+}
+
+.linksMain{
+    margin-top: 4rem;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.links{
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out, transform 0.1s ease-in-out;
+}
+.links:hover{
+    color: rgba(86, 56, 219, 0.925);
+    background-color: rgba(86, 56, 219, 0.19);
+    transform: scale(1.03);
+}
+
+.log{
+    color: rgb(84, 107, 238);
+    border: 2px solid rgba(23, 55, 237, 0.863);
+    border-radius: 7px;
+    padding: 0.46rem;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.log:hover{
+    background: rgba(0, 38, 255, 0.781);
+    color: white;
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 700px) {
+    .navbar{
+        padding: 0 0.1rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .navbar{
+        height: 3.9rem;
+        padding: 0;
+    }
+    .icon{
+        font-size: 2.2rem;
+    }
+    .leftContainer{
+        margin-left: 1.5rem;
+    }
+    .rightSection{
+        margin-right: 1.5rem;
+    }
+    .searchContainer{
+        display: none;
+    }
+    .searchMobile{
+        display: block;
+        font-size: 2.3rem;
+    }
+    .closeIcon{
+        font-size: 2.7rem;
+    }
+    .logoImg{
+        height: 3.9rem;
+    }
+    .profileIcon{
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .leftContainer{
+        margin-left: 0.3rem;
+        gap: 1rem;
+    }
+    .rightSection{
+        margin-right: 0.3rem;
+        gap: 1rem;
+    }
+    .closeIcon{
+        font-size: 2.5rem;
+    }
+    .sidebar{
+        width: 14rem;
+    }
+}
