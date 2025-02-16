@@ -2,7 +2,7 @@
 
 🚀 Welcome to **Verseify**, a modern and elegant **blogging platform** designed to empower writers, creators, and thinkers to **share their thoughts seamlessly** with the world. Whether you're writing articles, sharing ideas, or publishing creative content, **Verseify** is built to make blogging easy and enjoyable!
 
-![Verseify Banner](https://source.unsplash.com/1200x400/?blog,writing)
+![Verseify Banner](https://github.com/srinivas-batthula/verseify/blob/main/public/verseify.png)
 
 ## ✨ Features
 
