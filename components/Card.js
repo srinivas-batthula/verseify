@@ -4,6 +4,60 @@ import Image from "next/image";
 import styles from "../styles/Card.module.css";
 import useThemeStore from '@/stores/useThemeStore'
 import { showSuccess, showFailed } from "@/utils/Toasts";
+import React, { useState, useEffect } from 'react';
+import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from 'react-share';
+
+
+
+const ShareButton = () => {
+    const [canUseWebShare, setCanUseWebShare] = useState(false);
+    const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+    const shareText = "Check out this awesome website!";
+
+    useEffect(() => {
+        if (navigator.share) {
+            setCanUseWebShare(true);
+        }
+    }, []);
+
+    const handleNativeShare = async () => {
+        try {
+            await navigator.share({
+                title: "Awesome PWA",
+                text: shareText,
+                url: shareUrl,
+            });
+            console.log("Shared successfully!");
+        } catch (error) {
+            console.error("Error sharing:", error);
+        }
+    }
+
+    return (
+        <div className="flex items-center space-x-2">
+            <button
+                className={styles.actionBtn}
+                onClick={canUseWebShare ? handleNativeShare : undefined}
+            >
+                <i className="fa-solid fa-share-from-square" title="Share"></i>
+            </button>
+
+            {!canUseWebShare && (
+                <div className="flex space-x-2">
+                    <FacebookShareButton url={shareUrl}>
+                        <button className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-all shadow-md">F</button>
+                    </FacebookShareButton>
+                    <TwitterShareButton url={shareUrl}>
+                        <button className="p-2 rounded-full bg-sky-500 text-white hover:bg-sky-600 transition-all shadow-md">X</button>
+                    </TwitterShareButton>
+                    <WhatsappShareButton url={shareUrl}>
+                        <button className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-all shadow-md">W</button>
+                    </WhatsappShareButton>
+                </div>
+            )}
+        </div>
+    )
+}
 
 
 const Card = ({ 
@@ -64,9 +118,10 @@ const Card = ({
                 <button className={styles.actionBtn}>
                     <i className="fa-regular fa-comment-dots" title="Comment"></i> <span style={{marginLeft:'0.2rem', fontSize: '0.9rem', color: (theme==='black')?'#464646':'rgb(219, 219, 219)' }}>6</span>
                 </button>
-                <button className={styles.actionBtn}>
+                {/* <button className={styles.actionBtn}>
                     <i className="fa-solid fa-share-from-square" title="Share"></i>
-                </button>
+                </button> */}
+                <ShareButton />
                 <button onClick={()=>showSuccess("Post Saved!")} className={styles.actionBtn}>
                     <i className="fa-regular fa-bookmark" title="Bookmark"></i>
                 </button>

@@ -124,6 +124,11 @@
     text-decoration: underline;
 }
 
+.google{
+    width: fit-content;
+    overflow: hidden;
+}
+
 
 
 
@@ -140,6 +145,7 @@
 
 @media screen and (max-width:500px) {
     .card{
-        width: 98%;
+        width: 100%;
+        border-radius: 0;
     }
 }

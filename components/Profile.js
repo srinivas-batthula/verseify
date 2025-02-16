@@ -6,10 +6,66 @@ import styles from "../styles/Profile.module.css";
 import { FaChartLine, FaBookmark, FaEdit, FaShare, FaSignOutAlt, FaCog, FaPlus, FaBook, FaLinkedin, FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
 import useThemeStore from "@/stores/useThemeStore";
 import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from 'react-share';
+
+
+
+const ShareButton = () => {
+    const {theme} = useThemeStore()
+    const [canUseWebShare, setCanUseWebShare] = useState(false);
+    const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+    const shareText = "Check out this awesome website!";
+
+    useEffect(() => {
+        if (navigator.share) {
+            setCanUseWebShare(true);
+        }
+    }, [])
+    
+    const Edit = styled.button`
+        color: ${theme};
+        `
+
+    const handleNativeShare = async () => {
+        try {
+            await navigator.share({
+                title: "Awesome PWA",
+                text: shareText,
+                url: shareUrl,
+            });
+            console.log("Shared successfully!");
+        } catch (error) {
+            console.error("Error sharing:", error);
+        }
+    }
+
+    return (
+        <div className="flex items-center space-x-2">
+            <Edit onClick={canUseWebShare ? handleNativeShare : undefined} className={styles.editProfile} style={{marginBottom:'0.8rem'}}>
+                <FaShare title="Share Profile" size={25} />
+            </Edit>
+
+            {!canUseWebShare && (
+                <div className="flex space-x-2">
+                    <FacebookShareButton url={shareUrl}>
+                        <button className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-all shadow-md">F</button>
+                    </FacebookShareButton>
+                    <TwitterShareButton url={shareUrl}>
+                        <button className="p-2 rounded-full bg-sky-500 text-white hover:bg-sky-600 transition-all shadow-md">X</button>
+                    </TwitterShareButton>
+                    <WhatsappShareButton url={shareUrl}>
+                        <button className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-all shadow-md">W</button>
+                    </WhatsappShareButton>
+                </div>
+            )}
+        </div>
+    )
+}
 
 
 export default function Profile() {
-    const router = useRouter();
+    const router = useRouter()
     const {theme} = useThemeStore()
 
     const user = {
@@ -30,8 +86,8 @@ export default function Profile() {
     const handleLogout = () => {
         alert("Logged out successfully!"); // Replace with actual logout logic
         router.push("/login");
-    };
-
+    }
+    
     const Edit = styled.button`
         color: ${theme};
         `
@@ -64,9 +120,10 @@ export default function Profile() {
                         <img src={user.profileImage || (theme==='white' ? 'user_default_dark.png' : '/user_default_light.png')} alt="Profile" className={styles.profileImage} />
                     </div>
                     <div >
-                        <Edit className={styles.editProfile} style={{marginBottom:'0.8rem'}}>
+                        {/* <Edit className={styles.editProfile} style={{marginBottom:'0.8rem'}}>
                             <FaShare title="Share Profile" size={25} />
-                        </Edit>
+                        </Edit> */}
+                        <ShareButton />
                         <Link href={{pathname:'/editProfile', query:{user}}}>
                             <Edit className={styles.editProfile}>
                                 <FaEdit title="Edit Profile" size={25} />
