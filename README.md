@@ -56,7 +56,6 @@ Ensure you have the following installed:
    ```bash
    npm run dev
 
-
 ## 🌐 Live Demo  
 
 🔗 **[Try Verseify Live](https://verseify.vercel.app/)**  
