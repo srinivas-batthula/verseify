@@ -5,7 +5,8 @@
     width: 50rem;
     height: fit-content;
     border-radius: 1.5rem;
-    box-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 0.4rem rgba(144, 144, 144, 0.15);
+    outline: rgba(144, 144, 144, 0.15) solid 1px;
     padding: 0.8rem;
     margin: 1rem auto;
     transition: box-shadow 0.3s ease-in-out;
@@ -13,7 +14,7 @@
 }
 
 .postCard:hover {
-    box-shadow: 0 0 1.4rem rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.214);
 }
 
 /* Header */
@@ -72,18 +73,27 @@
     width: 6rem;
     height: 2.5rem;
     text-align: center;
-    background: #0b97e2;
-    color: white;
     border: none;
+    outline: #0b97e2 solid 2px;
     padding: 0.5rem 0.8rem 0.8rem 0.5rem;
     font-size: 1rem;
-    border-radius: 0.8rem;
+    border-radius: 0.5rem;
     cursor: pointer;
     transition: background 0.2s ease-in-out;
 }
 
-.followBtn:hover {
-    background: #1387c5;
+.followBtn:hover{
+    background: #0b97e2;
+    color: white;
+}
+
+.followBtn:active {
+    background: #007BFF;
+    outline: #0b97e2 solid 2px;
+}
+
+.followBtn:visited{
+    outline: #0b97e2 solid 2px;
 }
 
 /* Post Content */

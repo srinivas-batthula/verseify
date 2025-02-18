@@ -9,7 +9,7 @@ export default function Footer(){
     return(
         <div style={{display:'flex', flexDirection:'column', justifyContent:'center', justifyItems:'center', alignContent:'center', alignItems:'center', marginTop:'0rem', width:'100%', bottom:'0', marginBottom:'0', position:'static', background:'rgb(106, 106, 106)', color:'white', fontWeight:'bold'}}>
             <div style={{color:'rgb(191, 203, 255)', fontSize:'1.8rem', textAlign:'center', marginTop:'3rem'}}>Verseify -- <span style={{color:'white', fontSize:'1.1rem'}}>Every Blog, a New Verse!</span></div>
-            <div style={{marginTop:'0.6rem', marginBottom:'0.6rem', fontSize:'1rem', color:'white', display:'flex', flexWrap:'wrap', flexDirection:'row', justifyContent:'center', justifyItems:'center', alignContent:'center', alignItems:'center', textAlign:'center'}}>
+            <div style={{marginTop:'0.6rem', marginBottom:'0.6rem', marginLeft:'auto', marginRight:'auto', fontSize:'1rem', color:'white', display:'flex', flexWrap:'wrap', flexDirection:'row', justifyContent:'center', justifyItems:'center', alignContent:'center', alignItems:'center', textAlign:'center'}}>
                 {
                     [
                         {

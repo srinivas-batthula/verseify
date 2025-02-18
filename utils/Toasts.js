@@ -12,8 +12,9 @@ export function showSuccess(msg) {
         duration: 2500, // Auto-hide after 2.5 seconds
         position: "top-center",
         style: {
-            background: "rgba(64, 245, 64, 0.514)",
-            color: theme,
+            background: "rgba(200, 200, 200, 0.35)",
+            color: 'rgb(0, 174, 0)',
+            border: "1px solid rgba(200, 200, 200, 0.611)",
             borderLeft: "6px solid rgba(0, 119, 0, 0.516)",
             fontSize: "1rem",
             fontWeight: "bold",
@@ -31,8 +32,9 @@ export function showFailed(msg) {
         duration: 2500, // Auto-hide after 2.5 seconds
         position: "top-center",
         style: {
-            background: "rgba(255, 22, 22, 0.445)",
-            color: theme,
+            background: "rgba(200, 200, 200, 0.35)",
+            color: 'rgba(209, 0, 0, 0.815)',
+            border: "1px solid rgba(200, 200, 200, 0.611)",
             borderLeft: "6px solid rgba(207, 0, 0, 0.471)",
             fontSize: "1rem",
             fontWeight: "bold",

@@ -1,11 +1,13 @@
 'use client'
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import styles from "../styles/Card.module.css";
 import useThemeStore from '@/stores/useThemeStore'
 import { showSuccess, showFailed } from "@/utils/Toasts";
 import React, { useState, useEffect } from 'react';
 import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from 'react-share';
+import { saveResponse, getResponse } from "@/lib/indexedDB";
 
 
 
@@ -65,10 +67,30 @@ const Card = ({
     headline = 'Software Developer', 
     avatar = '/author.jpg', 
     title = 'Java Src', 
-    hashtags, 
+    hashtags,
     postImage = '/portfolio_project.png' 
 }) => {
     const {theme} = useThemeStore()
+    const router = useRouter()
+
+    async function handleSave(e) {
+        showSuccess("Post Saved!")
+
+        const r = await saveResponse('1', { 
+            author : 'Srinivas', 
+            headline : 'Software Developer', 
+            avatar : '/author.jpg', 
+            title : 'Java Src', 
+            postImage : '/portfolio_project.png' 
+        })
+
+        if(!r){
+            showFailed("Failed to Save!")
+        }
+        
+        const res = await getResponse()
+        console.log(res)
+    }
 
     return (
         <div className={styles.postCard} style={{color: theme, background:(theme === 'white') ? 'black' : 'white'}}>
@@ -94,7 +116,7 @@ const Card = ({
             </div>
 
             {/* Post Image */}
-            <div className={styles.postContent}>
+            <div onClick={()=>{router.push('/blog')}} className={styles.postContent}>
                 {postImage && (
                     <Image 
                         src={postImage} 
@@ -122,7 +144,7 @@ const Card = ({
                     <i className="fa-solid fa-share-from-square" title="Share"></i>
                 </button> */}
                 <ShareButton />
-                <button onClick={()=>showSuccess("Post Saved!")} className={styles.actionBtn}>
+                <button onClick={handleSave} className={styles.actionBtn}>
                     <i className="fa-regular fa-bookmark" title="Bookmark"></i>
                 </button>
             </div>

@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
         <div>
             <Navbar />
 
-            <div style={{marginTop:'4rem', width:'100%', height:'fit-content', color: theme, background: (theme === 'white') ? 'linear-gradient(180deg, #121212ef, #121212ef, #121212ef)' : 'linear-gradient(180deg, #dfdfdf1f, #dfdfdf1f, #dfdfdf1f)'}}>
+            <div style={{marginTop:'4rem', width:'100%', height:'fit-content', color: theme, background: (theme === 'white') ? 'linear-gradient(180deg, #121212ef, #121212ef, #121212ef)' : 'linear-gradient(180deg, #bbbbbb1f, #bbbbbb1f, #bbbbbb1f)'}}>
                 <main >{children}</main>
             </div>
             
