@@ -8,12 +8,13 @@ import styles from "../styles/Login.module.css";
 
 export default function Login() {
     const [isSignUp, setIsSignUp] = useState(false);
+    const [isForgot, setIsForgot] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const router = useRouter()
 
     
     const handleOAuth = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         try {
             // Send the user to your backend to start the Google OAuth flow
@@ -25,20 +26,24 @@ export default function Login() {
         }
     }
 
+    const handleSubmit = async(e)=>{
+        e.preventDefault()
+    }
+
 
     return (
         <div className={styles.container}>
             <div className={styles.card}>
-                <h2 className={styles.title}>{isSignUp ? "Register" : "Sign In"}</h2>
+                <h2 className={styles.title}>{isSignUp ? "Register" : (isForgot) ? "Reset Password" : "Sign In"}</h2>
 
                 <form className={styles.form}>
-                    {isSignUp && (
+                    {(isSignUp && !isForgot) && (
                         <input type="text" placeholder="Full Name" className={styles.input} />
                     )}
 
                     <input type="email" placeholder="Email" className={styles.input} />
 
-                    <div>
+                    {(!isForgot) && (<div>
                         {/* Password Input with Show/Hide Feature */}
                         <div className={styles.passwordContainer}>
                             <input
@@ -55,25 +60,25 @@ export default function Login() {
                             </button>
                         </div>
 
-                        <div className={styles.forgotPassword}>
-                            <a href="#">Forgot password?</a>
+                        <div onClick={()=>{setIsForgot(!isForgot); setIsSignUp(false)}} className={styles.forgotPassword}>
+                            <span style={{cursor:'pointer'}}>Forgot password?</span>
                         </div>
-                    </div>
+                    </div>)}
 
-                    <button type="submit" className={styles.button}>
-                        {isSignUp ? "Create" : "Log In"}
+                    <button onClick={handleSubmit} className={styles.button}>
+                        {isSignUp ? "Create" : (isForgot) ? "Next" : "Log In"}
                     </button>
                 </form>
 
                 <div className={styles.toggle}>
                     {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
-                    <span onClick={() => setIsSignUp(!isSignUp)} style={{fontSize:'1.2rem'}} className={styles.toggleLink}>
+                    <span onClick={() => {setIsSignUp(!isSignUp); setIsForgot(false)}} style={{fontSize:'1.2rem'}} className={styles.toggleLink}>
                         {isSignUp ? "Sign In" : "Create account"}
                     </span>
                 </div>
 
                 {/* SignIn with Google */}
-                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center', justifyItems:'center', alignItems:'center', marginTop: '0.8rem', marginBottom:'2rem' }}>
+                {!isForgot && <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center', justifyItems:'center', alignItems:'center', marginTop: '0.8rem', marginBottom:'2rem' }}>
                     <span style={{ textAlign: 'center', marginTop: '0.8rem' }}>or</span>
                     {/* <span style={{ textAlign: 'center', marginTop: '0.5rem' }}></span> */}
                     <button type='button' className={`${styles.google} ${styles.toggleLink}`} onClick={handleOAuth} style={{ fontWeight:'normal', width:'100%', paddingLeft:'0.3rem', paddingRight:'0.4rem', paddingTop:'0.65rem', paddingBottom:'0.65rem', borderRadius:'1.5rem', display:'flex', flexDirection:'row', justifyContent:'center', textAlign:'center', cursor: 'pointer', fontSize:'1.2rem', marginTop: '0.6rem', color:'white', backgroundColor:'black' }}>
@@ -82,9 +87,9 @@ export default function Login() {
                         </svg>
                         Continue with Google
                     </button>
-                </div>
+                </div>}
 
-                <button onClick={()=>{router.push('/')}} className={styles.guest}>Guest mode</button>
+                {!isForgot && <button onClick={()=>{router.push('/')}} className={styles.guest}>Guest mode</button>}
             </div>
         </div>
     );
