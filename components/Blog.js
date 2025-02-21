@@ -10,11 +10,11 @@ import useThemeStore from "@/stores/useThemeStore";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
-import Heading from "@tiptap/extension-heading";
+import Heading from "@tiptap/extension-heading"; 
 import BulletList from "@tiptap/extension-bullet-list";
 import OrderedList from "@tiptap/extension-ordered-list";
 import Underline from "@tiptap/extension-underline";
-import Highlight from "@tiptap/extension-highlight";
+import Highlight from "@tiptap/extension-highlight"; 
 
 
 const ShareButton = () => {
