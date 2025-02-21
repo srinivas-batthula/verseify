@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <head>
-                <link rel="manifest" href="http://localhost:3000/manifest.json" />
+                {/* <link rel="manifest" href="http://localhost:3000/manifest.json" /> */}
                 <meta name="theme-color" content="rgba(177, 68, 255, 0.853)" />
                 {/* Custom meta tags */}
                 <meta name="author" content="Srinivas Batthula" />
