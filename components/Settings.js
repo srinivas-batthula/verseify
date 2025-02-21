@@ -4,20 +4,26 @@ import { useRouter } from "next/navigation";
 import styles from "../styles/Settings.module.css";
 import { FaMoon, FaSun, FaUserEdit, FaLock, FaBell, FaEnvelope, FaTrash } from "react-icons/fa";
 import useThemeStore from "@/stores/useThemeStore";
-import { useState } from "react";
-
-
-// localStorage.setItem('notifications', 'false')
+import { useState, useEffect } from "react";
 
 export default function Settings() {
-    const [isOn, setIsOn] = useState(()=>localStorage.getItem('notifications') || 'true');
-    const router = useRouter()
-    const { theme, setTheme } = useThemeStore()
+    const [isOn, setIsOn] = useState('true'); // Default value for isOn
+    const router = useRouter();
+    const { theme, setTheme } = useThemeStore();
+
+    // Only read localStorage in the client (browser)
+    useEffect(() => {
+        const storedNotificationState = localStorage.getItem('notifications');
+        if (storedNotificationState) {
+            setIsOn(storedNotificationState);
+        }
+    }, []); // Empty dependency array ensures this runs once when the component mounts
 
     const toggle = () => {
-        localStorage.setItem('notifications', (isOn==='true'?'false':'true'))
-        setIsOn(isOn==='true'?'false':'true');
-    }
+        const newIsOn = isOn === 'true' ? 'false' : 'true';
+        localStorage.setItem('notifications', newIsOn);
+        setIsOn(newIsOn);
+    };
 
     return (
         <div style={{ width: '100%', height: '100vh' }}>
@@ -54,11 +60,11 @@ export default function Settings() {
                         <FaBell />
                         <span>Manage Notifications</span>
                         <button
-                            style={{fontWeight:'bold', float:'right', marginLeft:'5%'}}
-                            className={` flex justify-end align-middle float-right relative right-1 px-4 py-2 text-white rounded-lg transition-all ${(isOn==='true') ? "bg-green-500" : "bg-gray-500"
+                            style={{ fontWeight: 'bold', float: 'right', marginLeft: '5%' }}
+                            className={`flex justify-end align-middle float-right relative right-1 px-4 py-2 text-white rounded-lg transition-all ${(isOn === 'true') ? "bg-green-500" : "bg-gray-500"
                                 }`}
                         >
-                            {(isOn==='true') ? "ON" : "OFF"}
+                            {(isOn === 'true') ? "ON" : "OFF"}
                         </button>
                     </div>
 
@@ -70,5 +76,5 @@ export default function Settings() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
