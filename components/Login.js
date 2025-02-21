@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import styles from "../styles/Login.module.css";
 
@@ -8,6 +9,7 @@ import styles from "../styles/Login.module.css";
 export default function Login() {
     const [isSignUp, setIsSignUp] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter()
 
     
     const handleOAuth = async (e) => {
@@ -81,6 +83,8 @@ export default function Login() {
                         Continue with Google
                     </button>
                 </div>
+
+                <button onClick={()=>{router.push('/')}} className={styles.guest}>Guest mode</button>
             </div>
         </div>
     );

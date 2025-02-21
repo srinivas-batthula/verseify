@@ -65,10 +65,10 @@ const ShareButton = () => {
 const Card = ({ 
     author = 'Srinivas', 
     headline = 'Software Developer', 
-    avatar = '/author.jpg', 
+    avatar = 'https://srinivas-batthula.github.io/verseify/author.jpg', 
     title = 'Java Src', 
     hashtags,
-    postImage = '/portfolio_project.png' 
+    postImage = 'https://srinivas-batthula.github.io/verseify/portfolio_project.png' 
 }) => {
     const {theme} = useThemeStore()
     const router = useRouter()

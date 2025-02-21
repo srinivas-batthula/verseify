@@ -129,6 +129,21 @@
     overflow: hidden;
 }
 
+.guest{
+    margin-top: 1.2rem;
+    font-weight: bold;
+}
+.guest:hover{
+    text-decoration: underline;
+    color: rgb(0, 94, 255);
+}
+
+
+
+
+
+
+
 
 
 

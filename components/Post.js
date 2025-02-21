@@ -130,23 +130,23 @@ export default function Post() {
 
     // Auto-save effect
     useEffect(() => {
-        if (content !== typeof window !== 'undefined' ? localStorage.getItem("blogContent") : '') {
+        if (content !== localStorage.getItem("blogContent")) {
             setIsSaving(true);
-            typeof window !== 'undefined' ? localStorage.setItem("blogContent", content) : null;
+            localStorage.setItem("blogContent", content);
             setTimeout(() => setIsSaving(false), 500); // Delay save icon change
         }
     }, [content]);
     useEffect(() => {
-        if (title !== typeof window !== 'undefined' ? localStorage.getItem("blogTitle") : '') {
+        if (title !== localStorage.getItem("blogTitle")) {
             setIsSaving(true);
-            typeof window !== 'undefined' ? localStorage.setItem("blogTitle", title) : null;
+            localStorage.setItem("blogTitle", title);
             setTimeout(() => setIsSaving(false), 500); // Delay save icon change
         }
     }, [title]);
     useEffect(() => {
-        if (tags !== typeof window !== 'undefined' ? localStorage.getItem("blogTags") : '') {
+        if (tags !== localStorage.getItem("blogTags")) {
             setIsSaving(true);
-            typeof window !== 'undefined' ? localStorage.setItem("blogTags", tags) : null;
+            localStorage.setItem("blogTags", tags);
             setTimeout(() => setIsSaving(false), 500); // Delay save icon change
         }
     }, [tags]);

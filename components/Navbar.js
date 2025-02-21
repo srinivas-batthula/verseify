@@ -55,7 +55,7 @@ export default function Navbar() {
             <div className={styles.leftContainer}>
                 <FaBars className={styles.icon} onClick={() => setIsNavOpen(true)} />
                 <div onClick={()=>{router.push('/')}} className={styles.logo}>
-                    <img src="/verseify.png" alt="Logo" className={styles.logoImg} />
+                    <img src="https://srinivas-batthula.github.io/verseify/verseify.png" alt="Logo" className={styles.logoImg} />
                 </div>
             </div>
 
