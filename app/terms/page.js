@@ -1,4 +1,4 @@
-import TermsOfUse from "@/app/components/TermsOfUse";
+import TermsOfUse from "@/components/TermsOfUse";
 
 
 export default function Page(){

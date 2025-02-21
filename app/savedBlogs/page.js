@@ -1,4 +1,4 @@
-import Saved from "@/app/components/Saved";
+import Saved from "@/components/Saved";
 
 
 export default function SPage(){
