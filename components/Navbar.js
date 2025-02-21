@@ -12,7 +12,8 @@ import { showSuccess, showFailed } from "@/utils/Toasts";
 
 
 // localStorage.setItem('login', 'false')
-const login = localStorage.getItem('login')
+// const login = localStorage.getItem('login')
+const login = true
 
 export default function Navbar() {
     const [isNavOpen, setIsNavOpen] = useState(false);
