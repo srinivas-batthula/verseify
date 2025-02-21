@@ -1,4 +1,4 @@
-import PrivacyPolicy from "@/components/Privacy";
+import PrivacyPolicy from "@/app/components/Privacy";
 
 
 export default function Page(){

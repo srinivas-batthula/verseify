@@ -121,32 +121,32 @@ function ToolBar({ editor, onEmojiSelect, isSaving }) {
 export default function Post() {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
-    const [title, setTitle] = useState(() => localStorage.getItem("blogTitle") || "");
-    const [tags, setTags] = useState(() => localStorage.getItem("blogTags") || "");
+    const [title, setTitle] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogTitle") : "");
+    const [tags, setTags] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogTags") : "");
     const [file, setFile] = useState(null);
-    const [content, setContent] = useState(() => localStorage.getItem("blogContent") || "");
+    const [content, setContent] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogContent") : "");
     const {theme} = useThemeStore()
 
 
     // Auto-save effect
     useEffect(() => {
-        if (content !== localStorage.getItem("blogContent")) {
+        if (content !== typeof window !== 'undefined' ? localStorage.getItem("blogContent") : '') {
             setIsSaving(true);
-            localStorage.setItem("blogContent", content);
+            typeof window !== 'undefined' ? localStorage.setItem("blogContent", content) : null;
             setTimeout(() => setIsSaving(false), 500); // Delay save icon change
         }
     }, [content]);
     useEffect(() => {
-        if (title !== localStorage.getItem("blogTitle")) {
+        if (title !== typeof window !== 'undefined' ? localStorage.getItem("blogTitle") : '') {
             setIsSaving(true);
-            localStorage.setItem("blogTitle", title);
+            typeof window !== 'undefined' ? localStorage.setItem("blogTitle", title) : null;
             setTimeout(() => setIsSaving(false), 500); // Delay save icon change
         }
     }, [title]);
     useEffect(() => {
-        if (tags !== localStorage.getItem("blogTags")) {
+        if (tags !== typeof window !== 'undefined' ? localStorage.getItem("blogTags") : '') {
             setIsSaving(true);
-            localStorage.setItem("blogTags", tags);
+            typeof window !== 'undefined' ? localStorage.setItem("blogTags", tags) : null;
             setTimeout(() => setIsSaving(false), 500); // Delay save icon change
         }
     }, [tags]);

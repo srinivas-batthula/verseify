@@ -9,8 +9,8 @@ export const viewport = {
 }
 
 export const metadata = {
-    title: 'NextJs Test',
-    description: 'A Next.js test project',
+    title: 'Verseify',
+    description: 'A smooth blogging platform',
     authors: [{ name: 'Srinivas Batthula' }],
     // Add more global metadata if needed
     // For example, Open Graph, Twitter Cards, etc.

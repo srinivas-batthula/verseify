@@ -15,6 +15,14 @@ import { showSuccess, showFailed } from "@/utils/Toasts";
 // const login = localStorage.getItem('login')
 const login = true
 
+
+const Li = styled.li`
+    &:hover {
+        color: ${({ theme }) => (theme === 'white' ? 'black' : 'white')};
+        background: ${({ theme }) => theme};
+    }
+`
+
 export default function Navbar() {
     const [isNavOpen, setIsNavOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -40,13 +48,6 @@ export default function Navbar() {
     }, []);
 
     let notifications = 9
-
-    const Li = styled.li`
-        &:hover {
-            color: ${(theme==='white')?'black':'white'};
-            background: ${theme}
-        }`
-
 
     return (
         <nav className={`${styles.navbar} shadow-sm`} style={{ color: theme, background: (theme === 'white') ? 'black' : 'white' }}>
@@ -101,9 +102,9 @@ export default function Navbar() {
 
                                 {/* Options */}
                                 <ul className={styles.dropdownMenu}>
-                                    <Li onClick={()=>{router.push('/dashboard')}} className={styles.dropdownItem}>Dashboard</Li>
-                                    <Li onClick={()=>{router.push('/post')}} className={styles.dropdownItem}>Create Post</Li>
-                                    <Li onClick={()=>{router.push('/settings')}} className={styles.dropdownItem}>Settings</Li>
+                                    <Li theme={theme} onClick={()=>{router.push('/dashboard')}} className={styles.dropdownItem}>Dashboard</Li>
+                                    <Li theme={theme} onClick={()=>{router.push('/post')}} className={styles.dropdownItem}>Create Post</Li>
+                                    <Li theme={theme} onClick={()=>{router.push('/settings')}} className={styles.dropdownItem}>Settings</Li>
                                     <li onClick={()=>showSuccess("Logged Out Successfully!")} className={styles.dropdownItemLogout}>Logout</li>
                                 </ul>
                             </motion.div>

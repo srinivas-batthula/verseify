@@ -70,7 +70,7 @@ const ShareButton = () => {
 
 
 const Blog = ({ post }) => {
-    const [content, setContent] = useState(()=>localStorage.getItem("blogContent") || "<p>No content available</p>");
+    const [content, setContent] = useState(typeof window !== 'undefined' ? ()=>localStorage.getItem("blogContent") : "<p>No content available</p>");
     const {theme} = useThemeStore()
 
     post = {

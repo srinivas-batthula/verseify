@@ -15,7 +15,7 @@ export default function Login() {
 
         try {
             // Send the user to your backend to start the Google OAuth flow
-            window.location.href = "https://todo-backend-1-4u6w.onrender.com/api/auth/google1"; // Redirect to backend route
+            typeof window !== 'undefined' ? window.location.href = "https://todo-backend-1-4u6w.onrender.com/api/auth/google1" : null; // Redirect to backend route
         }
         catch (error) {
             setErr('Error: ' + error.message)

@@ -6,6 +6,7 @@ import { FaMoon, FaSun, FaUserEdit, FaLock, FaBell, FaEnvelope, FaTrash } from "
 import useThemeStore from "@/stores/useThemeStore";
 import { useState, useEffect } from "react";
 
+
 export default function Settings() {
     const [isOn, setIsOn] = useState('true'); // Default value for isOn
     const router = useRouter();
@@ -13,7 +14,7 @@ export default function Settings() {
 
     // Only read localStorage in the client (browser)
     useEffect(() => {
-        const storedNotificationState = localStorage.getItem('notifications');
+        const storedNotificationState = typeof window !== 'undefined' ? localStorage.getItem('notifications') : true;
         if (storedNotificationState) {
             setIsOn(storedNotificationState);
         }
@@ -21,7 +22,7 @@ export default function Settings() {
 
     const toggle = () => {
         const newIsOn = isOn === 'true' ? 'false' : 'true';
-        localStorage.setItem('notifications', newIsOn);
+        typeof window !== 'undefined' ? localStorage.setItem('notifications', newIsOn) : true;
         setIsOn(newIsOn);
     };
 

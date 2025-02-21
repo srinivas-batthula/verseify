@@ -8,7 +8,7 @@ export default function PrivacyPolicy() {
     const {theme} = useThemeStore()
 
     useEffect(() => {
-        document.title = "Privacy Policy | Verseify";
+        typeof window !== 'undefined' ? document.title = "Privacy Policy | Verseify" : null;
     }, []);
 
     return (

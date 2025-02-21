@@ -1,4 +1,4 @@
-import Blog from "@/components/Blog";
+import Blog from "@/app/components/Blog";
 
 
 export default function BPage(){

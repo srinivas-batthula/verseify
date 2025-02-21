@@ -1,4 +1,4 @@
-import Settings from "@/components/Settings";
+import Settings from "@/app/components/Settings";
 
 
 export default function Page(){
