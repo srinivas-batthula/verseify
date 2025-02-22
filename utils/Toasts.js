@@ -12,7 +12,7 @@ export function showSuccess(msg) {
         duration: 2500, // Auto-hide after 2.5 seconds
         position: "top-center",
         style: {
-            background: "rgba(200, 200, 200, 0.35)",
+            background: "rgba(220, 220, 220, 0.4)",
             color: 'rgb(0, 174, 0)',
             border: "1px solid rgba(200, 200, 200, 0.611)",
             borderLeft: "6px solid rgba(0, 119, 0, 0.516)",
@@ -20,6 +20,7 @@ export function showSuccess(msg) {
             fontWeight: "bold",
             padding: "0.7rem",
             borderRadius: "6px",
+            marginTop: '0.8rem',
         },
     });
 }
@@ -32,7 +33,7 @@ export function showFailed(msg) {
         duration: 2500, // Auto-hide after 2.5 seconds
         position: "top-center",
         style: {
-            background: "rgba(200, 200, 200, 0.35)",
+            background: "rgba(220, 220, 220, 0.4)",
             color: 'rgba(209, 0, 0, 0.815)',
             border: "1px solid rgba(200, 200, 200, 0.611)",
             borderLeft: "6px solid rgba(207, 0, 0, 0.471)",
@@ -40,6 +41,7 @@ export function showFailed(msg) {
             fontWeight: "bold",
             padding: "0.7rem",
             borderRadius: "6px",
+            marginTop: '0.8rem',
         },
     });
 }
