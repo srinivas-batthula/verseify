@@ -20,7 +20,7 @@ export function showSuccess(msg) {
             fontWeight: "bold",
             padding: "0.7rem",
             borderRadius: "6px",
-            marginTop: '0.8rem',
+            marginTop: '1.2rem',
         },
     });
 }
@@ -41,7 +41,7 @@ export function showFailed(msg) {
             fontWeight: "bold",
             padding: "0.7rem",
             borderRadius: "6px",
-            marginTop: '0.8rem',
+            marginTop: '1.2rem',
         },
     });
 }

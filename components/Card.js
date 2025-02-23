@@ -96,7 +96,7 @@ const Card = ({
         }
     }
 
-    const authorCheck=true
+    const authorCheck=false
 
     return (
         <div className={styles.postCard} style={{color: theme, background:(theme === 'white') ? 'black' : 'white'}}>
