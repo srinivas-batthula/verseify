@@ -1,10 +1,11 @@
 'use client'
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from 'next/navigation'
 import styles from '@/styles/Home.module.css'
 import Card from "./Card"
 import { motion } from "framer-motion";
+import useSavedStore from "@/stores/useSavedStore";
 
 
 const StarterSection = ({mainContentRef}) => {
@@ -52,6 +53,15 @@ const StarterSection = ({mainContentRef}) => {
 
 export default function HomePage() {
     const mainContentRef = useRef(null)
+    const {FetchSaved, saved} = useSavedStore()
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await FetchSaved()
+        }
+        fetchData()
+    }, [])
+    
 
     return (
         <div className={styles.main}>

@@ -12,8 +12,10 @@ export const metadata = {
     title: 'Verseify',
     description: 'A smooth blogging platform',
     authors: [{ name: 'Srinivas Batthula' }],
-    // Add more global metadata if needed
-    // For example, Open Graph, Twitter Cards, etc.
+    // manifest: "/manifest.json",      // PWA Manifest
+    // icons: {
+    //     icon: '/icon.png',
+    // },
 }
 
 
@@ -22,8 +24,12 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <head>
-                {/* <link rel="manifest" href="http://localhost:3000/manifest.json" /> */}
+                <link rel="manifest" href="https://srinivas-batthula.github.io/verseify/manifest.json" />
                 <meta name="theme-color" content="rgba(177, 68, 255, 0.853)" />
+
+                 {/* Icon...   https://srinivas-batthula.github.io/verseify  */}
+                <link rel="icon" href="https://srinivas-batthula.github.io/verseify/icon.png" type="image/x-icon" />
+
                 {/* Custom meta tags */}
                 <meta name="author" content="Srinivas Batthula" />
                 {/* External stylesheets */}

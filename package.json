@@ -1,5 +1,6 @@
 {
   "name": "verseify",
+  "homepage": "https://srinivas-batthula.github.io/verseify",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -27,6 +28,7 @@
     "idb": "^8.0.2",
     "lucide-react": "^0.475.0",
     "next": "^15.1.7",
+    "next-pwa": "^5.6.0",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",

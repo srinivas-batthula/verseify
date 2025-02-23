@@ -68,9 +68,10 @@ export default function Profile() {
     const router = useRouter()
     const {theme} = useThemeStore()
 
+    const authorCheck = false
+
     const user = {
         name: "Srinivas",
-        username: "@srinivas_dev",
         bio: "Aspiring Software Developer | MERN Stack | Building Tech for the Future",
         profileImage: "", // Change to actual image URL
         totalBlogs: 12,
@@ -124,11 +125,13 @@ export default function Profile() {
                             <FaShare title="Share Profile" size={25} />
                         </Edit> */}
                         <ShareButton />
-                        <Link href={{pathname:'/editProfile', query:{user}}}>
-                            <Edit className={styles.editProfile}>
-                                <FaEdit title="Edit Profile" size={25} />
-                            </Edit>
-                        </Link>
+                        {
+                            (authorCheck) && (<Link href={{pathname:'/editProfile', query:{user}}}>
+                                <Edit className={styles.editProfile}>
+                                    <FaEdit title="Edit Profile" size={25} />
+                                </Edit>
+                                </Link>)
+                        }
                     </div>
                 </div>
 
@@ -176,28 +179,41 @@ export default function Profile() {
                 </div>
 
                 {/* Navigation Buttons */}
-                <div className={styles.buttons}>
-                    <NavBtns className={styles.navButton} onClick={() => router.push("/dashboard")}>
-                        <FaChartLine /> Dashboard
-                    </NavBtns>
-                    <NavBtns className={styles.navButton} onClick={() => router.push("/myBlogs")}>
-                        <FaBook /> My Blogs
-                    </NavBtns>
-                    <NavBtns className={styles.navButton} onClick={() => router.push("/post")}>
-                        <FaPlus /> Create Post
-                    </NavBtns>
-                    <NavBtns className={styles.navButton} onClick={() => router.push("/savedBlogs")}>
-                        <FaBookmark /> Saved Blogs
-                    </NavBtns>
-                    <NavBtns className={styles.navButton} onClick={() => router.push("/settings")}>
-                        <FaCog /> Settings
-                    </NavBtns>
-                </div>
+                {
+                    (authorCheck) && (<div className={styles.buttons}>
+                        <NavBtns className={styles.navButton} onClick={() => router.push("/dashboard")}>
+                            <FaChartLine /> Dashboard
+                        </NavBtns>
+                        <NavBtns className={styles.navButton} onClick={() => router.push("/myBlogs")}>
+                            <FaBook /> My Blogs
+                        </NavBtns>
+                        <NavBtns className={styles.navButton} onClick={() => router.push("/post")}>
+                            <FaPlus /> Create Post
+                        </NavBtns>
+                        <NavBtns className={styles.navButton} onClick={() => router.push("/savedBlogs")}>
+                            <FaBookmark /> Saved Blogs
+                        </NavBtns>
+                        <NavBtns className={styles.navButton} onClick={() => router.push("/settings")}>
+                            <FaCog /> Settings
+                        </NavBtns>
+                    </div>)
+                }
 
                 {/* Logout Button */}
-                <button className={styles.logout} onClick={handleLogout}>
-                    <FaSignOutAlt /> Log Out
-                </button>
+                {
+                    (authorCheck) && (<button className={styles.logout} onClick={handleLogout}>
+                        <FaSignOutAlt /> Log Out
+                    </button>)
+                }
+
+                {/* Recent Blogs... */}
+                <div style={{margin:'1.8rem'}}>
+                    <div style={{fontSize:'1.5rem', fontWeight:'600'}}>{user.name || 'Author'}'s Recent Blogs:</div>
+                    
+                    <div style={{display:'flex', justifyContent:'center', alignContent:'center', textAlign:'center', gap:'0.2rem', margin:'1rem'}}>
+                        <button className={styles.btnLast} onClick={()=>{router.push('/blog')}}>Java Src</button>
+                    </div>
+                </div>
             </div>
         </div>
         </div>

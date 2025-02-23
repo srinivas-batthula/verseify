@@ -9,12 +9,13 @@
     outline: rgba(144, 144, 144, 0.15) solid 1px;
     padding: 0.8rem;
     margin: 1rem auto;
-    transition: box-shadow 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     cursor: pointer;
 }
 
 .postCard:hover {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.214);
+    transform: translateY(-2px);
 }
 
 /* Header */
@@ -30,7 +31,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.postHeader:active{
+.postHeader:active {
     border-radius: 1.5rem;
     background: rgb(168, 168, 168);
 }
@@ -54,12 +55,12 @@
     font-family: 'Inter', sans-serif;
 }
 
-.userDetails:hover > .userDetails1{
+.userDetails:hover>.userDetails1 {
     color: #0b97e2;
     text-decoration: underline;
 }
 
-.times{
+.times {
     font-weight: normal;
     font-size: 0.9rem;
 }
@@ -71,18 +72,18 @@
 
 .followBtn {
     width: 6rem;
-    height: 2.5rem;
+    height: fit-content;
     text-align: center;
     border: none;
     outline: #0b97e2 solid 2px;
-    padding: 0.5rem 0.8rem 0.8rem 0.5rem;
+    padding: 0.5rem 0.8rem 0.6rem 0.5rem;
     font-size: 1rem;
     border-radius: 0.5rem;
     cursor: pointer;
     transition: background 0.2s ease-in-out;
 }
 
-.followBtn:hover{
+.followBtn:hover {
     background: #0b97e2;
     color: white;
 }
@@ -92,8 +93,27 @@
     outline: #0b97e2 solid 2px;
 }
 
-.followBtn:visited{
+.followBtn:visited {
     outline: #0b97e2 solid 2px;
+}
+
+.deleteBtn{
+    width: 6rem;
+    height: fit-content;
+    text-align: center;
+    border: none;
+    color: red;
+    outline: rgba(179, 15, 15, 0.388) solid 2px;
+    padding: 0.5rem 0.8rem 0.6rem 0.7rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.deleteBtn:hover{
+    background: red;
+    color: white;
 }
 
 /* Post Content */
@@ -120,7 +140,7 @@
     font-family: 'Georgia', serif;
 }
 
-.postContent:active > .title{
+.postContent:active>.title {
     color: #1b8cc8;
     text-decoration: underline;
 }
@@ -135,7 +155,7 @@
     /* text-align: center; */
 }
 
-.seeMore:hover{
+.seeMore:hover {
     text-decoration: underline;
 }
 
@@ -169,18 +189,12 @@
     padding-bottom: 1.6rem;
     padding-left: 0.4rem;
     padding-right: 0.4rem;
-    transition-duration: 0.35s;
+    transition-duration: 0.25s;
     transition-property: all;
 }
 
-.actionBtn:hover {
-    color: rgba(86, 56, 219, 0.925);
-    background: rgba(86, 56, 219, 0.19);
-    transition-duration: 0.4s;
-}
-
-.actionBtn:active{
-    transform: scale(1.4);
+.actionBtn:active {
+    transform: scale(1.6);
 }
 
 
@@ -192,19 +206,35 @@
 
 
 
+
+
+
+
+
+
+
+
+@media screen and (min-width:850px) {
+    .actionBtn:hover {
+        color: rgba(86, 56, 219, 0.925);
+        background: rgba(86, 56, 219, 0.19);
+        transition-duration: 0.4s;
+    }
+}
 
 @media screen and (max-width:820px) {
-    .postCard{
+    .postCard {
         width: 100%;
         border-radius: 0;
     }
 }
 
 @media screen and (max-width:650px) {
-    .postImage{
+    .postImage {
         height: 17.2rem;
     }
-    .title{
+
+    .title {
         font-size: 1.8rem;
     }
 }

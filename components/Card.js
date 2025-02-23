@@ -7,7 +7,8 @@ import useThemeStore from '@/stores/useThemeStore'
 import { showSuccess, showFailed } from "@/utils/Toasts";
 import React, { useState, useEffect } from 'react';
 import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from 'react-share';
-import { saveResponse, getResponse } from "@/lib/indexedDB";
+import { saveResponse } from "@/lib/indexedDB";
+import useSavedStore from "@/stores/useSavedStore";
 
 
 
@@ -62,21 +63,25 @@ const ShareButton = () => {
 }
 
 
+
 const Card = ({ 
     author = 'Srinivas', 
     headline = 'Software Developer', 
-    avatar = 'https://srinivas-batthula.github.io/verseify/author.jpg', // '/author.jpg'
-    title = 'Java Src', 
+    avatar = '/author.jpg', // 'https://srinivas-batthula.github.io/verseify/author.jpg'
+    title = 'Java Src',
     hashtags,
-    postImage =  'https://srinivas-batthula.github.io/verseify/portfolio_project.png' // '/portfolio_project.png'
+    postImage = '/portfolio_project.png' // 'https://srinivas-batthula.github.io/verseify/portfolio_project.png'
 }) => {
     const {theme} = useThemeStore()
+    const {saved, FetchSaved} = useSavedStore()
     const router = useRouter()
+    
+    const isSaved = (saved && saved.length>0) ? saved.some((item) => item.id === '1') : false
 
     async function handleSave(e) {
-        showSuccess("Post Saved!")
+        showSuccess(isSaved?"Post Unsaved!":"Post Saved!")
 
-        const r = await saveResponse('1', { 
+        const res = await saveResponse('1', { 
             author : 'Srinivas', 
             headline : 'Software Developer', 
             avatar : '/author.jpg', 
@@ -84,13 +89,14 @@ const Card = ({
             postImage : '/portfolio_project.png' 
         })
 
-        if(!r){
+        await FetchSaved()
+
+        if(!res || !res.success){
             showFailed("Failed to Save!")
         }
-        
-        const res = await getResponse()
-        console.log(res)
     }
+
+    const authorCheck=true
 
     return (
         <div className={styles.postCard} style={{color: theme, background:(theme === 'white') ? 'black' : 'white'}}>
@@ -106,12 +112,14 @@ const Card = ({
                         style={{ borderRadius: "50%", objectFit: "cover" }} 
                     />
                     <div className={styles.userDetails1}>
-                        <div className={styles.authorName}>{author} <span style={{color: (theme === 'black') ? 'rgb(66, 66, 66)' : 'rgb(209, 209, 209)'}} className={styles.times}> • 2h ago</span></div>
+                        <div className={styles.authorName}>{ authorCheck ? 'You' : author } <span style={{color: (theme === 'black') ? 'rgb(66, 66, 66)' : 'rgb(209, 209, 209)'}} className={styles.times}> • 2h ago</span></div>
                         <div style={{color: (theme === 'black') ? 'rgb(66, 66, 66)' : 'rgb(209, 209, 209)'}} className={styles.authorHead}>{headline}</div>
                     </div>
                 </div>
-                <button onClick={()=>showSuccess("Following!")} className={styles.followBtn} title="Follow">
-                    <span style={{ fontWeight: 'bold' }}><i className="fa-solid fa-plus"></i></span> Follow
+                <button onClick={()=>showSuccess("Following!")}>
+                    {
+                        authorCheck ? (<span className={styles.deleteBtn} title="delete blog"><i className="fa-solid fa-trash-can"></i></span>) : (<span className={styles.followBtn} title="Follow"><span style={{ fontWeight: 'bold' }}><i className="fa-solid fa-plus"></i></span> Follow</span>)
+                    }
                 </button>
             </div>
 
@@ -145,7 +153,9 @@ const Card = ({
                 </button> */}
                 <ShareButton />
                 <button onClick={handleSave} className={styles.actionBtn}>
-                    <i className="fa-regular fa-bookmark" title="Bookmark"></i>
+                    {
+                        isSaved ? <i className="fa-solid fa-bookmark" title="Bookmark"></i> : <i className="fa-regular fa-bookmark" title="Bookmark"></i>
+                    }
                 </button>
             </div>
         </div>

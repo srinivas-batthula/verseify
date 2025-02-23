@@ -38,17 +38,12 @@
     padding-bottom: 1.6rem;
     padding-left: 0.4rem;
     padding-right: 0.4rem;
-    transition-duration: 0.35s;
+    transition-duration: 0.3s;
     transition-property: all;
 }
-.actionBtn:hover {
-    color: rgba(86, 56, 219, 0.925);
-    background: rgba(86, 56, 219, 0.19);
-    transition-duration: 0.4s;
-}
 
-.actionBtn:active{
-    transform: scale(1.4);
+.actionBtn:active {
+    transform: scale(1.5);
 }
 
 .title {
@@ -76,6 +71,7 @@
     margin-bottom: 1rem;
     cursor: pointer;
 }
+
 .avatar {
     width: 3.5rem;
     height: 3.5rem;
@@ -86,7 +82,7 @@
     margin-left: 0.3rem;
 }
 
-.authorSection:hover > .authorDetails{
+.authorSection:hover>.authorDetails {
     color: #0b97e2;
     text-decoration: underline;
 }
@@ -97,10 +93,12 @@
     font-weight: 600;
     font-family: 'Inter', sans-serif;
 }
+
 .authorBio {
     font-size: 0.93rem;
     color: rgba(66, 66, 66, 0.873);
 }
+
 .followBtn {
     margin-left: auto;
     padding: 0.5rem 0.8rem;
@@ -110,7 +108,7 @@
     cursor: pointer;
 }
 
-.followBtn:hover{
+.followBtn:hover {
     background: #0b97e2;
     color: white;
 }
@@ -120,7 +118,7 @@
     outline: #0b97e2 solid 2px;
 }
 
-.followBtn:visited{
+.followBtn:visited {
     outline: #0b97e2 solid 2px;
 }
 
@@ -145,11 +143,13 @@
 .commentSection {
     margin-top: 1rem;
 }
+
 .commentTitle {
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 0.6rem;
 }
+
 .commentBox {
     width: 100%;
     padding: 1rem;
@@ -157,6 +157,7 @@
     border-radius: 6px;
     font-size: 1rem;
 }
+
 .commentSubmit {
     margin-top: 0.3rem;
     padding: 0.5rem 0.8rem;
@@ -167,6 +168,7 @@
     border-radius: 6px;
     cursor: pointer;
 }
+
 .commentSubmit:hover {
     background-color: #218838;
 }
@@ -188,51 +190,74 @@
 
 
 
+
+@media screen and (min-width:850px) {
+    .actionBtn:hover {
+        color: rgba(86, 56, 219, 0.925);
+        background: rgba(86, 56, 219, 0.19);
+        transition-duration: 0.4s;
+    }
+}
+
 @media screen and (max-width:900px) {
-    .container{
+    .container {
         width: 100%;
         border-radius: 0;
     }
 }
 
 @media screen and (max-width:650px) {
-    .container{
+    .shareSection {
+        margin-left: 0rem;
+    }
+
+    .container {
         padding: 0rem;
     }
-    .postImage{
+
+    .postImage {
         border-radius: 1px;
     }
-    .title{
+
+    .title {
         font-size: 1.9rem;
     }
-    .authorName{
+
+    .authorName {
         font-size: 1.2rem;
     }
-    .avatar{
+
+    .avatar {
         width: 3.3rem;
         height: 3.3rem;
     }
-    .commentTitle{
+
+    .commentTitle {
         font-size: 1.3rem;
     }
-    .shareSection{
+
+    .shareSection {
         padding-top: 0.8rem;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
+        padding-left: 0.2rem;
+        padding-right: 0.3rem;
     }
-    .authorSection{
+
+    .authorSection {
         padding-left: 0.8rem;
         padding-right: 0.8rem;
     }
-    .actions{
+
+    .actions {
         padding-left: 0.8rem;
         padding-right: 0.8rem;
     }
-    .commentSection{
-        padding-left: 0.8rem;
-        padding-right: 0.8rem;
+
+    .commentSection {
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
     }
-    .content{
+
+    .content {
         font-size: 1.3rem;
         padding-left: 0.8rem;
         padding-right: 0.8rem;

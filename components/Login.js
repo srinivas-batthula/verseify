@@ -4,12 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import styles from "../styles/Login.module.css";
+import { showSuccess, showFailed } from "@/utils/Toasts";
 
 
 export default function Login() {
     const [isSignUp, setIsSignUp] = useState(false);
     const [isForgot, setIsForgot] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [inp, setInp] = useState({fullName:'', email:'', password:''})
     const router = useRouter()
 
     
@@ -26,10 +28,84 @@ export default function Login() {
         }
     }
 
-    const handleSubmit = async(e)=>{
-        e.preventDefault()
+    const handleChange = (e)=>{
+        setInp((prev)=>({ ...prev, [e.target.name]: e.target.value }))
     }
 
+    const validate = (name, email, password) => {
+        if(name==='' && email==='' && password===''){
+            return {result: false, element: 'Invalid Inputs!'}
+        }
+
+        if(isSignUp && name.length < 4) {
+            return { result: false, element: 'Name length must be at least 4!' }
+        }
+
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$/i
+        if(!emailPattern.test(email)){
+            return {result: false, element: 'Invalid Email!'}
+        }
+        else if (password.length < 4) {
+            return { result: false, element: 'Password length must be at least 4!' }
+        }        
+
+        return {result: true}
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+    
+        const email = inp.email
+        const password = inp.password
+        const fullName = inp.fullName
+
+        const re = validate(fullName, email, password)
+        if(!re.result){
+            return showFailed(re.element)
+        }
+    
+        const endpoint = isSignUp 
+            ? "http://localhost:8080/api/auth/signUp" 
+            : isForgot
+            ? "http://localhost:8080/api/auth/forgot-password-email"
+            : "http://localhost:8080/api/auth/signIn";
+    
+        const payload = isSignUp
+            ? { fullName, email, password }
+            : isForgot
+            ? { email }
+            : { email, password };
+    
+        try {
+            const response = await fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            })
+    
+            const data = await response.json();
+    
+            if (!response.ok) {
+                showFailed(data.details || "Something went Wrong!")
+                return
+            }
+    
+            showSuccess(isSignUp ? "Registered successfully!" : isForgot ? "Reset link sent to your Mail!" : "Login successful!")
+
+            inp.fullName=''
+            inp.email=''
+            inp.password=''
+
+            if(!isForgot){
+                setTimeout(() => {
+                    router.push("/")
+                }, 1200)
+            }
+        } catch (error) {
+            // console.error("Error:", error.message)
+            showFailed("Something went Wrong, Please try again later!")
+        }
+    }
 
     return (
         <div className={styles.container}>
@@ -38,15 +114,18 @@ export default function Login() {
 
                 <form className={styles.form}>
                     {(isSignUp && !isForgot) && (
-                        <input type="text" placeholder="Full Name" className={styles.input} />
+                        <input value={inp.fullName} onChange={handleChange} name="fullName" type="text" placeholder="Full Name" className={styles.input} />
                     )}
 
-                    <input type="email" placeholder="Email" className={styles.input} />
+                    <input value={inp.email} onChange={handleChange} name="email" type="email" placeholder="Email" className={styles.input} required />
 
                     {(!isForgot) && (<div>
                         {/* Password Input with Show/Hide Feature */}
                         <div className={styles.passwordContainer}>
                             <input
+                                value={inp.password}
+                                onChange={handleChange}
+                                name="password"
                                 type={showPassword ? "text" : "password"}
                                 placeholder="Password"
                                 className={styles.input}
@@ -78,7 +157,7 @@ export default function Login() {
                 </div>
 
                 {/* SignIn with Google */}
-                {!isForgot && <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center', justifyItems:'center', alignItems:'center', marginTop: '0.8rem', marginBottom:'2rem' }}>
+                {!isForgot && <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center', justifyItems:'center', alignItems:'center', marginTop: '0.4rem', marginBottom:'2rem' }}>
                     <span style={{ textAlign: 'center', marginTop: '0.8rem' }}>or</span>
                     {/* <span style={{ textAlign: 'center', marginTop: '0.5rem' }}></span> */}
                     <button type='button' className={`${styles.google} ${styles.toggleLink}`} onClick={handleOAuth} style={{ fontWeight:'normal', width:'100%', paddingLeft:'0.3rem', paddingRight:'0.4rem', paddingTop:'0.65rem', paddingBottom:'0.65rem', borderRadius:'1.5rem', display:'flex', flexDirection:'row', justifyContent:'center', textAlign:'center', cursor: 'pointer', fontSize:'1.2rem', marginTop: '0.6rem', color:'white', backgroundColor:'black' }}>

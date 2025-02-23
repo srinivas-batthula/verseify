@@ -11,10 +11,6 @@ import { useRouter } from "next/navigation";
 import { showSuccess, showFailed } from "@/utils/Toasts";
 
 
-// localStorage.setItem('login', 'false')
-// const login = localStorage.getItem('login')
-const login = true
-
 
 const Li = styled.li`
     &:hover {
@@ -29,8 +25,12 @@ export default function Navbar() {
     const { theme } = useThemeStore()
     const router = useRouter()
 
-    const profileRef = useRef(null);
-    const sidebarRef = useRef(null);
+    const profileRef = useRef(null)
+    const sidebarRef = useRef(null)
+
+    // typeof window !== 'undefined' ? localStorage.setItem('login', true) : null
+
+    const login = typeof window !== 'undefined' ? localStorage.getItem('login') || 'false' : 'false'
 
     // Close dropdown/sidebar when clicking outside
     useEffect(() => {
@@ -54,37 +54,41 @@ export default function Navbar() {
             {/* Left: Hamburger Icon */}
             <div className={styles.leftContainer}>
                 <FaBars className={styles.icon} onClick={() => setIsNavOpen(true)} />
-                <div onClick={()=>{router.push('/')}} className={styles.logo}>
+                <div onClick={() => { router.push('/') }} className={styles.logo}>
                     <img src="https://srinivas-batthula.github.io/verseify/verseify.png" alt="Logo" className={styles.logoImg} />
                 </div>
             </div>
 
             {/* Center: Search Bar */}
-            <div onClick={()=>{router.push('/search')}} className={styles.searchContainer}>
+            <div onClick={() => { router.push('/search') }} className={styles.searchContainer}>
                 <input type="text" placeholder="Search. . ." className={styles.searchInput} />
                 <FaSearch className={styles.searchIcon} />
             </div>
 
             {/* Right: Notification & Profile */}
             <div className={styles.rightSection}>
-                <FaSearch onClick={()=>{router.push('/search')}} className={`${styles.icon} ${styles.searchMobile}`} />
+                <FaSearch onClick={() => { router.push('/search') }} className={`${styles.icon} ${styles.searchMobile}`} />
 
-                <div onClick={()=>{router.push('/notifications')}} className={`${styles.notificationContainer}`} style={{display: (login==='false') ? 'none' : 'block'}}>
-                    <FaBell className={`${styles.icon}`} />
-                    {
-                        (notifications) > 0 && (
-                            <span className={styles.notificationBadge}>{notifications}</span>
-                        )
-                    }
-                </div>
+                {
+                    (login === 'true') && (<div onClick={() => { router.push('/notifications') }} className={`${styles.notificationContainer}`} style={{ display: (login === 'false') ? 'none' : 'block' }}>
+                        <FaBell className={`${styles.icon}`} />
+                        {
+                            (notifications) > 0 && (
+                                <span className={styles.notificationBadge}>{notifications}</span>
+                            )
+                        }
+                        </div>)
+                }
 
                 {/* Profile Dropdown */}
                 <div className="relative" ref={profileRef}>
-                    <BsPersonCircle
-                        className={styles.profileIcon}
-                        onClick={() => setIsProfileOpen(!isProfileOpen)}
-                        style={{display: (login==='false') ? 'none' : 'block'}}
-                    />
+                    {
+                        (login === 'true') && (<BsPersonCircle
+                            className={styles.profileIcon}
+                            onClick={() => setIsProfileOpen(!isProfileOpen)}
+                            style={{ display: (login === 'false') ? 'none' : 'block' }}
+                        />)
+                    }
                     <AnimatePresence>
                         {isProfileOpen && (
                             <motion.div
@@ -95,24 +99,26 @@ export default function Navbar() {
                                 style={{ color: theme, background: (theme === 'white') ? 'black' : 'white' }}
                             >
                                 {/* Username & View Profile */}
-                                <div onClick={()=>{router.push('/profile')}} className={styles.profileHeader}>
+                                <div onClick={() => { router.push('/profile') }} className={styles.profileHeader}>
                                     <p className={styles.username}><span style={{ marginRight: '0.1rem' }}>@</span>srinivas</p>
                                     <p className={styles.viewProfile}>View Profile →</p>
                                 </div>
 
                                 {/* Options */}
                                 <ul className={styles.dropdownMenu}>
-                                    <Li theme={theme} onClick={()=>{router.push('/dashboard')}} className={styles.dropdownItem}>Dashboard</Li>
-                                    <Li theme={theme} onClick={()=>{router.push('/post')}} className={styles.dropdownItem}>Create Post</Li>
-                                    <Li theme={theme} onClick={()=>{router.push('/settings')}} className={styles.dropdownItem}>Settings</Li>
-                                    <li onClick={()=>showSuccess("Logged Out Successfully!")} className={styles.dropdownItemLogout}>Logout</li>
+                                    <Li theme={theme} onClick={() => { router.push('/dashboard') }} className={styles.dropdownItem}>Dashboard</Li>
+                                    <Li theme={theme} onClick={() => { router.push('/post') }} className={styles.dropdownItem}>Create Post</Li>
+                                    <Li theme={theme} onClick={() => { router.push('/settings') }} className={styles.dropdownItem}>Settings</Li>
+                                    <li onClick={() => showSuccess("Logged Out Successfully!")} className={styles.dropdownItemLogout}>Logout</li>
                                 </ul>
                             </motion.div>
                         )}
                     </AnimatePresence>
                 </div>
 
-                <div onClick={()=>{router.push('/login')}} className={styles.log} style={{display: (login==='true') ? 'none' : 'block'}}>Sign In / Up</div>
+                {
+                    (login !== 'true') && (<div onClick={() => { router.push('/login') }} className={styles.log} style={{ display: (login === 'true') ? 'none' : 'block' }}>Log In</div>)
+                }
             </div>
 
             {/* Sidebar Menu */}
@@ -123,7 +129,7 @@ export default function Navbar() {
                         animate={{ x: 0 }}
                         exit={{ x: -250 }}
                         className={styles.sidebar}
-                        style={{background: (theme==='white')?'black':'white', color: theme}}
+                        style={{ background: (theme === 'white') ? 'black' : 'white', color: theme }}
                         ref={sidebarRef}
                     >
                         <FaTimes className={styles.closeIcon} onClick={() => setIsNavOpen(false)} />
@@ -161,12 +167,30 @@ export default function Navbar() {
                                         link: '/contact'
                                     },
                                 ].map((item, index) => (
-                                    <motion.li onClick={()=>{router.push(item.link)}} key={index} className={styles.sidebarItem} style={{display: ((item.link==='/post')&&(login==='false') ? 'none' : 'block')}}>
+                                    <motion.li onClick={() => { router.push(item.link) }} key={index} className={styles.sidebarItem}>
                                         <i className={`${item.class} ${styles.sidebarIcons}`}></i>
                                         {item.title}
                                     </motion.li>
                                 ))
                             }
+                            <ul>
+                                <li onClick={() => { router.push('/ai') }} className={styles.aiBtn} style={{
+                                    background: 'linear-gradient(135deg, #6dd5ed, #00c851, #00796b)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent'
+                                }}>
+                                    <i className={`fa-brands fa-rocketchat ${styles.sidebarIcons}`} style={{ color: 'black' }}></i>
+                                    Write with AI
+                                </li>
+                                <li onClick={() => { router.push('/subscribe') }} className={`${styles.subscribeBtn}`} style={{
+                                    background: 'linear-gradient(135deg, #12c2e9, #c471ed, #f64f59)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent'
+                                }}>
+                                    <i className={`fas fa-crown ${styles.sidebarIcons}`}></i>
+                                    Try Premium
+                                </li>
+                            </ul>
                         </ul>
 
                         <div style={{ fontWeight: '650', fontSize: '1.2rem' }}>Other</div>
@@ -184,7 +208,7 @@ export default function Navbar() {
                                         link: '/terms'
                                     }
                                 ].map((item, index) => (
-                                    <motion.li onClick={()=>{router.push(item.link)}} key={index} className={styles.sidebarItem}>
+                                    <motion.li onClick={() => { router.push(item.link) }} key={index} className={styles.sidebarItem}>
                                         <i className={`${item.class} ${styles.sidebarIcons}`}></i>
                                         {item.title}
                                     </motion.li>

@@ -188,6 +188,33 @@
     background: rgba(255, 0, 0, 0.7);
 }
 
+.btnLast{
+    width: 80%;
+    height: fit-content;
+    padding: 0.3rem;
+    border: none;
+    border-radius: 6px;
+    outline: rgba(194, 194, 194, 0.738) solid 2px;
+    font-size: 1.1rem;
+}
+
+.btnLast:hover{
+    text-decoration: underline;
+    color: #00a6ff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

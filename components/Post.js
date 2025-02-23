@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import {
     List, Heading1, Heading2, Heading3, Code, Bold, Italic, Strikethrough, AlignCenter, AlignLeft,
     AlignRight, Highlighter, ListOrdered, Undo, Redo, Underline
@@ -19,8 +20,8 @@ import { cva } from "class-variance-authority";
 import { clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { useState, useEffect } from "react";
+import { showFailed, showSuccess } from "@/utils/Toasts";
 import '../styles/editor.css'
-import useThemeStore from "@/stores/useThemeStore";
 
 
 
@@ -119,14 +120,21 @@ function ToolBar({ editor, onEmojiSelect, isSaving }) {
 
 // CustomEditor Component
 export default function Post() {
+    const router = useRouter()
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [title, setTitle] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogTitle") : "");
     const [tags, setTags] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogTags") : "");
     const [file, setFile] = useState(null);
     const [content, setContent] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogContent") : "");
-    const {theme} = useThemeStore()
 
+    useEffect(()=>{
+        if((typeof window !== 'undefined' ? localStorage.getItem('login') || 'false' : 'false')==='false'){
+            showFailed("Please do Login to Continue!")
+            router.push('/')
+            return
+        }
+    }, [])
 
     // Auto-save effect
     useEffect(() => {
@@ -223,7 +231,7 @@ export default function Post() {
             </div>
 
             {/* Media Input */}
-            <div className="input-group mb-4 mt-2 media" title="post media upload" style={{ marginLeft: '0', left: '0' }}>
+            <div className="input-group mt-2 media" title="post media upload" style={{ marginLeft: '0', left: '0' }}>
                 <label className="input-group-text" htmlFor="inputGroupFile01">Upload</label>
                 <input onChange={(e) => setFile(e.target.files[0])} type="file" className="form-control" id="inputGroupFile01" />
             </div>

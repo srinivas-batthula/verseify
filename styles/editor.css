@@ -29,7 +29,7 @@
     width: 50%;
     padding: 0.5rem;
     font-size: 1.3rem;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.1rem;
 }
 
 .editor{
@@ -37,6 +37,7 @@
     padding: 0.5rem;
     font-size: 1.3rem;
     margin-bottom: 0.6rem;
+    margin-top: 0;
 }
 
 .btn{
@@ -97,7 +98,7 @@
         width: 100%;
     }
     .title-input, .tags-input{
-        width: 99%;
+        width: 97%;
         font-size: 1.1rem;
     }
 }
