@@ -3,7 +3,7 @@
     "short_name": "Verseify",
     "description": "A powerful blogging app",
     "start_url": "/verseify",
-    "scope":"/",
+    "scope":"/verseify",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
