@@ -29,18 +29,18 @@ const StarterSection = ({mainContentRef}) => {
 
             const { outcome } = await deferredPrompt.userChoice
             if (outcome === 'accepted') {
-                console.log('User accepted the install.');
+                console.log('User accepted the install.')
             } else {
-                console.log('User dismissed the install.');
+                console.log('User dismissed the install.')
             }
         } else {
-            alert('PWA install prompt is not available.');
+            alert('PWA install prompt is not available.')
         }
     }
 
     const handleScrollToContent = () => {
         if (mainContentRef.current) {
-            mainContentRef.current.scrollIntoView({ behavior: "smooth" });
+            mainContentRef.current.scrollIntoView({ behavior: "smooth" })
         }
     }
 
@@ -63,12 +63,12 @@ const StarterSection = ({mainContentRef}) => {
                 whileTap={{ scale: 0.9 }}
                 onClick={() => {
                     handleInstallClick()
-                    setTimeout(()=>{
-                        router.push('/login')
-                    }, 1800)
+                    // setTimeout(()=>{
+                    //     router.push('/login')
+                    // }, 1800)
                 }}
             >
-                Download App Now
+                Get the App
             </motion.button>
             <motion.div
                 className={styles.scrollIcon}
