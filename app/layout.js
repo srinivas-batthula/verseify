@@ -21,6 +21,7 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <head>
                 <link rel="manifest" href="https://srinivas-batthula.github.io/verseify/manifest.json" />
+                
                 <meta name="theme-color" content="rgba(177, 68, 255, 0.853)" />
 
                  {/* Icon...     */}

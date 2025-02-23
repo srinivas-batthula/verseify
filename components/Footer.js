@@ -52,7 +52,7 @@ export default function Footer(){
                 }
             </div>
             <div style={{color:'white', textAlign:'center', fontSize:'1rem'}}>Made with love and <span style={{color:'skyblue'}}>NodeJs</span>.</div>
-            <div style={{marginBottom:'0.8rem'}}>Verseify © <span style={{color:'skyblue'}}>2025</span>.</div>
+            <div style={{marginBottom:'0.8rem'}}>Verseify Inc. © <span style={{color:'skyblue'}}>2025</span>.</div>
         </div>
     )
 }
