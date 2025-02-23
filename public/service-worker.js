@@ -1,4 +1,4 @@
-const CACHE_NAME = "verseify-cache-v1";
+const CACHE_NAME = "verseify-cache-v2";
 const STATIC_FILES = [
     "https://srinivas-batthula.github.io/verseify/",
     "https://srinivas-batthula.github.io/verseify/manifest.json",
