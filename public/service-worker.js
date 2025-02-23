@@ -1,13 +1,14 @@
-const CACHE_NAME = `verseify-cache-v${process.env.NEXT_PUBLIC_CACHE_VERSION || '1.0.0'}`
+// const CACHE_NAME = `verseify-cache-v${process.env.NEXT_PUBLIC_CACHE_VERSION || '5'}`
+const CACHE_NAME = `verseify-cache-v4`
 const STATIC_FILES = [
     "https://srinivas-batthula.github.io/verseify/",
     "https://srinivas-batthula.github.io/verseify/manifest.json",
     "https://srinivas-batthula.github.io/verseify/icon.png",
     "https://srinivas-batthula.github.io/verseify/verseify.png",
-];
+]
 
 // Install event: Cache essential assets
-self.addEventListener("install", (event) => {
+self.addEventListener("install", (event) => { 
     console.log("Service Worker installing...")
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
@@ -15,7 +16,7 @@ self.addEventListener("install", (event) => {
         })
     );
     self.skipWaiting()
-});
+})
 
 // Fetch event: Serve cached files & fetch new ones
 self.addEventListener("fetch", (event) => {
