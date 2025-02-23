@@ -10,12 +10,40 @@ import useSavedStore from "@/stores/useSavedStore";
 
 const StarterSection = ({mainContentRef}) => {
     const router = useRouter()
+    const [deferredPrompt, setDeferredPrompt] = useState(null)
+
+    useEffect(() => {
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault()  // Prevent auto-prompt
+            setDeferredPrompt(e)  // Store the event for manual trigger
+        })
+
+        return () => {
+            window.removeEventListener('beforeinstallprompt', () => {})
+        }
+    }, [])
+
+    const handleInstallClick = async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt()  // Show install prompt
+
+            const { outcome } = await deferredPrompt.userChoice
+            if (outcome === 'accepted') {
+                console.log('User accepted the install.');
+            } else {
+                console.log('User dismissed the install.');
+            }
+        } else {
+            alert('PWA install prompt is not available.');
+        }
+    }
 
     const handleScrollToContent = () => {
         if (mainContentRef.current) {
             mainContentRef.current.scrollIntoView({ behavior: "smooth" });
         }
     }
+
 
     return (
         <div className={styles.starterContainer}>
@@ -33,9 +61,14 @@ const StarterSection = ({mainContentRef}) => {
                 className={styles.starterButton}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                onClick={() => { router.push('/login') }}
+                onClick={() => {
+                    handleInstallClick()
+                    setTimeout(()=>{
+                        router.push('/login')
+                    }, 1800)
+                }}
             >
-                Get started
+                Download App Now
             </motion.button>
             <motion.div
                 className={styles.scrollIcon}
