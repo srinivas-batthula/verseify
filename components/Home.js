@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from 'next/navigation'
 import styles from '@/styles/Home.module.css'
 import Card from "./Card"
