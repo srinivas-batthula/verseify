@@ -1,26 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextPWA = (config) => {
-    const pwaConfig = {
-        dest: 'public',
-        register: true,
-        skipWaiting: true,
-        disable: process.env.NODE_ENV === 'development',
-        customWorkerDir: 'public'
-    };
 
-    // Merge the Next.js config with PWA settings
-    return Object.assign({}, config, {
-        output: 'export',  // Injected property
-        pwa: pwaConfig
-    });
-};
-
-const nextConfig = nextPWA({
-    basePath: '/verseify',
-    assetPrefix: '/verseify',
+const nextConfig = {
+    basePath:'/verseify',
+    assetPrefix:'/verseify',
     trailingSlash: true,
-    reactStrictMode: true
-});
+    
+    reactStrictMode: true,
+}
 
-
-export default nextConfig
+export default nextConfig;
