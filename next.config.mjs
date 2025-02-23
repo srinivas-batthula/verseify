@@ -10,6 +10,7 @@ const nextPWA = (config) => {
 
     // Merge the Next.js config with PWA settings
     return Object.assign({}, config, {
+        output: 'export',  // Injected property
         pwa: pwaConfig
     });
 };
