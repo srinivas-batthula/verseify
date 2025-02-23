@@ -3,7 +3,7 @@
     "short_name": "Verseify",
     "description": "A powerful blogging app by  ~Srinivas",
     "start_url": "/verseify",
-    "scope":"/verseify",
+    "scope": "/verseify",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
@@ -17,6 +17,20 @@
             "src": "https://srinivas-batthula.github.io/verseify/verseify.png",
             "sizes": "512x512",
             "type": "image/png"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "https://srinivas-batthula.github.io/verseify/desktop-screenshot.png",
+            "sizes": "1280x800",
+            "type": "image/png",
+            "form_factor": "wide"
+        },
+        {
+            "src": "https://srinivas-batthula.github.io/verseify/mobile-screenshot.png",
+            "sizes": "600x800",
+            "type": "image/png",
+            "form_factor": "narrow"
         }
     ]
 }

@@ -1,5 +1,5 @@
-// const CACHE_NAME = `verseify-cache-v${process.env.NEXT_PUBLIC_CACHE_VERSION || '5'}`
-const CACHE_NAME = `verseify-cache-v4`
+// const CACHE_NAME = `verseify-cache-v${process.env.NEXT_PUBLIC_CACHE_VERSION || '6'}`
+const CACHE_NAME = `verseify-cache-v5`
 const STATIC_FILES = [
     "https://srinivas-batthula.github.io/verseify/",
     "https://srinivas-batthula.github.io/verseify/manifest.json",
