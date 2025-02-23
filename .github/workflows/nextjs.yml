@@ -35,6 +35,10 @@ jobs:
       # ✅ Add this step to set the cache version based on the current timestamp
       - name: Set Cache Version
         run: echo "NEXT_PUBLIC_CACHE_VERSION=$(date +%s)" >> $GITHUB_ENV
+
+      - name: Clear Cache
+        run: |
+          rm -rf .next/cache
         
       - name: Detect package manager
         id: detect-package-manager
