@@ -1,7 +1,7 @@
 {
     "name": "Verseify",
     "short_name": "Verseify",
-    "description": "A powerful blogging app",
+    "description": "A powerful blogging app by  ~Srinivas",
     "start_url": "/verseify",
     "scope":"/verseify",
     "display": "standalone",

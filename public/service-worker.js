@@ -1,4 +1,4 @@
-const CACHE_NAME = "verseify-cache-v3";
+const CACHE_NAME = `verseify-cache-v${process.env.NEXT_PUBLIC_CACHE_VERSION || '1.0.0'}`
 const STATIC_FILES = [
     "https://srinivas-batthula.github.io/verseify/",
     "https://srinivas-batthula.github.io/verseify/manifest.json",
