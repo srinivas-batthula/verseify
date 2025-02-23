@@ -1,17 +1,25 @@
 /** @type {import('next').NextConfig} */
-const withPWA = require('next-pwa')({
-    dest: 'public',            // Service worker will be generated in the public folder
-    register: true,            // Automatically registers the service worker
-    skipWaiting: true,         // Activate the new SW immediately after install
-    disable: process.env.NODE_ENV === 'development',  // Disable in dev mode
-    customWorkerDir: 'public'  // Enable custom service worker
-});
+const nextPWA = (config) => {
+    const pwaConfig = {
+        dest: 'public',
+        register: true,
+        skipWaiting: true,
+        disable: process.env.NODE_ENV === 'development',
+        customWorkerDir: 'public'
+    };
 
-const nextConfig = withPWA({
+    // Merge the Next.js config with PWA settings
+    return Object.assign({}, config, {
+        pwa: pwaConfig
+    });
+};
+
+const nextConfig = nextPWA({
     basePath: '/verseify',
     assetPrefix: '/verseify',
     trailingSlash: true,
-    reactStrictMode: true,
+    reactStrictMode: true
 });
 
-export default nextConfig;
+
+export default nextConfig
