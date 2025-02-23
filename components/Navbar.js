@@ -28,7 +28,7 @@ export default function Navbar() {
     const profileRef = useRef(null)
     const sidebarRef = useRef(null)
 
-    // typeof window !== 'undefined' ? localStorage.setItem('login', true) : null
+    typeof window !== 'undefined' ? localStorage.setItem('login', true) : null
 
     const login = typeof window !== 'undefined' ? localStorage.getItem('login') || 'false' : 'false'
 
