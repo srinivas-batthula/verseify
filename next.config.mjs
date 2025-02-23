@@ -4,7 +4,6 @@ const nextConfig = {
     basePath:'/verseify',
     assetPrefix:'/verseify',
     trailingSlash: true,
-    
     reactStrictMode: true,
 }
 
