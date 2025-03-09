@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import styles from "../styles/Login.module.css";
 import { showSuccess, showFailed } from "@/utils/Toasts";
 
 
-export default function Login({q=''}) {
+export default function Login() {
+    const q = useSearchParams().get('q') || ''
     const [isSignUp, setIsSignUp] = useState(false);
     const [isForgot, setIsForgot] = useState(false);
     const [showPassword, setShowPassword] = useState(false);

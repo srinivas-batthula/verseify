@@ -1,10 +1,9 @@
 import Login from "@/components/Login";
 
 
-export default function Page({searchParams}){
-    const Q = searchParams?.get('q') || ""
+export default function Page(){
 
     return(
-        <Login q={Q} />
+        <Login />
     )
 }
