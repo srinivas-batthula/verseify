@@ -61,6 +61,7 @@ export const saveResponse = async ({ id, response, store = 'saved' }) => {
     return { success: true, msg: `Item with id ${id} Saved.` }
 }
 
+
 if ((isBrowser) && ('serviceWorker' in navigator)) {
     // Listen for messages from the Service Worker
     navigator.serviceWorker.addEventListener('message', async (event) => {
