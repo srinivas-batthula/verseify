@@ -20,18 +20,15 @@ export default function MyBlogs(){
         authorPic: user.profile_pic,
     }
 
+
     useEffect(()=>{
         const getBlogs = async (uid) => {
-            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-        
             try{
                 let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/blogs/user/${uid}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': token,
                     },
-                    credentials: 'include',
                 })
                 res = await res.json()
                 // console.log(res)
