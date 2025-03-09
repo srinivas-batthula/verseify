@@ -182,10 +182,13 @@ const Blog = () => {
         getComments()
     }, [id])
 
+    let authorCheck = (post.author === user._id) ? true : false
+
     useEffect(() => {
         setIsFollowing((user.following.includes(post.author)) ? true : false)
         setIsLiked((post.likes.includes(user._id)) ? true : false)
-    }, [user])
+        authorCheck = (post.author === user._id) ? true : false
+    }, [user, post])
 
     const isSaved = (saved && saved.length > 0) ? saved.some((item) => item.id === post._id) : false
 
@@ -243,7 +246,7 @@ const Blog = () => {
             body: JSON.stringify({ id: post.author })
         })
         res = await res.json()
-        console.log(res)
+        // console.log(res)
 
         if (res && res.success) {
             setUser(res.user)
@@ -342,9 +345,6 @@ const Blog = () => {
             attributes: { class: "" },
         },
     })
-
-
-    const authorCheck = (post.author === user._id) ? true : false        //change while deploying...
 
 
     return (

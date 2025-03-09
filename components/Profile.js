@@ -129,7 +129,7 @@ export default function Profile() {
     useEffect(() => {
         authorCheck = (users._id === user._id) ? true : false
         setIsFollowing((user.following.includes(users._id)) ? true : false)
-    }, [user])
+    }, [user, users])
 
 
     const handleFollow = async (e) => {
