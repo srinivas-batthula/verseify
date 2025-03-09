@@ -1,0 +1,139 @@
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.Cards {
+    width: 70%;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: auto;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8rem;
+    margin-top: 5rem;
+}
+
+.header {
+    width: 100%;
+}
+
+.starterContainer {
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 1.6rem 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.starterTitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 4.5rem;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.highlight {
+    /* color: #2f80ed; */
+    background: linear-gradient(to right, #5cd3fb, #2578e5);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.starterButton {
+    margin-top: 5rem;
+    padding: 0.8rem 1.2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #2f80ed;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.starterButton:hover {
+    background-color: #1c5bbf;
+}
+
+.scrollIcon {
+    cursor: pointer;
+    margin-top: 1rem;
+    font-size: 2rem;
+    color: #fff;
+    opacity: 0.9;
+}
+
+.ripple {
+    position: fixed;
+    width: 3rem;
+    height: 3rem;
+    background: rgba(175, 175, 175, 0.742);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Mobile: 1 row */
+@media screen and (max-width: 820px) {
+    .Cards {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        justify-items: center;
+        align-content: center;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .starterTitle {
+        font-size: 3.5rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .starterTitle {
+        font-size: 3rem;
+    }
+
+    .starterButton {
+        font-size: 1.1rem;
+        padding: 0.7rem 1rem;
+    }
+}
