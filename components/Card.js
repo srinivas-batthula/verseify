@@ -83,7 +83,6 @@ function daysAgo(date) {
 
 
 const Card = ({ data = {} }) => {
-
     const { theme } = useThemeStore()
     const {setData} = useDataStore()
     const { saved, FetchSaved } = useSavedStore()
@@ -93,11 +92,15 @@ const Card = ({ data = {} }) => {
     const router = useRouter()
 
     const isSaved = (saved && saved.length > 0) ? saved.some((item) => item.id === data._id) : false
+    let authorCheck = (data.author === user._id) ? true : false
 
     useEffect(()=>{             //Executes on client side to re-assign 'user' values after SSR...
-        setIsFollowing((user.following.includes(data.author)) ? true : false)
-        setIsLiked((data.likes.includes(user._id)) ? true : false)
-    }, [user])
+        if(data){
+            setIsFollowing((user.following.includes(data.author)) ? true : false)
+            setIsLiked((data.likes.includes(user._id)) ? true : false)
+            authorCheck = (data.author === user._id) ? true : false
+        }
+    }, [user, data])
 
 
     async function handleSave(e) {
@@ -178,7 +181,6 @@ const Card = ({ data = {} }) => {
         
         showSuccess("Liked Post!")
         setIsLiked(true)
-        data.likes.push(user._id)
 
         const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
@@ -197,12 +199,8 @@ const Card = ({ data = {} }) => {
         if (!(res && res.success)) {
             showFailed("Failed to Like Post!")
             setIsLiked(false)
-            data.likes.pop()
         }
     }
-
-
-    const authorCheck = (data.author === user._id) ? true : false        //change while deploying...
 
 
     return (

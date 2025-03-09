@@ -97,8 +97,6 @@ const Blog = () => {
     const { theme } = useThemeStore()
     const { user, setUser } = useUserStore()
     const { saved, FetchSaved } = useSavedStore()
-    const [isLiked, setIsLiked] = useState((post.likes.includes(user._id)) ? true : false)
-    const [isFollowing, setIsFollowing] = useState((user.following.includes(post.author)) ? true : false)
     const [newComment, setNewComment] = useState("")
     const [comments, setComments] = useState([])
     const [post, setPost] = useState({
@@ -121,6 +119,8 @@ const Blog = () => {
         content: "",
         authorSocials: {},
     })
+    const [isLiked, setIsLiked] = useState((post.likes.includes(user._id)) ? true : false)
+    const [isFollowing, setIsFollowing] = useState((user.following.includes(post.author)) ? true : false)
 
 
     useEffect(() => {
@@ -185,18 +185,20 @@ const Blog = () => {
     let authorCheck = (post.author === user._id) ? true : false
 
     useEffect(() => {
-        setIsFollowing((user.following.includes(post.author)) ? true : false)
-        setIsLiked((post.likes.includes(user._id)) ? true : false)
-        authorCheck = (post.author === user._id) ? true : false
+        if(post){
+            setIsFollowing((user.following.includes(post.author)) ? true : false)
+            setIsLiked((post.likes.includes(user._id)) ? true : false)
+            authorCheck = (post.author === user._id) ? true : false
+        }
     }, [user, post])
 
-    const isSaved = (saved && saved.length > 0) ? saved.some((item) => item.id === post._id) : false
 
+    const isSaved = (saved && saved.length > 0) ? saved.some((item) => item.id === post._id) : false
 
     async function handleSave(e) {
         showSuccess(isSaved ? "Post Unsaved!" : "Post Saved!")
 
-        const res = await saveResponse(post._id, post)
+        const res = await saveResponse({id: post._id, response: post})
 
         await FetchSaved()
 
@@ -265,7 +267,6 @@ const Blog = () => {
         }
 
         showSuccess("Liked Post!")
-        post.likes.push(user._id)
 
         const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
@@ -283,10 +284,13 @@ const Blog = () => {
 
         if (!(res && res.success)) {
             showFailed("Failed to Like Post!")
-            post.likes.pop()
         }
         else {
             setIsLiked(true)
+            setPost((prev) => ({
+                ...prev,
+                likes: [...prev.likes, user._id],
+            }))
         }
     }
 
