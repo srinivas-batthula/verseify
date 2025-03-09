@@ -1,11 +1,13 @@
 "use client";
 
+import { Image } from 'next/image';
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaBell, FaSearch, FaBars, FaTimes, FaInstagram, FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa";
 import { BsPersonCircle } from "react-icons/bs";
 import styles from "@/styles/Navbar.module.css";
 import useThemeStore from "@/stores/useThemeStore";
+import useUserStore from "@/stores/useUserStore";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
 import { showSuccess, showFailed } from "@/utils/Toasts";
@@ -20,32 +22,58 @@ const Li = styled.li`
 `
 
 export default function Navbar() {
-    const [isNavOpen, setIsNavOpen] = useState(false);
-    const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const [isNavOpen, setIsNavOpen] = useState(false)
+    const [isProfileOpen, setIsProfileOpen] = useState(false)
     const { theme } = useThemeStore()
+    const { user } = useUserStore()
     const router = useRouter()
 
     const profileRef = useRef(null)
     const sidebarRef = useRef(null)
 
-    typeof window !== 'undefined' ? localStorage.setItem('login', true) : null
-
     const login = typeof window !== 'undefined' ? localStorage.getItem('login') || 'false' : 'false'
+
 
     // Close dropdown/sidebar when clicking outside
     useEffect(() => {
         function handleClickOutside(event) {
             if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-                setIsNavOpen(false);
+                setIsNavOpen(false)
             }
             if (profileRef.current && !profileRef.current.contains(event.target)) {
-                setIsProfileOpen(false);
+                setIsProfileOpen(false)
             }
         }
 
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => document.removeEventListener("mousedown", handleClickOutside)
+    }, [])
+
+                //Handling Log Out...
+    const handleLogout = async () => {
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+
+        let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/auth/signOut`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token,
+            },
+            credentials: 'include',
+        })
+        res = await res.json()
+        // console.log(res)
+
+        if (res && res.success) {
+            showSuccess("Logged Out Successfully!")
+            setTimeout(() => {
+                router.push("/login")
+            }, 900)
+        }
+        else {
+            showFailed("Failed to LogOut!")
+        }
+    }
 
     let notifications = 9
 
@@ -55,7 +83,8 @@ export default function Navbar() {
             <div className={styles.leftContainer}>
                 <FaBars className={styles.icon} onClick={() => setIsNavOpen(true)} />
                 <div onClick={() => { router.push('/') }} className={styles.logo}>
-                    <img src="https://srinivas-batthula.github.io/verseify/verseify.png" alt="Logo" className={styles.logoImg} />
+                    {/* https://srinivas-batthula.github.io/verseify */}
+                    <img src="/verseify.png" alt="Logo" className={styles.logoImg} />
                 </div>
             </div>
 
@@ -77,17 +106,18 @@ export default function Navbar() {
                                 <span className={styles.notificationBadge}>{notifications}</span>
                             )
                         }
-                        </div>)
+                    </div>)
                 }
 
                 {/* Profile Dropdown */}
                 <div className="relative" ref={profileRef}>
                     {
-                        (login === 'true') && (<BsPersonCircle
-                            className={styles.profileIcon}
-                            onClick={() => setIsProfileOpen(!isProfileOpen)}
-                            style={{ display: (login === 'false') ? 'none' : 'block' }}
-                        />)
+                        (login === 'true') && ((user.profile_pic && user.profile_pic.secure_url !== '') ? (<img src={user.profile_pic.secure_url} onClick={() => setIsProfileOpen(!isProfileOpen)} style={{ display: (login === 'false') ? 'none' : 'block' }} className={styles.profileIcon}></img>)
+                            : (<BsPersonCircle
+                                className={styles.profileIcon1}
+                                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                                style={{ display: (login === 'false') ? 'none' : 'block' }}
+                            />))
                     }
                     <AnimatePresence>
                         {isProfileOpen && (
@@ -99,8 +129,8 @@ export default function Navbar() {
                                 style={{ color: theme, background: (theme === 'white') ? 'black' : 'white' }}
                             >
                                 {/* Username & View Profile */}
-                                <div onClick={() => { router.push('/profile') }} className={styles.profileHeader}>
-                                    <p className={styles.username}><span style={{ marginRight: '0.1rem' }}>@</span>srinivas</p>
+                                <div onClick={() => { router.push(`/profile/${user._id}`) }} className={styles.profileHeader}>
+                                    <p className={styles.username}><span style={{ marginRight: '0.1rem' }}>@</span>{user.username}</p>
                                     <p className={styles.viewProfile}>View Profile →</p>
                                 </div>
 
@@ -109,7 +139,7 @@ export default function Navbar() {
                                     <Li theme={theme} onClick={() => { router.push('/dashboard') }} className={styles.dropdownItem}>Dashboard</Li>
                                     <Li theme={theme} onClick={() => { router.push('/post') }} className={styles.dropdownItem}>Create Post</Li>
                                     <Li theme={theme} onClick={() => { router.push('/settings') }} className={styles.dropdownItem}>Settings</Li>
-                                    <li onClick={() => showSuccess("Logged Out Successfully!")} className={styles.dropdownItemLogout}>Logout</li>
+                                    <li onClick={handleLogout} className={styles.dropdownItemLogout}>Logout</li>
                                 </ul>
                             </motion.div>
                         )}

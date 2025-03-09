@@ -61,6 +61,10 @@ export default function About() {
                 </FooterText>
 
                 <FooterText style={{fontSize:'1.1rem'}} className="mt-4">
+                    <strong>Explore the Backend API docs here </strong> <a target="_blank" style={{color:'blue', textDecoration:'underline'}} href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/api-docs`}>click here</a>
+                </FooterText>
+
+                <FooterText style={{fontSize:'1.1rem'}} className="mt-4">
                     <strong>Your words matter. Your stories inspire.</strong> Welcome to Verseify!
                 </FooterText>
             </Container>

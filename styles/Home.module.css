@@ -78,6 +78,19 @@
     opacity: 0.9;
 }
 
+.ripple {
+    position: fixed;
+    width: 3rem;
+    height: 3rem;
+    background: rgba(175, 175, 175, 0.742);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+}
+
+
+
 
 
 

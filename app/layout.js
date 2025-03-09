@@ -5,7 +5,7 @@ import { Toaster } from "sonner";
 
 
 export const viewport = {
-    themeColor: "rgba(177, 68, 255, 0.853)",
+    themeColor: "rgba(0, 76, 255, 0.562)",
 }
 
 export const metadata = {
@@ -15,16 +15,16 @@ export const metadata = {
 }
 
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
 
     return (
         <html lang="en">
             <head>
                 <link rel="manifest" href="https://srinivas-batthula.github.io/verseify/manifest.json" />
-                
-                <meta name="theme-color" content="rgba(177, 68, 255, 0.853)" />
 
-                 {/* Icon...     */}
+                <meta name="theme-color" content="rgba(0, 76, 255, 0.562)" />
+
+                {/* Icon...     */}
                 <link rel="icon" href="https://srinivas-batthula.github.io/verseify/verseify.png" type="image/x-icon" />
 
                 {/* Custom meta tags */}
@@ -51,7 +51,7 @@ export default function RootLayout({ children }) {
                 {/* Main content of your application */}
                 <Layout>
                     {children}
-                    
+
                     <Toaster />
                 </Layout>
             </body>

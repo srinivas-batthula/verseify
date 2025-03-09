@@ -162,7 +162,11 @@
 .hashtags {
     margin-top: 0.5rem;
     font-size: 0.9rem;
-    color: #464646;
+    /* color: #464646; */
+}
+
+.hashtag1:hover{
+    color: #027bd8;
 }
 
 /* Actions */

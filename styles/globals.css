@@ -22,14 +22,14 @@ html {
 ::-webkit-scrollbar-track {
     background: #929292;
     /* Light grey */
-    border-radius: 10px;
+    border-radius: 80px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: #929292;
     /* Custom color */
-    border-radius: 20px;
+    border-radius: 80px;
 }
 
 /* Handle on hover */

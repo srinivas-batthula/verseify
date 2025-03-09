@@ -1,11 +1,16 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import styles from "@/styles/Blog.module.css"; // Import CSS file
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from 'react-share';
 import CommentCard from "./CommentCard";
+import { showSuccess, showFailed } from "@/utils/Toasts";
 import useThemeStore from "@/stores/useThemeStore";
+import useUserStore from "@/stores/useUserStore";
+import { saveResponse } from "@/lib/indexedDB";
+import useSavedStore from "@/stores/useSavedStore";
 
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -17,21 +22,22 @@ import Underline from "@tiptap/extension-underline";
 import Highlight from "@tiptap/extension-highlight";
 
 
-const ShareButton = () => {
-    const [canUseWebShare, setCanUseWebShare] = useState(false);
-    const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-    const shareText = "Check out this awesome website!";
+
+const ShareButton = ({ data }) => {                     //data = { url, text }
+    const [canUseWebShare, setCanUseWebShare] = useState(false)
+    const shareUrl = (data.url) ? (process.env.NEXT_PUBLIC_HOME + '/blog/' + data.url) : (typeof window !== "undefined" ? window.location.href : "")
+    const shareText = (data.text) ? data.text : ("Check out this awesome website!")
 
     useEffect(() => {
         if (navigator.share) {
-            setCanUseWebShare(true);
+            setCanUseWebShare(true)
         }
-    }, []);
+    }, [])
 
     const handleNativeShare = async () => {
         try {
             await navigator.share({
-                title: "Awesome PWA",
+                title: "Verseify",
                 text: shareText,
                 url: shareUrl,
             });
@@ -53,13 +59,13 @@ const ShareButton = () => {
             {!canUseWebShare && (
                 <div className="flex space-x-2">
                     <FacebookShareButton url={shareUrl}>
-                        <button className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-all shadow-md">F</button>
+                        <span className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-all shadow-md">F</span>
                     </FacebookShareButton>
                     <TwitterShareButton url={shareUrl}>
-                        <button className="p-2 rounded-full bg-sky-500 text-white hover:bg-sky-600 transition-all shadow-md">X</button>
+                        <span className="p-2 rounded-full bg-sky-500 text-white hover:bg-sky-600 transition-all shadow-md">X</span>
                     </TwitterShareButton>
                     <WhatsappShareButton url={shareUrl}>
-                        <button className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-all shadow-md">W</button>
+                        <span className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-all shadow-md">W</span>
                     </WhatsappShareButton>
                 </div>
             )}
@@ -68,36 +74,158 @@ const ShareButton = () => {
 }
 
 
+function daysAgo(date) {
+    const now = new Date();
+    const inputDate = new Date(date);
 
-const Blog = ({ post }) => {
-    const [content, setContent] = useState(typeof window !== 'undefined' ? ()=>localStorage.getItem("blogContent") : "<p>No content available</p>");
-    const {theme} = useThemeStore()
+    // Get only the date part (reset time to 00:00:00 for accurate comparison)
+    now.setHours(0, 0, 0, 0);
+    inputDate.setHours(0, 0, 0, 0);
 
-    post = {
-        author: 'Srinivas',
-        headline: 'Software Developer',
-        avatar: '/author.jpg',
-        title: 'Java Src',
-        hashtags: '#dev',
-        image: '/portfolio_project.png',
-        content: "Hello all, I'm Srinivas Batthula..."
+    // Calculate the difference in days
+    const diffInDays = Math.floor((now - inputDate) / (1000 * 60 * 60 * 24));
+
+    return `${diffInDays}d ago`;
+}
+
+
+
+const Blog = ({ post = {}, comments1 = []}) => {
+    const router = useRouter()
+    const { theme } = useThemeStore()
+    const { user, setUser } = useUserStore()
+    const { saved, FetchSaved } = useSavedStore()
+    const [isLiked, setIsLiked] = useState((post.likes.includes(user._id)) ? true : false)
+    const [isFollowing, setIsFollowing] = useState((user.following.includes(post.author)) ? true : false)
+    const [newComment, setNewComment] = useState("")
+    const [comments, setComments] = useState(comments1)
+
+
+    useEffect(() => {
+        setIsFollowing((user.following.includes(post.author)) ? true : false)
+        setIsLiked((post.likes.includes(user._id)) ? true : false)
+    }, [user])
+
+    const isSaved = (saved && saved.length > 0) ? saved.some((item) => item.id === post._id) : false
+
+
+    async function handleSave(e) {
+        showSuccess(isSaved ? "Post Unsaved!" : "Post Saved!")
+
+        const res = await saveResponse(post._id, post)
+
+        await FetchSaved()
+
+        if (!res || !res.success) {
+            showFailed("Failed to Save!")
+        }
     }
-    const comments = [
-        {
-            user: { name: "Ansell Maximilian", avatar: "/author.jpg", isSubscriber: true },
-            date: "Feb 13",
-            text: "Good luck! 👍",
-            likes: 3,
-        },
-        {
-            user: { name: "Srinivas", avatar: "/user2.jpg", isSubscriber: false },
-            date: "Feb 14",
-            text: "Great article! Thanks for sharing.",
-            likes: 5,
-        },
-    ];
 
-    const [newComment, setNewComment] = useState("");
+    const handleDelete = async (e) => {
+        showSuccess("Post Deleted Successfully!")
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+
+        let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/blogs/${post._id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token,
+            },
+            credentials: 'include',
+        })
+        res = await res.json()
+
+        if (!(res && res.success)) {
+            showFailed("Failed to Delete!")
+        }
+    }
+
+    const handleFollow = async (e) => {
+        showSuccess(isFollowing ? "UnFollowed!" : "Followed!")
+
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+        // console.log('user._id: '+user._id+'     data.author: '+data.author)
+
+        let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/follow/${user._id}?q=${isFollowing ? 'unfollow' : 'follow'}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token,
+            },
+            credentials: 'include',
+            body: JSON.stringify({ id: post.author })
+        })
+        res = await res.json()
+        console.log(res)
+
+        if (res && res.success) {
+            setUser(res.user)
+            setIsFollowing(!isFollowing)
+        }
+        else {
+            showFailed(isFollowing ? "Failed to UnFollow!" : "Failed to Follow!")
+        }
+    }
+
+    const handleLike = async (e) => {
+        showSuccess("Liked Post!")
+        post.likes.push(user._id)
+
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+
+        let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/blogs/${post._id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token,
+            },
+            credentials: 'include',
+            body: JSON.stringify({ id: user._id })
+        })
+        res = await res.json()
+        // console.log(res)
+
+        if (!(res && res.success)) {
+            showFailed("Failed to Like Post!")
+            post.likes.pop()
+        }
+        else{
+            setIsLiked(true)
+        }
+    }
+
+    const handleComment = async (e) => {
+        if (newComment === '') {
+            showFailed("Enter Something to Comment!")
+            return
+        }
+
+        showSuccess("Added New Comment!")
+
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+
+        let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/comments/${post._id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token,
+            },
+            credentials: 'include',
+            body: JSON.stringify({ userId: user._id, text: newComment })
+        })
+        res = await res.json()
+        // console.log(res)
+
+        if (!res || !res.success) {
+            showFailed("Failed to Comment!")
+        }
+        else {
+            setNewComment("")
+            setComments([res.comment, ...comments])          //Updating 'comments'-state with new comment...
+        }
+    }
+
+
 
     const editor = useEditor({
         extensions: [
@@ -109,76 +237,103 @@ const Blog = ({ post }) => {
             Underline,
             Highlight,
         ],
-        content: content,
+        content: post.content,
         editable: false, // Make it read-only
         editorProps: {
             attributes: { class: "" },
         },
     })
 
+
+    const authorCheck = (post.author === user._id) ? true : false        //change while deploying...
+
+
     return (
-        <div className={styles.container} style={{color: theme, background: (theme==='white')?'black':'white'}}>
+        <div className={styles.container} style={{ color: theme, background: (theme === 'white') ? 'black' : 'white' }}>
             <div className={styles.box} style={{ marginBottom: '4rem' }}>
                 {/* Share Button */}
                 <div className={styles.shareSection}>
                     <h1 className={styles.title}>{post.title}</h1>
                     <div className={styles.shareButtons}>
-                        <ShareButton />
+                        <ShareButton data={{ url: post._id, text: `Check out my awesome Blog '${post.title}'` }} />
                     </div>
                 </div>
 
                 {/* Post Image */}
-                <Image src={post.image} alt="Post Image" width={800} height={800} className={styles.postImage} />
+                {
+                    (post.media && post.media.secure_url!=='') && (
+                        <Image src={post.media.secure_url} alt="Post Image" width={800} height={800} className={styles.postImage} />
+                    )
+                }
+                <div style={{marginBottom: (!post.media || post.media.secure_url==='') ? '2.5rem' : '0'}}></div>
 
                 {/* Author Section */}
                 <div className={styles.authorSection}>
-                    <Image src={post.avatar} alt="Author's Profile pic" width={100} height={100} className={styles.avatar} style={{ borderRadius: "50%", objectFit: "cover" }} />
-                    <div className={styles.authorDetails}>
-                        <h3 className={styles.authorName}>{post.author}</h3>
-                        <p className={styles.authorBio}>{post.headline}</p>
+                    <div onClick={()=>{router.push(`/profile/${post.author}`)}} className={styles.author}>
+                        <Image src={(post.authorPic && post.authorPic.secure_url!=='') ? post.authorPic.secure_url : (theme === 'black' ? '/user_default_dark.png' : '/user_default_light.png')} alt="Author's Profile pic" width={100} height={100} className={styles.avatar} style={{ borderRadius: "50%", objectFit: "cover" }} />
+                        <div className={styles.authorDetails}>
+                            <h3 className={styles.authorName}>{authorCheck ? 'You' : post.authorName}</h3>
+                            <p className={styles.authorBio}>{post.authorBio}</p>
+                        </div>
                     </div>
+
                     <button className={styles.followBtn}>
-                        <span style={{ fontWeight: 'bold' }}><i className="fa-solid fa-plus"></i></span> Follow
+                        {
+                            authorCheck ? (<span onClick={handleDelete} title="delete blog"><i className="fa-solid fa-trash-can"></i></span>) : (isFollowing) ? (<span onClick={handleFollow} title="UnFollow"><span style={{ fontWeight: 'bold' }}><i className="fa-solid fa-minus"></i></span> UnFollow</span>) : (<span onClick={handleFollow} title="Follow"><span style={{ fontWeight: 'bold' }}><i className="fa-solid fa-plus"></i></span> Follow</span>)
+                        }
                     </button>
                 </div>
 
-                {/* Like & Comment Section */}
+                {/* Like & Comment & Save Section */}
                 <div className={styles.actions}>
-                    <button className={styles.actionBtn} onClick={() => setLikes(likes + 1)}>
-                        <i className="fa-solid fa-heart" style={{ color: 'red' }} title="Likes"></i> <span style={{ marginLeft: '0.2rem', fontSize: '0.9rem', color: (theme === 'black') ? '#464646' : 'rgb(219, 219, 219)' }}>54</span>
+                    <button className={styles.actionBtn} onClick={handleLike}>
+                        {
+                            isLiked ? (<i className="fa-solid fa-heart" style={{ color: 'red' }} title="Like"></i>) : (<i className="fa-regular fa-heart" style={{ color: theme }} title="Like"></i>)
+                        }
+                        <span style={{ marginLeft: '0.2rem', fontSize: '0.9rem', color: (theme === 'black') ? '#464646' : 'rgb(219, 219, 219)' }}>{post.likes.length || 0}</span>
                     </button>
-                    <button className={styles.actionBtn}><i class="fa-regular fa-comment-dots" title="Comments"></i> <span style={{ marginLeft: '0.2rem', fontSize: '0.9rem', color: (theme === 'black') ? '#464646' : 'rgb(219, 219, 219)' }}>54</span></button>
+
+                    <a href="#comments" className={styles.actionBtn}><i className="fa-regular fa-comment-dots" title="Comments"></i></a>
+
+                    <button onClick={handleSave} className={styles.actionBtn}>
+                        {
+                            isSaved ? <i className="fa-solid fa-bookmark" title="Bookmark"></i> : <i className="fa-regular fa-bookmark" title="Bookmark"></i>
+                        }
+                    </button>
                 </div>
 
                 {/* Post Content */}
-                <p className={styles.content}>
+                <div className={styles.content}>
                     <EditorContent editor={editor} />
-                </p>
+                </div>
 
                 {/* Comment Section */}
-                <div className={styles.commentSection}>
+                <div id="comments" className={styles.commentSection}>
                     <h3 className={styles.commentTitle}>Leave a Comment:</h3>
                     <textarea
                         className={styles.commentBox}
                         placeholder="Write your comment..."
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
-                        style={{color: theme, background: (theme==='white')?'black':'white'}}
+                        style={{ color: theme, background: (theme === 'white') ? 'black' : 'white' }}
                     />
-                    <button className={styles.commentSubmit} onClick={() => setComments(comments + 1)}>
+                    <button className={styles.commentSubmit} onClick={handleComment}>
                         Comment
                     </button>
 
                     {/* Comments */}
-                    <div style={{marginTop:'2rem', padding:'1rem'}}>
-                        {comments.map((comment, index) => (
-                            <CommentCard key={index} comment={comment} />
-                        ))}
+                    <div style={{ marginTop: '2rem', padding: '1rem' }}>
+                        {
+                            (!comments && comments.length === 0) ? <div >No Comments Yet.</div> : comments.map((comment, index) => (
+                                <CommentCard key={index} comment={comment} />
+                            ))
+                        }
                     </div>
                 </div>
             </div>
         </div>
     )
 }
+
 
 export default Blog;

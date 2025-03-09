@@ -1,2 +1,5 @@
 
 1. For every Re-Deploy of a PWA web-app, it's must to change the 'CACHE_NAME' to other from previous name...
+2. public/service-worker.js is linked in components/Layout.js via useEffect()
+3. public/manifest.json is linked in app/layout.js via <link> tag
+4. Added new configurations to next.config.mjs for PWA

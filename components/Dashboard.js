@@ -2,21 +2,56 @@
 
 import { motion } from "framer-motion";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import useThemeStore from "@/stores/useThemeStore";
+import useThemeStore from "@/stores/useThemeStore"
+import useUserStore from "@/stores/useUserStore";
 import styles from "@/styles/Dashboard.module.css"; // Import CSS module
+import { useEffect, useState } from "react";
 
 
-const data = [
-    { name: "Jan", blogs: 5, likes: 20, comments: 8 },
-    { name: "Feb", blogs: 7, likes: 35, comments: 15 },
-    { name: "Mar", blogs: 10, likes: 50, comments: 20 },
-    { name: "Apr", blogs: 15, likes: 70, comments: 30 },
-    { name: "May", blogs: 20, likes: 100, comments: 40 },
-];
 
 
 const Dashboard = () => {
-    const { theme } = useThemeStore();
+    const { theme } = useThemeStore()
+    const {user} = useUserStore()
+    const [details, setDetails] = useState({totalBlogs: 0,totalComments: 0})
+
+
+    useEffect(()=>{
+        const get = async ()=>{
+            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+        
+            try{
+                let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/dashboard/`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application',
+                        'Authorization': token,
+                    },
+                    credentials: 'include',
+                })
+                res = await res.json()
+                console.log(res)
+        
+                if (!res || !res.success) {
+                    setDetails({totalBlogs: 0,totalComments: 0,})
+                }
+                else {
+                    setDetails({totalBlogs: res.totalBlogs,totalComments: res.totalComments,})
+                }
+            }
+            catch(err){
+                setDetails({totalBlogs: 0,totalComments: 0,})
+            }
+        }
+        get()
+    }, [])
+
+    const data = [
+        { name: "Q1", blogs: 0, comments: 0, following: 0},
+        { name: "Q2", blogs: details.totalBlogs, comments: details.totalComments, following: user.following.length },
+        { name: "Q3", blogs: 1, comments: 1, following: 1},
+    ]
+
 
     return (
         <div className={`${styles.dashboardContainer} ${(theme==='white') ? styles.darkMode : styles.lightMode}`}>
@@ -28,16 +63,15 @@ const Dashboard = () => {
                 transition={{ duration: 0.5 }}
                 className={styles.dashboardTitle}
             >
-                Blog Dashboard
+                Dashboard
             </motion.h1>
 
             {/* Stats Boxes */}
             <div className={styles.statsContainer}>
                 {[
-                    { title: "Blogs", value: 50, color: "#8884d8" },
-                    { title: "Likes", value: 250, color: "#82ca9d" },
-                    { title: "Comments", value: 100, color: "#ff7300" },
-                    { title: "Followers", value: 1200, color: "#ff4081" }, // New Feature
+                    { title: "Blogs", value: details.totalBlogs, color: "#8884d8" },
+                    { title: "Comments", value: details.totalComments, color: "#ff7300" },
+                    { title: "Following", value: user.following.length, color: "#ff4081" }, // New Feature
                 ].map((stat, index) => (
                     <motion.div
                         key={index}
@@ -57,7 +91,7 @@ const Dashboard = () => {
                 transition={{ delay: 0.3, duration: 0.6 }}
                 className={`${styles.graphContainer} ${(theme==='white') ? styles.graphDark : styles.graphLight}`}
             >
-                <h2 className="text-2xl font-semibold mb-4">Monthly Statistics</h2>
+                <h2 className="text-2xl font-semibold mb-4">Statistics</h2>
                 <ResponsiveContainer width="100%" height={300}>
                     <LineChart data={data} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke={(theme==='white') ? "#444" : "#ccc"} />
@@ -65,7 +99,7 @@ const Dashboard = () => {
                         <YAxis stroke={(theme==='white') ? "#fff" : "#000"} />
                         <Tooltip contentStyle={{ backgroundColor: (theme==='white') ? "#333" : "#fff", color: (theme==='white') ? "#fff" : "#000" }} />
                         <Line type="monotone" dataKey="blogs" stroke="#8884d8" strokeWidth={3} />
-                        <Line type="monotone" dataKey="likes" stroke="#82ca9d" strokeWidth={3} />
+                        <Line type="monotone" dataKey="Following" stroke="#ff4081" strokeWidth={3} />
                         <Line type="monotone" dataKey="comments" stroke="#ff7300" strokeWidth={3} />
                     </LineChart>
                 </ResponsiveContainer>

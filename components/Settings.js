@@ -2,29 +2,34 @@
 
 import { useRouter } from "next/navigation";
 import styles from "../styles/Settings.module.css";
-import { FaMoon, FaSun, FaUserEdit, FaLock, FaBell, FaEnvelope, FaTrash } from "react-icons/fa";
+import { FaMoon, FaSun, FaUserEdit, FaLock, FaBell, FaKey, FaTrash } from "react-icons/fa";
 import useThemeStore from "@/stores/useThemeStore";
+import useUserStore from "@/stores/useUserStore";
+import { showFailed } from "@/utils/Toasts";
 import { useState, useEffect } from "react";
+
 
 
 export default function Settings() {
     const [isOn, setIsOn] = useState('true'); // Default value for isOn
     const router = useRouter();
     const { theme, setTheme } = useThemeStore();
+    const {user} = useUserStore()
 
     // Only read localStorage in the client (browser)
     useEffect(() => {
         const storedNotificationState = typeof window !== 'undefined' ? localStorage.getItem('notifications') : true;
         if (storedNotificationState) {
-            setIsOn(storedNotificationState);
+            setIsOn(storedNotificationState)
         }
-    }, []); // Empty dependency array ensures this runs once when the component mounts
+    }, [])
 
     const toggle = () => {
         const newIsOn = isOn === 'true' ? 'false' : 'true';
         typeof window !== 'undefined' ? localStorage.setItem('notifications', newIsOn) : true;
         setIsOn(newIsOn);
-    };
+    }
+
 
     return (
         <div style={{ width: '100%', height: '100vh' }}>
@@ -45,15 +50,15 @@ export default function Settings() {
                     </div>
 
                     {/* Change Password */}
-                    <div className={styles.settingItem}>
+                    <a target="_blank" href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/reset-password/${user._id}`} className={styles.settingItem}>
                         <FaLock />
                         <span>Reset Password</span>
-                    </div>
+                    </a>
 
                     {/* Change Password */}
-                    <div className={styles.settingItem}>
-                        <FaEnvelope />
-                        <span>Change E-mail</span>
+                    <div onClick={()=>{router.push('/login?q=forgotPassword')}} className={styles.settingItem}>
+                        <FaKey />
+                        <span>Forgot Password</span>
                     </div>
 
                     {/* Manage Notifications */}
@@ -70,7 +75,7 @@ export default function Settings() {
                     </div>
 
                     {/* Social Accounts */}
-                    <div className={styles.settingItem} style={{ color: 'red' }}>
+                    <div onClick={()=>{showFailed('Something went Wrong!')}} className={styles.settingItem} style={{ color: 'red' }} >
                         <FaTrash />
                         <span>Delete Account</span>
                     </div>

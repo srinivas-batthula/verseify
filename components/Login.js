@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import styles from "../styles/Login.module.css";
 import { showSuccess, showFailed } from "@/utils/Toasts";
 
 
 export default function Login() {
+    const q = useSearchParams().get('q') || ''
     const [isSignUp, setIsSignUp] = useState(false);
     const [isForgot, setIsForgot] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -15,12 +16,18 @@ export default function Login() {
     const router = useRouter()
 
     
+    useEffect(()=>{
+        if(q==='forgotPassword'){
+            setIsForgot(true)
+        }
+    }, [q])
+
     const handleOAuth = async (e) => {
         e.preventDefault()
 
         try {
             // Send the user to your backend to start the Google OAuth flow
-            typeof window !== 'undefined' ? window.location.href = "https://todo-backend-1-4u6w.onrender.com/api/auth/google1" : null; // Redirect to backend route
+            typeof window !== 'undefined' ? window.location.href = process.env.NEXT_PUBLIC_BACKEND_URL+'/api/auth/googleAuth' : null; // Redirect to backend route
         }
         catch (error) {
             setErr('Error: ' + error.message)
@@ -33,19 +40,20 @@ export default function Login() {
     }
 
     const validate = (name, email, password) => {
-        if(name==='' && email==='' && password===''){
-            return {result: false, element: 'Invalid Inputs!'}
-        }
-
-        if(isSignUp && name.length < 4) {
-            return { result: false, element: 'Name length must be at least 4!' }
+        if(email===''){
+            return {result: false, element: 'Enter your Email!'}
         }
 
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$/i
         if(!emailPattern.test(email)){
             return {result: false, element: 'Invalid Email!'}
         }
-        else if (password.length < 4) {
+
+        if(!isForgot && isSignUp && name.length < 4) {
+            return { result: false, element: 'Name length must be at least 4!' }
+        }
+
+        if (!isForgot && password.length < 4) {
             return { result: false, element: 'Password length must be at least 4!' }
         }        
 
@@ -65,25 +73,26 @@ export default function Login() {
         }
     
         const endpoint = isSignUp 
-            ? "http://localhost:8080/api/auth/signUp" 
+            ? process.env.NEXT_PUBLIC_BACKEND_URL+'/api/auth/signUp'
             : isForgot
-            ? "http://localhost:8080/api/auth/forgot-password-email"
-            : "http://localhost:8080/api/auth/signIn";
+            ? process.env.NEXT_PUBLIC_BACKEND_URL+'/api/auth/forgot-password-email'
+            : process.env.NEXT_PUBLIC_BACKEND_URL+'/api/auth/signIn'
     
         const payload = isSignUp
             ? { fullName, email, password }
             : isForgot
             ? { email }
-            : { email, password };
+            : { email, password }
     
         try {
             const response = await fetch(endpoint, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
+                credentials: 'include',
             })
-    
-            const data = await response.json();
+            const data = await response.json()
+            // console.log(data)
     
             if (!response.ok) {
                 showFailed(data.details || "Something went Wrong!")
@@ -91,15 +100,23 @@ export default function Login() {
             }
     
             showSuccess(isSignUp ? "Registered successfully!" : isForgot ? "Reset link sent to your Mail!" : "Login successful!")
+            if(isForgot){
+                setTimeout(()=>{
+                    router.push('/successEmail')
+                }, 800)
+                return
+            }
 
-            inp.fullName=''
-            inp.email=''
-            inp.password=''
+            setInp({fullName:'', email:'', password:''})
 
             if(!isForgot){
+                typeof window !== 'undefined' ? localStorage.setItem('login', true) : null
+                typeof window !== 'undefined' ? localStorage.setItem('token', data.token) : null
                 setTimeout(() => {
-                    router.push("/")
+                    // router.push("/")
+                    window.location.href = '/'
                 }, 1200)
+                return
             }
         } catch (error) {
             // console.error("Error:", error.message)

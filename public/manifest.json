@@ -5,8 +5,8 @@
     "start_url": "/verseify",
     "scope": "/verseify",
     "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#000000",
+    "background_color": "rgba(0, 76, 255, 0.562)",
+    "theme_color": "rgba(0, 76, 255, 0.562)",
     "icons": [
         {
             "src": "https://srinivas-batthula.github.io/verseify/icon.png",

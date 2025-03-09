@@ -12,6 +12,7 @@ export default function Saved(){
     useEffect(()=>{
         const GET = async()=>{
             await FetchSaved()
+            // console.log(saved)
         }
         GET()
     }, [])
@@ -21,15 +22,15 @@ export default function Saved(){
             <div className={styles.head}>Saved Items ({saved.length || 0})</div>
             
                 {
-                    (saved.length===0)?(<div >No Saved Blogs!</div>):(
+                    (!saved || saved.length===0)?(<div >No Saved Blogs!</div>):(
                         <div className={styles.Cards}>
                             {
                                 saved.map((item, index)=>{
-                                    return <Card key={index} />
+                                    return <Card data={item.response} key={index} />
                                 })
                             }
                         </div>
-                            )
+                        )
                 }
         </div>
     )

@@ -22,6 +22,7 @@ import { twMerge } from "tailwind-merge"
 import { useState, useEffect } from "react";
 import { showFailed, showSuccess } from "@/utils/Toasts";
 import '../styles/editor.css'
+import useUserStore from "@/stores/useUserStore";
 
 
 
@@ -121,17 +122,71 @@ function ToolBar({ editor, onEmojiSelect, isSaving }) {
 // CustomEditor Component
 export default function Post() {
     const router = useRouter()
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-    const [isSaving, setIsSaving] = useState(false);
-    const [title, setTitle] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogTitle") : "");
-    const [tags, setTags] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogTags") : "");
-    const [file, setFile] = useState(null);
-    const [content, setContent] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogContent") : "");
+    const {user} = useUserStore()
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+    const [isSaving, setIsSaving] = useState(false)
+    const [title, setTitle] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogTitle") || '' : "")
+    const [tags, setTags] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogTags") || '' : "")
+    const [file, setFile] = useState(null)
+    const [content, setContent] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogContent") || '' : "")
+
+
+    const handlePost = async (e)=>{
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+        e.preventDefault()
+        if(title === ''){
+            showFailed("Enter a title to Post!")
+            return
+        }
+
+        const formData = new FormData()
+        if (file) {
+            formData.append('file', file)
+        }
+        const t = {
+            title,
+            content,
+            tags,
+        }
+        formData.append('data', JSON.stringify(t))
+
+        // console.log('formData: '+formData.get('data'))           // +'file: '+file+'userId: '+user._id
+
+        try {
+            let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/blogs/${user._id}?q=${(file!==null) ? true : false}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token,
+                },
+                credentials: 'include',
+                body: formData,
+            })
+            res = await res.json()
+            // console.log(res)
+    
+            if (!res || !res.success) {
+                showFailed("Failed to Post!")
+            }
+            else {
+                showSuccess("Successfully Posted a new Blog!")
+                setTimeout(()=>{
+                    router.push('/')
+                }, 1000)
+            }
+        }
+        catch(error){
+            // console.log(error)
+            showFailed("Something went Wrong!")
+        }
+    }
+
 
     useEffect(()=>{
         if((typeof window !== 'undefined' ? localStorage.getItem('login') || 'false' : 'false')==='false'){
             showFailed("Please do Login to Continue!")
-            router.push('/')
+            setTimeout(()=>{
+                router.push('/')
+            }, 1000)
             return
         }
     }, [])
@@ -139,25 +194,27 @@ export default function Post() {
     // Auto-save effect
     useEffect(() => {
         if (content !== localStorage.getItem("blogContent")) {
-            setIsSaving(true);
-            localStorage.setItem("blogContent", content);
-            setTimeout(() => setIsSaving(false), 500); // Delay save icon change
+            setIsSaving(true)
+            localStorage.setItem("blogContent", content)
+            setTimeout(() => setIsSaving(false), 500)    // Delay save icon change
         }
-    }, [content]);
+    }, [content])
+
     useEffect(() => {
         if (title !== localStorage.getItem("blogTitle")) {
-            setIsSaving(true);
-            localStorage.setItem("blogTitle", title);
-            setTimeout(() => setIsSaving(false), 500); // Delay save icon change
+            setIsSaving(true)
+            localStorage.setItem("blogTitle", title)
+            setTimeout(() => setIsSaving(false), 500)    // Delay save icon change
         }
-    }, [title]);
+    }, [title])
+
     useEffect(() => {
         if (tags !== localStorage.getItem("blogTags")) {
-            setIsSaving(true);
-            localStorage.setItem("blogTags", tags);
-            setTimeout(() => setIsSaving(false), 500); // Delay save icon change
+            setIsSaving(true)
+            localStorage.setItem("blogTags", tags)
+            setTimeout(() => setIsSaving(false), 500)    // Delay save icon change
         }
-    }, [tags]);
+    }, [tags])
 
 
     const editor = useEditor({
@@ -175,24 +232,24 @@ export default function Post() {
             attributes: { class: "h-72 border rounded-lg bg-white text-black py-3 px-3 shadow" },
         },
         onUpdate: ({ editor }) => {
-            setContent(editor.getHTML());
+            setContent(editor.getHTML())
         },
-    });
+    })
 
     // Set editor content from localStorage after it initializes
     useEffect(() => {
         if (editor && !editor.isDestroyed) {
-            editor.commands.setContent(content);
+            editor.commands.setContent(content)
         }
-    }, [editor]);
+    }, [editor])
 
     // Add Emoji Function
     const addEmoji = (emojiObject) => {
         if (editor) {
-            editor.chain().focus().insertContent(emojiObject.emoji).run();
+            editor.chain().focus().insertContent(emojiObject.emoji).run()
         }
-        setShowEmojiPicker(false);
-    };
+        setShowEmojiPicker(false)
+    }
 
 
     return (
@@ -253,7 +310,7 @@ export default function Post() {
                 </div>
             </div>
 
-            <button className="btn" title="create post">Create</button>
+            <button onClick={handlePost} className="btn" title="create post">Create</button>
         </div>
     )
 }
