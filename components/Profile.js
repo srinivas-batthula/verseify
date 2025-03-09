@@ -67,20 +67,66 @@ const ShareButton = ({ data }) => {
 }
 
 
-export default function Profile({ user1 }) {
+export default function Profile({ id }) {
     const router = useRouter()
     const { theme } = useThemeStore()
     const { user, setUser } = useUserStore()
-    const [users, setUsers] = useState(user1)
-    const [isFollowing, setIsFollowing] = useState((user.following.includes(user1._id)) ? true : false)
+    const [users, setUsers] = useState({
+        _id: '1',
+        following: [],
+        username: '',
+        email: '',
+        subscription: {},
+        bio: '',
+        profile_pic: {
+            secure_url: '',
+            public_id: '',
+        },
+        social_links: {
+            linkedin: '',
+            github: '',
+            twitter: '',
+        },
+    })
+    const [isFollowing, setIsFollowing] = useState((user.following.includes(users._id)) ? true : false)
 
 
-    let authorCheck = (user1._id === user._id) ? true : false
+    useEffect(()=>{
+        const getUser = async () => {
+            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+        
+            try{
+                let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/users/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application',
+                        'Authorization': token,
+                    },
+                    credentials: 'include',
+                })
+                res = await res.json()
+                // console.log(res)
+        
+                if (!res || !res.success) {
+                    return
+                }
+                else {
+                    setUsers(res.user)
+                }
+            }
+            catch(err){
+                return
+            }
+        }
+        getUser()
+    }, [id])
+
+
+    let authorCheck = (users._id === user._id) ? true : false
 
     useEffect(() => {
-        setUsers(user1)
-        authorCheck = (user1._id === user._id) ? true : false
-        setIsFollowing((user.following.includes(user1._id)) ? true : false)
+        authorCheck = (users._id === user._id) ? true : false
+        setIsFollowing((user.following.includes(users._id)) ? true : false)
     }, [user])
 
 
@@ -97,7 +143,7 @@ export default function Profile({ user1 }) {
                 'Authorization': token,
             },
             credentials: 'include',
-            body: JSON.stringify({ id: user1._id })
+            body: JSON.stringify({ id: users._id })
         })
         res = await res.json()
         // console.log(res)

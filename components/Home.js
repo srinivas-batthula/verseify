@@ -121,14 +121,36 @@ const BlogCardSkeleton = () => {
 
 
 
-export default function HomePage({ data1 = { blogs: [], page: 0, totalBlogs: 0, totalPages: 0, } }) {
+export default function HomePage() {
     const mainContentRef = useRef(null)
     const { setData, data, FetchData } = useDataStore()
     const [loading, setLoading] = useState(false)
 
 
     useEffect(() => {
-        setData(data1)
+        const getBlogs = async () => {
+        try{
+            let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/db/blogs', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application',
+                },
+            })
+            res = await res.json()
+            console.log(res)
+    
+            if (!res || !res.success) {
+                setData({ blogs: [], page: 0, totalBlogs: 0, totalPages: 0 })
+            }
+            else {
+                setData({ blogs: res.blogs, page: res.page, totalBlogs: res.totalBlogs, totalPages: res.totalPages })
+            }
+        }
+        catch(err){
+            setData({ blogs: [], page: 0, totalBlogs: 0, totalPages: 0 })
+        }
+    }
+    getBlogs()
         // console.log('data: ' + data1)
     }, [])
 

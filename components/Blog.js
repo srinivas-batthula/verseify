@@ -90,7 +90,7 @@ function daysAgo(date) {
 
 
 
-const Blog = ({ post = {}, comments1 = []}) => {
+const Blog = ({ id }) => {
     const router = useRouter()
     const { theme } = useThemeStore()
     const { user, setUser } = useUserStore()
@@ -98,8 +98,87 @@ const Blog = ({ post = {}, comments1 = []}) => {
     const [isLiked, setIsLiked] = useState((post.likes.includes(user._id)) ? true : false)
     const [isFollowing, setIsFollowing] = useState((user.following.includes(post.author)) ? true : false)
     const [newComment, setNewComment] = useState("")
-    const [comments, setComments] = useState(comments1)
+    const [comments, setComments] = useState([])
+    const [post, setPost] = useState({
+        author: '',
+        _id: '',
+        authorName: '',
+        authorBio: '',
+        authorPic: {
+            secure_url: '',
+            public_id: ''
+        },
+        title: '',
+        tags: [],
+        media: {
+            secure_url: '',
+            public_id: ''
+        },
+        likes: [],
+        createdAt: new Date(),
+        content: "",
+        authorSocials: {},
+    })
 
+
+    useEffect(()=>{
+        const getBlog = async () => {
+            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+        
+            try{
+                let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/blogs/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application',
+                        'Authorization': token,
+                    },
+                    credentials: 'include',
+                })
+                res = await res.json()
+                // console.log(res)
+        
+                if (!res || !res.success) {
+                    return
+                }
+                else {
+                    setPost(res.blog)
+                }
+            }
+            catch(err){
+                return
+            }
+        }
+        
+        const getComments = async () => {
+            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+        
+            try{
+                let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/comments/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application',
+                        'Authorization': token,
+                    },
+                    credentials: 'include',
+                })
+                res = await res.json()
+                // console.log(res)
+        
+                if (!res || !res.success) {
+                    return
+                }
+                else {
+                    setComments(res.comments)
+                }
+            }
+            catch(err){
+                return
+            }
+        }
+
+        getBlog()
+        getComments()
+    }, [id])
 
     useEffect(() => {
         setIsFollowing((user.following.includes(post.author)) ? true : false)
