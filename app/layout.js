@@ -20,12 +20,12 @@ export default async function RootLayout({ children }) {
     return (
         <html lang="en">
             <head>
-                <link rel="manifest" href="https://67cd4d37f36b04454acc1d8a--verseify.netlify.app/manifest.json" />
+                <link rel="manifest" href="https://verseify.netlify.app/manifest.json" />
 
                 <meta name="theme-color" content="rgba(0, 76, 255, 0.562)" />
 
                 {/* Icon...     */}
-                <link rel="icon" href="https://67cd4d37f36b04454acc1d8a--verseify.netlify.app/verseify.png" type="image/x-icon" />
+                <link rel="icon" href="https://verseify.netlify.app/verseify.png" type="image/x-icon" />
 
                 {/* Custom meta tags */}
                 <meta name="author" content="Srinivas Batthula" />
