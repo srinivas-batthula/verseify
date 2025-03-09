@@ -25,7 +25,7 @@ export const dbPromise = isBrowser
     : Promise.resolve(null)
 
 // Save response (only store up to 10 items, prevent duplicates)
-export const saveResponse = async ({id, response, store='saved'}) => {
+export const saveResponse = async ({ id, response, store = 'saved' }) => {
     // console.log('store: '+store)
     const db = await dbPromise
     if (!db) {
@@ -61,18 +61,19 @@ export const saveResponse = async ({id, response, store='saved'}) => {
     return { success: true, msg: `Item with id ${id} Saved.` }
 }
 
-
-// Listen for messages from the Service Worker
-navigator.serviceWorker.addEventListener('message', async (event) => {
-    if (event.data?.type === 'SAVE_NOTIFICATION') {
-        // console.log('Saving notification:', event.data.data)
-        await saveResponse({id: event.data.id, response: event.data.data, store: 'notify'})
-    }
-})
+if ((isBrowser) && ('serviceWorker' in navigator)) {
+    // Listen for messages from the Service Worker
+    navigator.serviceWorker.addEventListener('message', async (event) => {
+        if (event.data?.type === 'SAVE_NOTIFICATION') {
+            // console.log('Saving notification:', event.data.data)
+            await saveResponse({ id: event.data.id, response: event.data.data, store: 'notify' })
+        }
+    })
+}
 
 
 // Get response
-export const getResponse = async ({id = '', store='saved'}) => {
+export const getResponse = async ({ id = '', store = 'saved' }) => {
     const db = await dbPromise
     if (!db) {
         // console.error('IndexedDB not available')
@@ -90,7 +91,7 @@ export const getResponse = async ({id = '', store='saved'}) => {
 }
 
 // Delete response
-export const deleteResponse = async (id, store='saved') => {
+export const deleteResponse = async (id, store = 'saved') => {
     const db = await dbPromise;
     if (!db) {
         // console.error('IndexedDB not available')
