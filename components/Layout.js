@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation"
 import useThemeStore from '@/stores/useThemeStore'
 import useSavedStore from "@/stores/useSavedStore"
 import useUserStore from "@/stores/useUserStore"
-import { useEffect } from "react"
+import { useEffect, Suspense } from "react"
 
 
 const Layout = ({ children }) => {
@@ -65,21 +65,23 @@ const Layout = ({ children }) => {
     }, [])
 
     return (
-        <div>
-            <ClickAnimation />
-
-            {
-                (pathname !== '/login') ? <Navbar /> : <div style={{ display: 'none' }}></div>
-            }
-
-            <div style={{ marginTop: (pathname !== '/login') ? '4rem' : '0rem', width: '100%', height: 'fit-content', color: theme, background: (theme === 'white') ? 'linear-gradient(180deg, #121212ef, #121212ef, #121212ef)' : 'linear-gradient(180deg, #a3a3a31f, #a3a3a31f, #a3a3a31f)' }}>
-                <main >{children}</main>
+        <Suspense fallback={<p>Loading...</p>}>
+            <div>
+                <ClickAnimation />
+        
+                {
+                    (pathname !== '/login') ? <Navbar /> : <div style={{ display: 'none' }}></div>
+                }
+    
+                <div style={{ marginTop: (pathname !== '/login') ? '4rem' : '0rem', width: '100%', height: 'fit-content', color: theme, background: (theme === 'white') ? 'linear-gradient(180deg, #121212ef, #121212ef, #121212ef)' : 'linear-gradient(180deg, #a3a3a31f, #a3a3a31f, #a3a3a31f)' }}>
+                    <main >{children}</main>
+                </div>
+            
+                {
+                    (pathname !== '/login') ? <Footer /> : <div style={{ display: 'none' }}></div>
+                }
             </div>
-
-            {
-                (pathname !== '/login') ? <Footer /> : <div style={{ display: 'none' }}></div>
-            }
-        </div>
+        </Suspense>
     )
 }
 
