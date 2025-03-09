@@ -1,8 +1,7 @@
 // const CACHE_NAME = `verseify-cache-v${process.env.NEXT_PUBLIC_CACHE_VERSION || '9'}`
-importScripts('/lib/indexedDB.js')
 
 
-const CACHE_NAME = `verseify-cache-v22`                   //Change this to a new version before every New DEPLOY.............................
+const CACHE_NAME = `verseify-cache-v23`                   //Change this to a new version before every New DEPLOY.............................
 const HOME = 'https://verseify.netlify.app'
 
 const STATIC_FILES = [
@@ -26,16 +25,6 @@ self.addEventListener("install", (event) => {
     self.skipWaiting()
 })
 
-// Fetch event: Serve cached files & fetch new ones
-// self.addEventListener("fetch", (event) => {
-//     event.respondWith(
-//         caches.match(event.request).then((cachedResponse) => {
-//             return cachedResponse || fetch(event.request).catch(() => {
-//                 return caches.match("/verseify/offline.html")
-//             })
-//         })
-//     )
-// })
 
 // Activate event: Delete old caches
 self.addEventListener("activate", (event) => {
@@ -53,18 +42,12 @@ self.addEventListener("activate", (event) => {
 })
 
 
-async function handleSave(data) {
-    const res = await saveResponse({id: data.id, response: data, store: 'notify'})
-}
-
 let url = HOME
 //Push Notifications...
 self.addEventListener('push', async(event) => {
     console.log("Push received...")
     let data = event.data ? event.data.json() : { title: 'You have a new Notification!', body: 'You have a new notification alert from ~Verseify.' }
     url = (body.url!=='')?body.url : url
-
-    await handleSave({id: data.id, title: data.title, body: data.body, date: new Date()})
 
     const options = {
         body: data.body,
@@ -87,6 +70,14 @@ self.addEventListener('push', async(event) => {
     event.waitUntil(
         self.registration.showNotification(data.title, options)
     )
+
+    
+    // Send data to the main thread
+    self.clients.matchAll().then((clients) => {
+        clients.forEach((client) => {
+            client.postMessage({ type: 'SAVE_NOTIFICATION', data: data })
+        })
+    })
 })
 
 self.addEventListener('notificationclick', (event) => {

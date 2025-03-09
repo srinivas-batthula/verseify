@@ -1,52 +1,31 @@
 'use client'
 
-// import { openDB } from 'idb'
+import { openDB } from 'idb'
 
 
 // Ensure IndexedDB runs only in the browser
 const isBrowser = typeof window !== 'undefined'
 
-// indexedDB.js - Convert to UMD-style
-if (isBrowser) {
-    (async () => {
-        const { openDB } = await import('https://cdn.jsdelivr.net/npm/idb@7/build/iife/index-min.js');
-
-        self.dbPromise = openDB('verseify-db', 1, {
-            upgrade(db) {
-                console.log('Upgrading DB...');
-                if (!db.objectStoreNames.contains('saved')) {
-                    db.createObjectStore('saved', { keyPath: 'id' });
-                }
-                if (!db.objectStoreNames.contains('notify')) {
-                    db.createObjectStore('notify', { keyPath: 'id' });
-                }
-            },
-        });
-    })();
-} else {
-    self.dbPromise = Promise.resolve(null);
-}
-
-// // Open IndexedDB
-// export const dbPromise = isBrowser
-//     ? openDB('verseify-db', 1, {
-//         upgrade(db) {
-//             console.log('Upgrading DB...')
-//             // Create 'saved' store if not exists
-//             if (!db.objectStoreNames.contains('saved')) {
-//                 // console.log('Creating object store: saved')
-//                 db.createObjectStore('saved', { keyPath: 'id' })
-//             }
-//             // Create 'notify' store if not exists
-//             if (!db.objectStoreNames.contains('notify')) {
-//                 db.createObjectStore('notify', { keyPath: 'id' })
-//             }
-//         },
-//     })
-//     : Promise.resolve(null)
+// Open IndexedDB
+export const dbPromise = isBrowser
+    ? openDB('verseify-db', 1, {
+        upgrade(db) {
+            console.log('Upgrading DB...')
+            // Create 'saved' store if not exists
+            if (!db.objectStoreNames.contains('saved')) {
+                // console.log('Creating object store: saved')
+                db.createObjectStore('saved', { keyPath: 'id' })
+            }
+            // Create 'notify' store if not exists
+            if (!db.objectStoreNames.contains('notify')) {
+                db.createObjectStore('notify', { keyPath: 'id' })
+            }
+        },
+    })
+    : Promise.resolve(null)
 
 // Save response (only store up to 10 items, prevent duplicates)
-export const saveResponse = async ({ id, response, store = 'saved' }) => {
+export const saveResponse = async ({id, response, store='saved'}) => {
     // console.log('store: '+store)
     const db = await dbPromise
     if (!db) {
@@ -82,8 +61,18 @@ export const saveResponse = async ({ id, response, store = 'saved' }) => {
     return { success: true, msg: `Item with id ${id} Saved.` }
 }
 
+
+// Listen for messages from the Service Worker
+navigator.serviceWorker.addEventListener('message', async (event) => {
+    if (event.data?.type === 'SAVE_NOTIFICATION') {
+        // console.log('Saving notification:', event.data.data)
+        await saveResponse({id: event.data.id, response: event.data.data, store: 'notify'})
+    }
+})
+
+
 // Get response
-export const getResponse = async ({ id = '', store = 'saved' }) => {
+export const getResponse = async ({id = '', store='saved'}) => {
     const db = await dbPromise
     if (!db) {
         // console.error('IndexedDB not available')
@@ -101,7 +90,7 @@ export const getResponse = async ({ id = '', store = 'saved' }) => {
 }
 
 // Delete response
-export const deleteResponse = async (id, store = 'saved') => {
+export const deleteResponse = async (id, store='saved') => {
     const db = await dbPromise;
     if (!db) {
         // console.error('IndexedDB not available')
