@@ -66,6 +66,7 @@ export default function Navbar() {
 
         if (res && res.success) {
             showSuccess("Logged Out Successfully!")
+            typeof window !== 'undefined' ? localStorage.setItem('login', false) : null
             setTimeout(() => {
                 router.push("/login")
             }, 900)

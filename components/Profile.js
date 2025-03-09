@@ -181,6 +181,7 @@ export default function Profile() {
 
         if (res && res.success) {
             showSuccess("Logged Out Successfully!")
+            typeof window !== 'undefined' ? localStorage.setItem('login', false) : null
             setTimeout(() => {
                 router.push("/login")
             }, 900)
@@ -245,7 +246,7 @@ export default function Profile() {
                     {/* Stats */}
                     <div className={styles.stats} style={{ marginBottom: authorCheck ? '0' : '2.8rem' }}>
                         <motion.div
-                            onClick={() => router.push(`/myblogs/${user._id}`)}
+                            onClick={() => router.push(`/myblogs/${users._id}`)}
                             className={`${styles.statBox} ${(theme === 'white') ? "bg-gray-800 text-white" : "bg-gray-200 text-black"}`}
                             whileHover={{ scale: 1.05 }}
                         >

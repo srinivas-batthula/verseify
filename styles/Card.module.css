@@ -66,6 +66,7 @@
 }
 
 .authorHead {
+    margin: 0;
     font-size: 0.93rem;
     color: rgba(66, 66, 66, 0.873);
 }
