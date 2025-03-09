@@ -2,8 +2,8 @@
 import { saveResponse } from "@/lib/indexedDB";
 
 
-const CACHE_NAME = `verseify-cache-v16`                   //Change this to a new version before every New DEPLOY.............................
-const HOME = process.env.NEXT_PUBLIC_HOME
+const CACHE_NAME = `verseify-cache-v17`                   //Change this to a new version before every New DEPLOY.............................
+const HOME = 'https://verseify.netlify.app'
 
 const STATIC_FILES = [
     HOME+"/",
@@ -57,12 +57,12 @@ async function handleSave(data) {
     const res = await saveResponse({id: data.id, response: data, store: 'notify'})
 }
 
-let url = NEXT_PUBLIC_HOME + ''
+let url = HOME
 //Push Notifications...
 self.addEventListener('push', async(event) => {
     console.log("Push received...")
     let data = event.data ? event.data.json() : { title: 'You have a new Notification!', body: 'You have a new notification alert from ~Verseify.' }
-    url = body.url || NEXT_PUBLIC_HOME + ''
+    url = (body.url!=='')?body.url : url
 
     await handleSave({id: data.id, title: data.title, body: data.body, date: new Date()})
 
@@ -106,7 +106,7 @@ self.addEventListener('notificationclick', (event) => {
     else {
         event.notification.close()
         event.waitUntil(
-            clients.openWindow(NEXT_PUBLIC_HOME + '') // Replace with your desired home URL
+            clients.openWindow(HOME) // Replace with your desired home URL
         )
     }
 })
