@@ -1,0 +1,20 @@
+{
+    "rewrites": [
+        {
+            "source": "/blog/:id",
+            "destination": "/blog/[id]"
+        },
+        {
+            "source": "/profile/:id",
+            "destination": "/profile/[id]"
+        },
+        {
+            "source": "/follow/:id",
+            "destination": "/follow/[id]"
+        },
+        {
+            "source": "/myblogs/:id",
+            "destination": "/myblogs/[id]"
+        }
+    ]
+}
