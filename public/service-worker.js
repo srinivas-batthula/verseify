@@ -2,16 +2,17 @@
 import { saveResponse } from "@/lib/indexedDB";
 
 
-const CACHE_NAME = `verseify-cache-v13`                   //Change this to a new version before every New DEPLOY.............................
+const CACHE_NAME = `verseify-cache-v14`                   //Change this to a new version before every New DEPLOY.............................
+const HOME = process.env.NEXT_PUBLIC_HOME
 
 const STATIC_FILES = [
-    "https://srinivas-batthula.github.io/verseify/",
+    HOME+"/",
     // "https://srinivas-batthula.github.io/verseify/public/",
-    "https://srinivas-batthula.github.io/verseify/manifest.json",
-    "https://srinivas-batthula.github.io/verseify/icon.png",
-    "https://srinivas-batthula.github.io/verseify/verseify.png",
-    "https://srinivas-batthula.github.io/verseify/badge.svg",
-    "https://srinivas-batthula.github.io/verseify/notification.wav",
+    HOME+"/manifest.json",
+    HOME+"/icon.png",
+    HOME+"/verseify.png",
+    HOME+"/badge.svg",
+    HOME+"/notification.wav",
 ]
 
 // Install event: Cache essential assets
