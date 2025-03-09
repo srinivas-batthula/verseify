@@ -2,11 +2,10 @@ import Follow from "@/components/Follow";
 
 
 
-export default async function FollowPage({params}){
-    const { id } = await params
+export default function FollowPage(){
 
 
     return (
-        <Follow id={id} />
+        <Follow />
     )
 }

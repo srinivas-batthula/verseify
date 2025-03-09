@@ -2,11 +2,10 @@ import Profile from "@/components/Profile";
 
 
 
-export default async function Page({params}){
-    const { id } = await params
+export default async function Page(){
 
 
     return(
-        <Profile id={id} />
+        <Profile />
     )
 }

@@ -3,11 +3,10 @@ import Blog from "@/components/Blog";
 
 
 
-export default async function BPage({params}){
-    const { id } = await params
+export default function BPage(){
 
 
     return(
-        <Blog id={id} />
+        <Blog />
     )
 }

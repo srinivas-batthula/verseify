@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import styles from "@/styles/Blog.module.css"; // Import CSS file
 import React, { useState, useEffect, use } from 'react';
 import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from 'react-share';
@@ -90,7 +90,9 @@ function daysAgo(date) {
 
 
 
-const Blog = ({ id }) => {
+const Blog = () => {
+    const params = useParams()
+    const id = params.id
     const router = useRouter()
     const { theme } = useThemeStore()
     const { user, setUser } = useUserStore()

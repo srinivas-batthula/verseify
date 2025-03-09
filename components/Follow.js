@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { showSuccess, showFailed } from "@/utils/Toasts";
 import Image from "next/image";
@@ -10,7 +10,9 @@ import styles from '@/styles/Follow.module.css'
 
 
 
-const Follow = ({id}) => {
+const Follow = () => {
+    const params = useParams()
+    const id = params.id
     const router = useRouter()
     const q = useSearchParams().get('q')
     const {user} = useUserStore()

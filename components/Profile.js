@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import styles from "../styles/Profile.module.css";
 import { FaChartLine, FaBookmark, FaEdit, FaShare, FaSignOutAlt, FaCog, FaPlus, FaBook, FaLinkedin, FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
@@ -67,7 +67,9 @@ const ShareButton = ({ data }) => {
 }
 
 
-export default function Profile({ id }) {
+export default function Profile() {
+    const params = useParams()
+    const id = params.id
     const router = useRouter()
     const { theme } = useThemeStore()
     const { user, setUser } = useUserStore()
