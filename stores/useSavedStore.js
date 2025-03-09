@@ -1,7 +1,7 @@
 'use client'
 
 import { create } from "zustand"
-import { getResponse } from '@/lib/indexedDB'
+import { getResponse } from '@/public/lib/indexedDB'
 
 
 const useSavedStore = create((set) => ({

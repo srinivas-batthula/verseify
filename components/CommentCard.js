@@ -41,6 +41,12 @@ const CommentCard = ({ comment }) => {
             return
         }
 
+        const login = typeof window !== 'undefined' ? localStorage.getItem('login') : null
+        if (login === 'false') {
+            showFailed('Please do Login to Continue!')
+            return
+        }
+
         showSuccess("Added New Reply!")
 
         const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
@@ -68,6 +74,12 @@ const CommentCard = ({ comment }) => {
     }
 
     const handleLike = async () => {
+        const login = typeof window !== 'undefined' ? localStorage.getItem('login') : null
+        if (login === 'false') {
+            showFailed('Please do Login to Continue!')
+            return
+        }
+
         showSuccess("Liked Comment!")
         setLikes(prevLikes => prevLikes + 1)
 
@@ -95,12 +107,12 @@ const CommentCard = ({ comment }) => {
     return (
         <div className={styles.commentCard}>
             {/* Profile Image */}
-            <Image onClick={()=>{router.push(`/profile/${comment.userId}`)}} src={(comment.authorPic && comment.authorPic.secure_url!=='') ? comment.authorPic.secure_url : (theme === 'black' ? '/user_default_dark.png' : '/user_default_light.png')} alt="User Avatar" width={100} height={100} className={styles.avatar} />
+            <Image onClick={() => { router.push(`/profile/${comment.userId}`) }} src={(comment.authorPic && comment.authorPic.secure_url !== '') ? comment.authorPic.secure_url : (theme === 'black' ? '/user_default_dark.png' : '/user_default_light.png')} alt="User Avatar" width={100} height={100} className={styles.avatar} />
 
             <div className={styles.commentContent}>
                 {/* User Info */}
                 <div className={styles.userInfo}>
-                    <span onClick={()=>{router.push(`/profile/${comment.userId}`)}} className={styles.username}>{authorCheck ? 'You' : comment.authorName}</span>
+                    <span onClick={() => { router.push(`/profile/${comment.userId}`) }} className={styles.username}>{authorCheck ? 'You' : comment.authorName}</span>
                     {/* {comment.user.isSubscriber && <span className={styles.subscriber}>Subscriber</span>} */}
                     <span className={styles.dot}>•</span>
                     <span className={styles.date}>{daysAgo(comment.createdAt)}</span>

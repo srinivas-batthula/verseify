@@ -9,7 +9,7 @@ import CommentCard from "./CommentCard";
 import { showSuccess, showFailed } from "@/utils/Toasts";
 import useThemeStore from "@/stores/useThemeStore";
 import useUserStore from "@/stores/useUserStore";
-import { saveResponse } from "@/lib/indexedDB";
+import { saveResponse } from "@/public/lib/indexedDB";
 import useSavedStore from "@/stores/useSavedStore";
 
 import { EditorContent, useEditor } from "@tiptap/react";
@@ -121,11 +121,11 @@ const Blog = ({ id }) => {
     })
 
 
-    useEffect(()=>{
+    useEffect(() => {
         const getBlog = async () => {
             const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-        
-            try{
+
+            try {
                 let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/blogs/${id}`, {
                     method: 'GET',
                     headers: {
@@ -136,7 +136,7 @@ const Blog = ({ id }) => {
                 })
                 res = await res.json()
                 // console.log(res)
-        
+
                 if (!res || !res.success) {
                     return
                 }
@@ -144,15 +144,15 @@ const Blog = ({ id }) => {
                     setPost(res.blog)
                 }
             }
-            catch(err){
+            catch (err) {
                 return
             }
         }
-        
+
         const getComments = async () => {
             const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-        
-            try{
+
+            try {
                 let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/comments/${id}`, {
                     method: 'GET',
                     headers: {
@@ -163,7 +163,7 @@ const Blog = ({ id }) => {
                 })
                 res = await res.json()
                 // console.log(res)
-        
+
                 if (!res || !res.success) {
                     return
                 }
@@ -171,7 +171,7 @@ const Blog = ({ id }) => {
                     setComments(res.comments)
                 }
             }
-            catch(err){
+            catch (err) {
                 return
             }
         }
@@ -220,6 +220,12 @@ const Blog = ({ id }) => {
     }
 
     const handleFollow = async (e) => {
+        const login = typeof window !== 'undefined' ? localStorage.getItem('login') : null
+        if (login === 'false') {
+            showFailed('Please do Login to Continue!')
+            return
+        }
+
         showSuccess(isFollowing ? "UnFollowed!" : "Followed!")
 
         const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
@@ -247,6 +253,12 @@ const Blog = ({ id }) => {
     }
 
     const handleLike = async (e) => {
+        const login = typeof window !== 'undefined' ? localStorage.getItem('login') : null
+        if (login === 'false') {
+            showFailed('Please do Login to Continue!')
+            return
+        }
+
         showSuccess("Liked Post!")
         post.likes.push(user._id)
 
@@ -268,7 +280,7 @@ const Blog = ({ id }) => {
             showFailed("Failed to Like Post!")
             post.likes.pop()
         }
-        else{
+        else {
             setIsLiked(true)
         }
     }
@@ -276,6 +288,12 @@ const Blog = ({ id }) => {
     const handleComment = async (e) => {
         if (newComment === '') {
             showFailed("Enter Something to Comment!")
+            return
+        }
+
+        const login = typeof window !== 'undefined' ? localStorage.getItem('login') : null
+        if (login === 'false') {
+            showFailed('Please do Login to Continue!')
             return
         }
 
@@ -340,16 +358,16 @@ const Blog = ({ id }) => {
 
                 {/* Post Image */}
                 {
-                    (post.media && post.media.secure_url!=='') && (
+                    (post.media && post.media.secure_url !== '') && (
                         <Image src={post.media.secure_url} alt="Post Image" width={800} height={800} className={styles.postImage} />
                     )
                 }
-                <div style={{marginBottom: (!post.media || post.media.secure_url==='') ? '2.5rem' : '0'}}></div>
+                <div style={{ marginBottom: (!post.media || post.media.secure_url === '') ? '2.5rem' : '0' }}></div>
 
                 {/* Author Section */}
                 <div className={styles.authorSection}>
-                    <div onClick={()=>{router.push(`/profile/${post.author}`)}} className={styles.author}>
-                        <Image src={(post.authorPic && post.authorPic.secure_url!=='') ? post.authorPic.secure_url : (theme === 'black' ? '/user_default_dark.png' : '/user_default_light.png')} alt="Author's Profile pic" width={100} height={100} className={styles.avatar} style={{ borderRadius: "50%", objectFit: "cover" }} />
+                    <div onClick={() => { router.push(`/profile/${post.author}`) }} className={styles.author}>
+                        <Image src={(post.authorPic && post.authorPic.secure_url !== '') ? post.authorPic.secure_url : (theme === 'black' ? '/user_default_dark.png' : '/user_default_light.png')} alt="Author's Profile pic" width={100} height={100} className={styles.avatar} style={{ borderRadius: "50%", objectFit: "cover" }} />
                         <div className={styles.authorDetails}>
                             <h3 className={styles.authorName}>{authorCheck ? 'You' : post.authorName}</h3>
                             <p className={styles.authorBio}>{post.authorBio}</p>

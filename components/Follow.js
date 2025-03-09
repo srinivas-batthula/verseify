@@ -79,7 +79,7 @@ const Follow = ({id}) => {
             </motion.h1>
 
             {(!followingUsers || followingUsers.length === 0) ? (
-                <p className="text-center text-gray-500">{q==='following' ? "You're not following anyone Yet." : "You've no Followers Yet."}</p>
+                <p className="text-center text-gray-500">{q==='following' ? "User is not following anyone Yet." : "User has no Followers Yet."}</p>
             ) : (
                 <div className={`${styles.main2}`}>
                 <motion.div

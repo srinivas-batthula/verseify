@@ -137,7 +137,7 @@ export default function HomePage() {
                 },
             })
             res = await res.json()
-            console.log(res)
+            // console.log(res)
     
             if (!res || !res.success) {
                 setData({ blogs: [], page: 0, totalBlogs: 0, totalPages: 0 })

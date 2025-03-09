@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { getResponse, saveResponse } from '@/lib/indexedDB'
+import { getResponse, saveResponse } from '@/public/lib/indexedDB'
 import styles from '@/styles/Notifications.module.css';
 import { motion } from 'framer-motion';
 import { Bell, Info } from 'lucide-react';

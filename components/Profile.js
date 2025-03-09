@@ -91,11 +91,11 @@ export default function Profile({ id }) {
     const [isFollowing, setIsFollowing] = useState((user.following.includes(users._id)) ? true : false)
 
 
-    useEffect(()=>{
+    useEffect(() => {
         const getUser = async () => {
             const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-        
-            try{
+
+            try {
                 let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/users/${id}`, {
                     method: 'GET',
                     headers: {
@@ -106,7 +106,7 @@ export default function Profile({ id }) {
                 })
                 res = await res.json()
                 // console.log(res)
-        
+
                 if (!res || !res.success) {
                     return
                 }
@@ -114,7 +114,7 @@ export default function Profile({ id }) {
                     setUsers(res.user)
                 }
             }
-            catch(err){
+            catch (err) {
                 return
             }
         }
@@ -131,6 +131,12 @@ export default function Profile({ id }) {
 
 
     const handleFollow = async (e) => {
+        const login = typeof window !== 'undefined' ? localStorage.getItem('login') : null
+        if (login === 'false') {
+            showFailed('Please do Login to Continue!')
+            return
+        }
+
         showSuccess(isFollowing ? "UnFollowed!" : "Followed!")
 
         const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
@@ -173,7 +179,7 @@ export default function Profile({ id }) {
 
         if (res && res.success) {
             showSuccess("Logged Out Successfully!")
-            setTimeout(()=>{
+            setTimeout(() => {
                 router.push("/login")
             }, 900)
         }
@@ -235,7 +241,7 @@ export default function Profile({ id }) {
                     <p className={styles.bio} style={{ color: (theme === 'black') ? 'rgb(70, 70, 70)' : 'rgb(213, 213, 213)' }}>{users.bio}</p>
 
                     {/* Stats */}
-                    <div className={styles.stats} style={{marginBottom: authorCheck ? '0' : '2.8rem'}}>
+                    <div className={styles.stats} style={{ marginBottom: authorCheck ? '0' : '2.8rem' }}>
                         <motion.div
                             onClick={() => router.push(`/myblogs/${user._id}`)}
                             className={`${styles.statBox} ${(theme === 'white') ? "bg-gray-800 text-white" : "bg-gray-200 text-black"}`}
@@ -318,7 +324,7 @@ export default function Profile({ id }) {
 
                     {/* Recent Blogs... */}
                     {
-                        (!authorCheck) && (<div onClick={()=>{router.push('/')}} style={{ margin: '1.8rem' }} className={`${styles.last1} ${styles.buttons}`}>
+                        (!authorCheck) && (<div onClick={() => { router.push('/') }} style={{ margin: '1.8rem' }} className={`${styles.last1} ${styles.buttons}`}>
                             Back to Home...
                         </div>)
                     }

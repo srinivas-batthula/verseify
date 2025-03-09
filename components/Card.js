@@ -7,7 +7,7 @@ import useThemeStore from '@/stores/useThemeStore'
 import { showSuccess, showFailed } from "@/utils/Toasts";
 import React, { useState, useEffect } from 'react';
 import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from 'react-share';
-import { saveResponse } from "@/lib/indexedDB";
+import { saveResponse } from "@/public/lib/indexedDB";
 import useSavedStore from "@/stores/useSavedStore";
 import useUserStore from "@/stores/useUserStore";
 import useDataStore from "@/stores/useDataStore";
@@ -137,6 +137,12 @@ const Card = ({ data = {} }) => {
     }
 
     const handleFollow = async (e) => {
+        const login = typeof window !== 'undefined' ? localStorage.getItem('login') : null
+        if(login==='false'){
+            showFailed('Please do Login to Continue!')
+            return
+        }
+            
         showSuccess(isFollowing ? "UnFollowed!" : "Followed!")
 
         const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
@@ -164,6 +170,12 @@ const Card = ({ data = {} }) => {
     }
 
     const handleLike = async (e) => {
+        const login = typeof window !== 'undefined' ? localStorage.getItem('login') : null
+        if(login==='false'){
+            showFailed('Please do Login to Continue!')
+            return
+        }
+        
         showSuccess("Liked Post!")
         setIsLiked(true)
         data.likes.push(user._id)
