@@ -3,19 +3,15 @@ import HomePage from '@/components/Home'
 
 
 const getBlogs = async () => {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-
     try{
         let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/db/blogs', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application',
-                'Authorization': token,
             },
-            credentials: 'include',
         })
         res = await res.json()
-        // console.log(res)
+        console.log(res)
 
         if (!res || !res.success) {
             return { blogs: [], page: 0, totalBlogs: 0, totalPages: 0 }

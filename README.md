@@ -45,7 +45,7 @@ Ensure you have the following installed:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/verseify.git
+   git clone https://github.com/srinivas-batthula/verseify
    cd verseify
    
 2. **Install dependencies**
@@ -58,7 +58,8 @@ Ensure you have the following installed:
 
 ## 🌐 Live Demo  
 
-🔗 **[Try Verseify Live](https://verseify.vercel.app/)**  
+🔗 **[Try Verseify Live](https://verseify.netlify.app/)**
+🔗 **[Try Backend API Docs Live](https://backend_url/api-docs)**
 
 ---
 

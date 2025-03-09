@@ -2,7 +2,7 @@
 import { saveResponse } from "@/lib/indexedDB";
 
 
-const CACHE_NAME = `verseify-cache-v17`                   //Change this to a new version before every New DEPLOY.............................
+const CACHE_NAME = `verseify-cache-v18`                   //Change this to a new version before every New DEPLOY.............................
 const HOME = 'https://verseify.netlify.app'
 
 const STATIC_FILES = [
