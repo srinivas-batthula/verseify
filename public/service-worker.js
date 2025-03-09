@@ -2,7 +2,7 @@
 importScripts('/lib/indexedDB.js')
 
 
-const CACHE_NAME = `verseify-cache-v21`                   //Change this to a new version before every New DEPLOY.............................
+const CACHE_NAME = `verseify-cache-v22`                   //Change this to a new version before every New DEPLOY.............................
 const HOME = 'https://verseify.netlify.app'
 
 const STATIC_FILES = [
