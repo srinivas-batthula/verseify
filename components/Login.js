@@ -90,13 +90,13 @@ export default function Login() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    'Authorization': token,
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(payload),
                 // credentials: 'include',
             })
             const data = await response.json()
-            console.log(data)
+            // console.log(data)
     
             if (!data.success) {
                 showFailed(data.details || "Something went Wrong!")
@@ -108,8 +108,10 @@ export default function Login() {
             setInp({fullName:'', email:'', password:''})
 
             if(!isForgot){
-                typeof window !== 'undefined' ? localStorage.setItem('login', data.success) : null
-                typeof window !== 'undefined' ? localStorage.setItem('token', data.token) : null
+                if(data.success){
+                    typeof window !== 'undefined' ? localStorage.setItem('login', true) : null
+                    typeof window !== 'undefined' ? localStorage.setItem('token', data.token) : null
+                }
 
                 setTimeout(() => {
                     // router.push("/")

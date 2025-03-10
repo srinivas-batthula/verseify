@@ -27,22 +27,22 @@ const Layout = ({ children }) => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': token,
+                    'Authorization': `Bearer ${token}`,
                 },
                 // credentials: 'include',      // 👈 This ensures cookies are sent with the request
             })
             res = await res.json()
             console.log(token)
 
-            setToken(token)         //Set Token to current Global State...
+            setToken(`Bearer ${token}`)         //Set Token to current Global State...
 
             if (res && res.success) {
                 typeof window !== 'undefined' ? localStorage.setItem('login', true) : null
                 setUser(res.user)
             }
-            else {
-                typeof window !== 'undefined' ? localStorage.setItem('login', false) : null
-            }
+            // else {
+            //     typeof window !== 'undefined' ? localStorage.setItem('login', false) : null
+            // }
         }
         getUser()
 

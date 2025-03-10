@@ -18,7 +18,7 @@ const useDataStore = create((set) => ({
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': token,
+                    'Authorization': `Bearer ${token}`,
                 },
                 // credentials: 'include',
             })
