@@ -48,7 +48,7 @@ export default function MyBlogs(){
                         <div className={styles.Cards}>
                             {
                                 blogs.map((item, index)=>{
-                                    return <Card data={{item}} key={index} />
+                                    return <Card data={item} key={index} />
                                 })
                             }
                         </div>
