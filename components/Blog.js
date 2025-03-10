@@ -11,6 +11,7 @@ import useThemeStore from "@/stores/useThemeStore";
 import useUserStore from "@/stores/useUserStore";
 import { saveResponse } from "@/public/lib/indexedDB";
 import useSavedStore from "@/stores/useSavedStore";
+import useTokenStore from "@/stores/useTokenStore";
 
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -97,6 +98,7 @@ const Blog = () => {
     const { theme } = useThemeStore()
     const { user, setUser } = useUserStore()
     const { saved, FetchSaved } = useSavedStore()
+    const {token} = useTokenStore()
     const [newComment, setNewComment] = useState("")
     const [comments, setComments] = useState([])
     const [post, setPost] = useState({
@@ -130,8 +132,9 @@ const Blog = () => {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application',
+                        'Authorization': token,
                     },
-                    credentials: 'include',
+                    // credentials: 'include',
                 })
                 res = await res.json()
                 // console.log(res)
@@ -154,8 +157,9 @@ const Blog = () => {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application',
+                        'Authorization': token,
                     },
-                    credentials: 'include',
+                    // credentials: 'include',
                 })
                 res = await res.json()
                 // console.log(res)
@@ -208,8 +212,9 @@ const Blog = () => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': token,
             },
-            credentials: 'include',
+            // credentials: 'include',
         })
         res = await res.json()
 
@@ -233,8 +238,9 @@ const Blog = () => {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': token,
             },
-            credentials: 'include',
+            // credentials: 'include',
             body: JSON.stringify({ id: post.author })
         })
         res = await res.json()
@@ -262,8 +268,9 @@ const Blog = () => {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': token,
             },
-            credentials: 'include',
+            // credentials: 'include',
             body: JSON.stringify({ id: user._id })
         })
         res = await res.json()
@@ -299,8 +306,9 @@ const Blog = () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': token,
             },
-            credentials: 'include',
+            // credentials: 'include',
             body: JSON.stringify({ userId: user._id, text: newComment })
         })
         res = await res.json()

@@ -4,12 +4,14 @@ import React, { useEffect, useState } from 'react'
 import styles from '@/styles/Saved.module.css'
 import Card from "./Card"
 import { useParams } from 'next/navigation'
+import useTokenStore from '@/stores/useTokenStore'
 
 
 
 export default function MyBlogs(){
     const params = useParams()
-
+    
+    const {token} = useTokenStore()
     const [blogs, setBlogs] = useState([])
 
 
@@ -20,6 +22,7 @@ export default function MyBlogs(){
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': token,
                     },
                 })
                 res = await res.json()

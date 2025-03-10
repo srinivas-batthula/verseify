@@ -7,6 +7,7 @@ import styles from "../styles/Profile.module.css";
 import { FaChartLine, FaBookmark, FaEdit, FaShare, FaSignOutAlt, FaCog, FaPlus, FaBook, FaLinkedin, FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
 import useThemeStore from "@/stores/useThemeStore";
 import useUserStore from "@/stores/useUserStore";
+import useTokenStore from "@/stores/useTokenStore";
 import styled from "styled-components";
 import { showSuccess, showFailed } from "@/utils/Toasts";
 import React, { useState, useEffect } from 'react';
@@ -72,6 +73,7 @@ export default function Profile() {
     const id = params.id
     const router = useRouter()
     const { theme } = useThemeStore()
+    const {setToken, token} = useTokenStore()
     const { user, setUser } = useUserStore()
     const [users, setUsers] = useState({
         _id: '1',
@@ -100,8 +102,9 @@ export default function Profile() {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': token,
                     },
-                    credentials: 'include',
+                    // credentials: 'include',
                 })
                 res = await res.json()
                 // console.log(res)
@@ -144,8 +147,9 @@ export default function Profile() {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': token,
             },
-            credentials: 'include',
+            // credentials: 'include',
             body: JSON.stringify({ id: users._id })
         })
         res = await res.json()
@@ -161,26 +165,32 @@ export default function Profile() {
     }
 
     const handleLogout = async () => {
-        let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/auth/signOut`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include',
-        })
-        res = await res.json()
-        // console.log(res)
+        typeof window !== 'undefined' ? localStorage.setItem('token', '') : null
+        typeof window !== 'undefined' ? localStorage.setItem('login', false) : null
+        setToken('')
+        showSuccess("Logged Out Successfully!")
 
-        if (res && res.success) {
-            showSuccess("Logged Out Successfully!")
-            typeof window !== 'undefined' ? localStorage.setItem('login', false) : null
-            setTimeout(() => {
-                router.push("/login")
-            }, 900)
-        }
-        else {
-            showFailed("Failed to LogOut!")
-        }
+        
+        // let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/auth/signOut`, {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     credentials: 'include',
+        // })
+        // res = await res.json()
+        // // console.log(res)
+
+        // if (res && res.success) {
+        //     showSuccess("Logged Out Successfully!")
+        //     typeof window !== 'undefined' ? localStorage.setItem('login', false) : null
+        //     setTimeout(() => {
+        //         router.push("/login")
+        //     }, 900)
+        // }
+        // else {
+        //     showFailed("Failed to LogOut!")
+        // }
     }
 
 

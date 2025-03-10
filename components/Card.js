@@ -11,6 +11,7 @@ import { saveResponse } from "@/public/lib/indexedDB";
 import useSavedStore from "@/stores/useSavedStore";
 import useUserStore from "@/stores/useUserStore";
 import useDataStore from "@/stores/useDataStore";
+import useTokenStore from "@/stores/useTokenStore";
 
 
 
@@ -86,6 +87,7 @@ const Card = ({ data = {} }) => {
     const { theme } = useThemeStore()
     const {setData} = useDataStore()
     const { saved, FetchSaved } = useSavedStore()
+    const {token} = useTokenStore()
     const { user, setUser } = useUserStore()
     const [isLiked, setIsLiked] = useState((data.likes.includes(user._id)) ? true : false)
     const [isFollowing, setIsFollowing] = useState((user.following.includes(data.author)) ? true : false)
@@ -122,8 +124,9 @@ const Card = ({ data = {} }) => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': token,
             },
-            credentials: 'include',
+            // credentials: 'include',
         })
         res = await res.json()
 
@@ -152,8 +155,9 @@ const Card = ({ data = {} }) => {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': token,
             },
-            credentials: 'include',
+            // credentials: 'include',
             body: JSON.stringify({id : data.author})
         })
         res = await res.json()
@@ -182,8 +186,9 @@ const Card = ({ data = {} }) => {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': token,
             },
-            credentials: 'include',
+            // credentials: 'include',
             body: JSON.stringify({id : user._id})
         })
         res = await res.json()

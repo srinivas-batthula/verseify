@@ -6,6 +6,7 @@ import styles from "@/styles/EditProfile.module.css";
 import { showSuccess, showFailed } from "@/utils/Toasts";
 import useThemeStore from "@/stores/useThemeStore";
 import useUserStore from "@/stores/useUserStore";
+import useTokenStore from "@/stores/useTokenStore";
 import { useRouter } from "next/navigation";
 
 
@@ -14,6 +15,7 @@ const EditProfile = () => {
     const router = useRouter()
     const { theme } = useThemeStore()
     const { user } = useUserStore()
+    const {token} = useTokenStore()
     const [profile, setProfile] = useState({
         username: user.username || "",
         email: user.email || "",
@@ -85,7 +87,10 @@ const EditProfile = () => {
         try {
             let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/users/${user._id}?q=${isFile}`, {
                 method: 'PATCH',
-                credentials: 'include',
+                headers:{
+                    'Authorization': token,
+                },
+                // credentials: 'include',
                 body: formData,
             })
             res = await res.json()

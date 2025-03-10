@@ -23,6 +23,7 @@ import { useState, useEffect } from "react";
 import { showFailed, showSuccess } from "@/utils/Toasts";
 import '../styles/editor.css'
 import useUserStore from "@/stores/useUserStore";
+import useTokenStore from "@/stores/useTokenStore";
 
 
 
@@ -123,6 +124,7 @@ function ToolBar({ editor, onEmojiSelect, isSaving }) {
 export default function Post() {
     const router = useRouter()
     const {user} = useUserStore()
+    const {token} = useTokenStore()
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
     const [title, setTitle] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogTitle") || '' : "")
@@ -154,7 +156,10 @@ export default function Post() {
         try {
             let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/blogs/${user._id}?q=${(file!==null) ? true : false}`, {
                 method: 'POST',
-                credentials: 'include',
+                headers: {
+                    'Authorization': token,
+                },
+                // credentials: 'include',
                 body: formData,
             })
             res = await res.json()

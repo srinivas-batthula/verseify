@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import useThemeStore from "@/stores/useThemeStore";
 import useUserStore from "@/stores/useUserStore";
+import useTokenStore from "@/stores/useTokenStore";
 import { showSuccess, showFailed } from "@/utils/Toasts";
 import styles from "@/styles/CommentCard.module.css";
 
@@ -29,6 +30,7 @@ const CommentCard = ({ comment }) => {
     const router = useRouter()
     const { theme } = useThemeStore()
     const { user } = useUserStore()
+    const {token} = useTokenStore()
     const [likes, setLikes] = useState(comment.likesCount || 0)
     const [showReplyInput, setShowReplyInput] = useState(false)
     const [replyText, setReplyText] = useState("")
@@ -53,8 +55,9 @@ const CommentCard = ({ comment }) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': token,
             },
-            credentials: 'include',
+            // credentials: 'include',
             body: JSON.stringify({ userId: user._id, text: replyText, parentId: comment._id })
         })
         res = await res.json()
@@ -84,8 +87,9 @@ const CommentCard = ({ comment }) => {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': token,
             },
-            credentials: 'include',
+            // credentials: 'include',
         })
         res = await res.json()
         // console.log(res)

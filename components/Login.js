@@ -85,14 +85,18 @@ export default function Login() {
             : { email, password }
     
         try {
+            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
             const response = await fetch(endpoint, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': token,
+                },
                 body: JSON.stringify(payload),
-                credentials: 'include',
+                // credentials: 'include',
             })
             const data = await response.json()
-            // console.log(data)
+            console.log(data)
     
             if (!data.success) {
                 showFailed(data.details || "Something went Wrong!")
@@ -105,6 +109,7 @@ export default function Login() {
 
             if(!isForgot){
                 typeof window !== 'undefined' ? localStorage.setItem('login', data.success) : null
+                typeof window !== 'undefined' ? localStorage.setItem('token', data.token) : null
 
                 setTimeout(() => {
                     // router.push("/")

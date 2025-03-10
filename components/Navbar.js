@@ -11,6 +11,7 @@ import useUserStore from "@/stores/useUserStore";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
 import { getResponse } from '@/public/lib/indexedDB';
+import useTokenStore from '@/stores/useTokenStore';
 import { showSuccess, showFailed } from "@/utils/Toasts";
 
 
@@ -28,6 +29,7 @@ export default function Navbar() {
     const [notifications, setNotifications] = useState(0)
     const { theme } = useThemeStore()
     const { user } = useUserStore()
+    const {setToken} = useTokenStore()
     const router = useRouter()
 
     const profileRef = useRef(null)
@@ -62,26 +64,32 @@ export default function Navbar() {
 
     //Handling Log Out...
     const handleLogout = async () => {
-        let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/auth/signOut`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include',
-        })
-        res = await res.json()
-        // console.log(res)
+        typeof window !== 'undefined' ? localStorage.setItem('token', '') : null
+        typeof window !== 'undefined' ? localStorage.setItem('login', false) : null
+        setToken('')
+        showSuccess("Logged Out Successfully!")
 
-        if (res && res.success) {
-            showSuccess("Logged Out Successfully!")
-            typeof window !== 'undefined' ? localStorage.setItem('login', false) : null
-            setTimeout(() => {
-                router.push("/login")
-            }, 900)
-        }
-        else {
-            showFailed("Failed to LogOut!")
-        }
+    
+        // let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/auth/signOut`, {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     credentials: 'include',
+        // })
+        // res = await res.json()
+        // // console.log(res)
+
+        // if (res && res.success) {
+        //     showSuccess("Logged Out Successfully!")
+        //     typeof window !== 'undefined' ? localStorage.setItem('login', false) : null
+        //     setTimeout(() => {
+        //         router.push("/login")
+        //     }, 900)
+        // }
+        // else {
+        //     showFailed("Failed to LogOut!")
+        // }
     }
 
 

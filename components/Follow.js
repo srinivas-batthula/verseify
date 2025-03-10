@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { showSuccess, showFailed } from "@/utils/Toasts";
 import Image from "next/image";
 import useUserStore from "@/stores/useUserStore";
+import useTokenStore from "@/stores/useTokenStore";
 import styles from '@/styles/Follow.module.css'
 
 
@@ -16,6 +17,7 @@ const Follow = () => {
     const router = useRouter()
     const q = useSearchParams().get('q')
     const {user} = useUserStore()
+    const {token} = useTokenStore()
     const [followingUsers, setFollowingUsers] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -29,8 +31,9 @@ const Follow = () => {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
+                        'Authorization': token,
                     },
-                    credentials: "include",
+                    // credentials: "include",
                 })
                 res = await res.json()
                 // console.log(res)

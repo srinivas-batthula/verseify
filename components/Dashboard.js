@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import useThemeStore from "@/stores/useThemeStore"
 import useUserStore from "@/stores/useUserStore";
+import useTokenStore from "@/stores/useTokenStore";
 import styles from "@/styles/Dashboard.module.css"; // Import CSS module
 import { useEffect, useState } from "react";
 
@@ -13,6 +14,7 @@ import { useEffect, useState } from "react";
 const Dashboard = () => {
     const { theme } = useThemeStore()
     const {user} = useUserStore()
+    const {token} = useTokenStore()
     const [details, setDetails] = useState({totalBlogs: 0,totalComments: 0})
 
 
@@ -23,8 +25,9 @@ const Dashboard = () => {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application',
+                        'Authorization': token,
                     },
-                    credentials: 'include',
+                    // credentials: 'include',
                 })
                 res = await res.json()
                 // console.log(res)

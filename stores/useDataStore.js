@@ -13,12 +13,14 @@ const useDataStore = create((set) => ({
 
     FetchData: async (page=1) => {
         try {
+            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
             let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/blogs?page=${page}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': token,
                 },
-                credentials: 'include',
+                // credentials: 'include',
             })
             res = await res.json()
             // console.log(res)

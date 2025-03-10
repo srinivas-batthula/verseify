@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation"
 import useThemeStore from '@/stores/useThemeStore'
 import useSavedStore from "@/stores/useSavedStore"
 import useUserStore from "@/stores/useUserStore"
+import useTokenStore from "@/stores/useTokenStore"
 import { useEffect, Suspense } from "react"
 import styles from '@/styles/Follow.module.css'
 
@@ -16,19 +17,24 @@ const Layout = ({ children }) => {
     const pathname = usePathname()
     const { FetchSaved } = useSavedStore()
     const { setUser } = useUserStore()
+    const { setToken } = useTokenStore()
 
 
     useEffect(() => {
         const getUser = async () => {
+            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
             let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+'/api/db/user', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': token,
                 },
-                credentials: 'include', // 👈 This ensures cookies are sent with the request
+                // credentials: 'include',      // 👈 This ensures cookies are sent with the request
             })
             res = await res.json()
-            // console.log(res)
+            console.log(token)
+
+            setToken(token)         //Set Token to current Global State...
 
             if (res && res.success) {
                 typeof window !== 'undefined' ? localStorage.setItem('login', true) : null
@@ -56,7 +62,7 @@ const Layout = ({ children }) => {
                 })
                 .catch((error) => {
                     console.error('Service Worker Registration failed: ', error)
-                });
+                })
         }
     }, [])
 

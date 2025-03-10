@@ -5,6 +5,7 @@ import styles from '@/styles/Home.module.css'
 import Card from "./Card"
 import { motion } from "framer-motion"
 import useDataStore from "@/stores/useDataStore"
+import useTokenStore from "@/stores/useTokenStore";
 
 import * as React from 'react';
 import { Skeleton, Stack, Box } from '@mui/material';
@@ -124,6 +125,7 @@ const BlogCardSkeleton = () => {
 export default function HomePage() {
     const mainContentRef = useRef(null)
     const { setData, data, FetchData } = useDataStore()
+    const {token} = useTokenStore()
     const [loading, setLoading] = useState(false)
 
 
@@ -134,6 +136,7 @@ export default function HomePage() {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application',
+                    'Authorization': token,
                 },
             })
             res = await res.json()

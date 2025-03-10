@@ -107,6 +107,7 @@ export default function Subscribe() {
 
     const subscribed = typeof window !== 'undefined' ? localStorage.getItem('subscribed') || 'false' : 'false'
 
+
     return (
         <div style={{ width: '100%', height: '100vh', padding: '0.3rem', textAlign: 'center', display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>
             <div className={styles.card}>
