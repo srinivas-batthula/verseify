@@ -30,7 +30,7 @@ const Layout = ({ children }) => {
                 credentials: 'include' // 👈 This ensures cookies are sent with the request
             })
             res = await res.json()
-            // console.log(res)
+            console.log(res)
 
             if (res && res.success) {
                 typeof window !== 'undefined' ? localStorage.setItem('login', true) : null
