@@ -53,7 +53,7 @@ export default function Settings() {
                     </div>
 
                     {/* Change Password */}
-                    <a target="_blank" href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/reset-password/${user._id}?q=${token}`} className={styles.settingItem}>
+                    <a target="_blank" href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/reset-password/${user._id}?tid=${token}`} className={styles.settingItem}>
                         <FaLock />
                         <span>Reset Password</span>
                     </a>

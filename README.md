@@ -6,7 +6,7 @@
 
 
 ## 🚀 Live Demo
-🔗 **[Try Verseify Live](https://verseify.onrender.com)**
+🔗 **[Try Verseify Live](https://verseify.netlify.app)**
 🔗 **[Try Backend API Docs Live](https://verseify-backend.onrender.com/api-docs)**
 
 

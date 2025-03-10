@@ -52,11 +52,11 @@ const Layout = ({ children }) => {
         fetchData()
     }, [])
 
-
-    // Register the service worker  
+    
+    // Register the service worker...
     useEffect(() => {
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('https://verseify.onrender.com/service-worker.js', { scope: '/' })
+            navigator.serviceWorker.register(process.env.NEXT_PUBLIC_HOME+'/service-worker.js', { scope: '/' })
                 .then((registration) => {
                     console.log('Service Worker registered with scope: ', registration.scope)
                 })

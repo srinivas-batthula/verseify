@@ -9,25 +9,25 @@
     "theme_color": "rgba(0, 76, 255, 0.562)",
     "icons": [
         {
-            "src": "https://verseify.onrender.com/icon.png",
+            "src": "https://verseify.netlify.app/icon.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "https://verseify.onrender.com/verseify.png",
+            "src": "https://verseify.netlify.app/verseify.png",
             "sizes": "512x512",
             "type": "image/png"
         }
     ],
     "screenshots": [
         {
-            "src": "https://verseify.onrender.com/desktop-screenshot.png",
+            "src": "https://verseify.netlify.app/desktop-screenshot.png",
             "sizes": "1280x800",
             "type": "image/png",
             "form_factor": "wide"
         },
         {
-            "src": "https://verseify.onrender.com/mobile-screenshot.png",
+            "src": "https://verseify.netlify.app/mobile-screenshot.png",
             "sizes": "600x800",
             "type": "image/png",
             "form_factor": "narrow"
