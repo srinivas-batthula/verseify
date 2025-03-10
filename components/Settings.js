@@ -54,7 +54,7 @@ export default function Settings() {
 
                     {/* Change Password */}
                     <a target="_blank" href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/reset-password/${user._id}?tid=${token}`} className={styles.settingItem}>
-                        <FaLock />
+                        <FaLock /> 
                         <span>Reset Password</span>
                     </a>
 
