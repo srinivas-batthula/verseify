@@ -23,7 +23,7 @@ export default function MyBlogs(){
                     },
                 })
                 res = await res.json()
-                // console.log(res)
+                console.log(res)
         
                 if (!res || !res.success) {
                     setBlogs([])
