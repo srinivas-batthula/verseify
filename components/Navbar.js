@@ -10,6 +10,7 @@ import useThemeStore from "@/stores/useThemeStore";
 import useUserStore from "@/stores/useUserStore";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
+import { getResponse } from '@/public/lib/indexedDB';
 import { showSuccess, showFailed } from "@/utils/Toasts";
 
 
@@ -24,6 +25,7 @@ const Li = styled.li`
 export default function Navbar() {
     const [isNavOpen, setIsNavOpen] = useState(false)
     const [isProfileOpen, setIsProfileOpen] = useState(false)
+    const [notifications, setNotifications] = useState(0)
     const { theme } = useThemeStore()
     const { user } = useUserStore()
     const router = useRouter()
@@ -33,6 +35,15 @@ export default function Navbar() {
 
     const login = typeof window !== 'undefined' ? localStorage.getItem('login') || 'false' : 'false'
 
+
+    useEffect(() => {
+        const GET = async () => {
+            const response = await getResponse({ store: 'notify' })
+            // console.log(response)
+            setNotifications(response.success ? response.saved.length : 0)
+        }
+        GET()
+    }, [])
 
     // Close dropdown/sidebar when clicking outside
     useEffect(() => {
@@ -49,7 +60,7 @@ export default function Navbar() {
         return () => document.removeEventListener("mousedown", handleClickOutside)
     }, [])
 
-                //Handling Log Out...
+    //Handling Log Out...
     const handleLogout = async () => {
         let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/auth/signOut`, {
             method: 'GET',
@@ -73,7 +84,6 @@ export default function Navbar() {
         }
     }
 
-    let notifications = 9
 
     return (
         <nav className={`${styles.navbar} shadow-sm`} style={{ color: theme, background: (theme === 'white') ? 'black' : 'white' }}>

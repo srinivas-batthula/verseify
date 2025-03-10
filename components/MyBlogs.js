@@ -13,12 +13,6 @@ export default function MyBlogs(){
 
     const [blogs, setBlogs] = useState([])
     const {user} = useUserStore()
-    const t = {
-        author: user._id,
-        authorName: user.username,
-        authorBio: user.bio,
-        authorPic: user.profile_pic,
-    }
 
 
     useEffect(()=>{
@@ -50,13 +44,13 @@ export default function MyBlogs(){
 
     return(
         <div className={styles.main}>
-            <div className={styles.head}>My Blogs ({(blogs) ? blogs.length : 0})</div>
+            <div className={styles.head}>({blogs ? `${blogs[0].authorName}'s` : "User's"}) Blogs ({(blogs) ? blogs.length : 0})</div>
                 {
                     (!blogs || blogs.length===0)?(<div >No Blogs Created Yet!</div>):(
                         <div className={styles.Cards}>
                             {
                                 blogs.map((item, index)=>{
-                                    return <Card data={{...item, ...t}} key={index} />
+                                    return <Card data={{item}} key={index} />
                                 })
                             }
                         </div>
