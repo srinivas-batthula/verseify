@@ -5,6 +5,7 @@ import styles from "../styles/Settings.module.css";
 import { FaMoon, FaSun, FaUserEdit, FaLock, FaBell, FaKey, FaTrash } from "react-icons/fa";
 import useThemeStore from "@/stores/useThemeStore";
 import useUserStore from "@/stores/useUserStore";
+import useTokenStore from "@/stores/useTokenStore";
 import { showFailed } from "@/utils/Toasts";
 import { useState, useEffect } from "react";
 
@@ -12,9 +13,11 @@ import { useState, useEffect } from "react";
 
 export default function Settings() {
     const [isOn, setIsOn] = useState('true'); // Default value for isOn
-    const router = useRouter();
-    const { theme, setTheme } = useThemeStore();
+    const router = useRouter()
+    const { theme, setTheme } = useThemeStore()
     const {user} = useUserStore()
+    const {token} = useTokenStore()
+
 
     // Only read localStorage in the client (browser)
     useEffect(() => {
@@ -50,7 +53,7 @@ export default function Settings() {
                     </div>
 
                     {/* Change Password */}
-                    <a target="_blank" href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/reset-password/${user._id}`} className={styles.settingItem}>
+                    <a target="_blank" href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/reset-password/${user._id}?q=${token}`} className={styles.settingItem}>
                         <FaLock />
                         <span>Reset Password</span>
                     </a>

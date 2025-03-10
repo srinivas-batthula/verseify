@@ -32,7 +32,7 @@ const Layout = ({ children }) => {
                 // credentials: 'include',      // 👈 This ensures cookies are sent with the request
             })
             res = await res.json()
-            console.log(token)
+            // console.log(res)
 
             setToken(`Bearer ${token}`)         //Set Token to current Global State...
 
