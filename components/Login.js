@@ -94,32 +94,28 @@ export default function Login() {
             const data = await response.json()
             // console.log(data)
     
-            if (!response.ok) {
+            if (!data.success) {
                 showFailed(data.details || "Something went Wrong!")
                 return
             }
     
             showSuccess(isSignUp ? "Registered successfully!" : isForgot ? "Reset link sent to your Mail!" : "Login successful!")
-            if(isForgot){
-                setTimeout(()=>{
-                    router.push('/successEmail')
-                }, 800)
-                return
-            }
 
             setInp({fullName:'', email:'', password:''})
 
             if(!isForgot){
-                if(!data.success){
-                    typeof window !== 'undefined' ? localStorage.setItem('login', false) : null
-                }
-                else{
-                    typeof window !== 'undefined' ? localStorage.setItem('login', true) : null
-                }
+                typeof window !== 'undefined' ? localStorage.setItem('login', data.success) : null
+
                 setTimeout(() => {
                     // router.push("/")
                     window.location.href = '/'
                 }, 1200)
+                return
+            }
+            else{
+                setTimeout(()=>{
+                    router.push('/successEmail')
+                }, 800)
                 return
             }
         } catch (error) {

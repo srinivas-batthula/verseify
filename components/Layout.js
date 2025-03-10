@@ -25,7 +25,7 @@ const Layout = ({ children }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include' // 👈 This ensures cookies are sent with the request
+                credentials: 'include', // 👈 This ensures cookies are sent with the request
             })
             res = await res.json()
             // console.log(res)
@@ -38,7 +38,6 @@ const Layout = ({ children }) => {
                 typeof window !== 'undefined' ? localStorage.setItem('login', false) : null
             }
         }
-
         getUser()
 
         const fetchData = async () => {
@@ -46,7 +45,6 @@ const Layout = ({ children }) => {
         }
         fetchData()
     }, [])
-
 
 
     // Register the service worker  
@@ -61,6 +59,7 @@ const Layout = ({ children }) => {
                 });
         }
     }, [])
+
 
     return (
         <Suspense fallback={<div className="flex items-center justify-center h-screen">
