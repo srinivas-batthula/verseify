@@ -125,14 +125,11 @@ const Blog = () => {
 
     useEffect(() => {
         const getBlog = async () => {
-            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-
             try {
                 let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/blogs/${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application',
-                        'Authorization': token,
                     },
                     credentials: 'include',
                 })
@@ -152,14 +149,11 @@ const Blog = () => {
         }
 
         const getComments = async () => {
-            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-
             try {
                 let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/comments/${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application',
-                        'Authorization': token,
                     },
                     credentials: 'include',
                 })
@@ -209,13 +203,11 @@ const Blog = () => {
 
     const handleDelete = async (e) => {
         showSuccess("Post Deleted Successfully!")
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
         let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/blogs/${post._id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': token,
             },
             credentials: 'include',
         })
@@ -235,14 +227,12 @@ const Blog = () => {
 
         showSuccess(isFollowing ? "UnFollowed!" : "Followed!")
 
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
         // console.log('user._id: '+user._id+'     data.author: '+data.author)
 
         let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/follow/${user._id}?q=${isFollowing ? 'unfollow' : 'follow'}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': token,
             },
             credentials: 'include',
             body: JSON.stringify({ id: post.author })
@@ -268,13 +258,10 @@ const Blog = () => {
 
         showSuccess("Liked Post!")
 
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-
         let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/blogs/${post._id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': token,
             },
             credentials: 'include',
             body: JSON.stringify({ id: user._id })
@@ -308,13 +295,10 @@ const Blog = () => {
 
         showSuccess("Added New Comment!")
 
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-
         let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/comments/${post._id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': token,
             },
             credentials: 'include',
             body: JSON.stringify({ userId: user._id, text: newComment })

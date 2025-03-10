@@ -18,19 +18,16 @@ const Dashboard = () => {
 
     useEffect(()=>{
         const get = async ()=>{
-            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-        
             try{
                 let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/dashboard/`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application',
-                        'Authorization': token,
                     },
                     credentials: 'include',
                 })
                 res = await res.json()
-                console.log(res)
+                // console.log(res)
         
                 if (!res || !res.success) {
                     setDetails({totalBlogs: 0,totalComments: 0,})

@@ -1,16 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { getResponse, saveResponse } from '@/public/lib/indexedDB'
+import { getResponse } from '@/public/lib/indexedDB'
 import styles from '@/styles/Notifications.module.css';
 import { motion } from 'framer-motion';
 import { Bell, Info } from 'lucide-react';
 
-const notificationsData = [
-    { title: 'New comment on your post', body:'New comment on your post', date: '' },
-    { title: 'Your order has been shipped', body: 'Your order has been shipped', date: '' },
-    { title: 'Payment failed! Please try again.', body:'Payment failed! Please try again.', date: '' },
-]
 
 
 function daysAgo(date) {

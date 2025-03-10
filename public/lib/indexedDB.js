@@ -13,7 +13,6 @@ export const dbPromise = isBrowser
             console.log('Upgrading DB...')
             // Create 'saved' store if not exists
             if (!db.objectStoreNames.contains('saved')) {
-                // console.log('Creating object store: saved')
                 db.createObjectStore('saved', { keyPath: 'id' })
             }
             // Create 'notify' store if not exists
@@ -26,16 +25,13 @@ export const dbPromise = isBrowser
 
 // Save response (only store up to 10 items, prevent duplicates)
 export const saveResponse = async ({ id, response, store = 'saved' }) => {
-    // console.log('store: '+store)
     const db = await dbPromise
     if (!db) {
-        // console.error('IndexedDB not available')
         return { success: false, msg: `IndexedDB not available!` }
     }
 
     // Ensure 'saved' store exists before using
     if (!db.objectStoreNames.contains(store)) {
-        // console.error("Object store 'saved' not found!")
         return { success: false, msg: `IndexedDB doesn't existed in the device!` }
     }
 
@@ -44,19 +40,16 @@ export const saveResponse = async ({ id, response, store = 'saved' }) => {
     // Check if the ID already exists
     const exists = allItems.some((item) => item.id === id)
     if (exists) {
-        // console.warn(`Item with id ${id} already exists.`)
         await db.delete(store, id)
         return { success: true, msg: `Post Unsaved!` }
     }
 
-    // If 10 items exist, delete the oldest one
+    // If 10 items exist, delete the oldest one (As we SAVE only upto 10-items)...
     if (allItems.length >= 10) {
-        // console.log(`Deleting oldest item: ${allItems[0].id}`)
         await db.delete(store, allItems[0].id)
     }
 
     // Save the new response
-    // console.log(`Saving response: ${id}`)
     await db.put(store, { id, response })
     return { success: true, msg: `Item with id ${id} Saved.` }
 }
@@ -77,13 +70,11 @@ if ((isBrowser) && ('serviceWorker' in navigator)) {
 export const getResponse = async ({ id = '', store = 'saved' }) => {
     const db = await dbPromise
     if (!db) {
-        // console.error('IndexedDB not available')
         return { success: false, msg: `IndexedDB not available!` }
     }
 
     // Ensure 'saved' store exists
     if (!db.objectStoreNames.contains(store)) {
-        // console.error("Object store 'saved' not found!")
         return { success: false, msg: `Object store not Found!` }
     }
 
@@ -95,17 +86,14 @@ export const getResponse = async ({ id = '', store = 'saved' }) => {
 export const deleteResponse = async (id, store = 'saved') => {
     const db = await dbPromise;
     if (!db) {
-        // console.error('IndexedDB not available')
         return { success: false, msg: `IndexedDB not available!` }
     }
 
     // Ensure 'saved' store exists
     if (!db.objectStoreNames.contains(store)) {
-        // console.error("Object store 'saved' not found!")
         return { success: false, msg: `Object store not Found!` }
     }
 
-    // console.log(`Deleting item: ${id}`)
     await db.delete(store, id)
     return { success: true, msg: `Post Unsaved!` }
 }

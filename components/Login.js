@@ -110,8 +110,12 @@ export default function Login() {
             setInp({fullName:'', email:'', password:''})
 
             if(!isForgot){
-                typeof window !== 'undefined' ? localStorage.setItem('login', true) : null
-                typeof window !== 'undefined' ? localStorage.setItem('token', data.token) : null
+                if(!data.success){
+                    typeof window !== 'undefined' ? localStorage.setItem('login', false) : null
+                }
+                else{
+                    typeof window !== 'undefined' ? localStorage.setItem('login', true) : null
+                }
                 setTimeout(() => {
                     // router.push("/")
                     window.location.href = '/'

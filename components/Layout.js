@@ -8,6 +8,7 @@ import useThemeStore from '@/stores/useThemeStore'
 import useSavedStore from "@/stores/useSavedStore"
 import useUserStore from "@/stores/useUserStore"
 import { useEffect, Suspense } from "react"
+import styles from '@/styles/Follow.module.css'
 
 
 const Layout = ({ children }) => {
@@ -19,18 +20,15 @@ const Layout = ({ children }) => {
 
     useEffect(() => {
         const getUser = async () => {
-            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-
             let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+'/api/db/user', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': token,
                 },
                 credentials: 'include' // 👈 This ensures cookies are sent with the request
             })
             res = await res.json()
-            console.log(res)
+            // console.log(res)
 
             if (res && res.success) {
                 typeof window !== 'undefined' ? localStorage.setItem('login', true) : null
@@ -54,7 +52,7 @@ const Layout = ({ children }) => {
     // Register the service worker  
     useEffect(() => {
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('https://verseify.netlify.app/service-worker.js', { scope: '/' })
+            navigator.serviceWorker.register('https://verseify.onrender.com/service-worker.js', { scope: '/' })
                 .then((registration) => {
                     console.log('Service Worker registered with scope: ', registration.scope)
                 })
@@ -65,7 +63,9 @@ const Layout = ({ children }) => {
     }, [])
 
     return (
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<div className="flex items-center justify-center h-screen">
+                                    <div className={styles.loader}></div>
+                                </div>}>
             <div>
                 <ClickAnimation />
         
@@ -73,7 +73,7 @@ const Layout = ({ children }) => {
                     (pathname !== '/login/') ? <Navbar /> : <div style={{ display: 'none' }}></div>
                 }
     
-                <div style={{ marginTop: (pathname !== '/login') ? '4rem' : '0rem', width: '100%', height: 'fit-content', color: theme, background: (theme === 'white') ? 'linear-gradient(180deg, #121212ef, #121212ef, #121212ef)' : 'linear-gradient(180deg, #a3a3a31f, #a3a3a31f, #a3a3a31f)' }}>
+                <div style={{ marginTop: (pathname !== '/login/') ? '4rem' : '0rem', width: '100%', height: 'fit-content', color: theme, background: (theme === 'white') ? 'linear-gradient(180deg, #121212ef, #121212ef, #121212ef)' : 'linear-gradient(180deg, #a3a3a31f, #a3a3a31f, #a3a3a31f)' }}>
                     <main >{children}</main>
                 </div>
             

@@ -49,13 +49,10 @@ const CommentCard = ({ comment }) => {
 
         showSuccess("Added New Reply!")
 
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-
         let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/comments/${comment.blogId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': token,
             },
             credentials: 'include',
             body: JSON.stringify({ userId: user._id, text: replyText, parentId: comment._id })
@@ -83,13 +80,10 @@ const CommentCard = ({ comment }) => {
         showSuccess("Liked Comment!")
         setLikes(prevLikes => prevLikes + 1)
 
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-
         let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/comments/${comment._id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': token,
             },
             credentials: 'include',
         })

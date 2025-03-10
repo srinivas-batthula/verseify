@@ -6,7 +6,7 @@
 
 
 ## 🚀 Live Demo
-🔗 **[Try Verseify Live](https://verseify.netlify.app/)**
+🔗 **[Try Verseify Live](https://verseify.onrender.com)**
 🔗 **[Try Backend API Docs Live](https://verseify-backend.onrender.com/api-docs)**
 
 
@@ -33,11 +33,12 @@
 
 Verseify is built with the latest technologies to ensure speed, security, and a great user experience:
 
-- **Frontend:** [Next.js](https://nextjs.org), [React](https://react.dev), [Tailwind CSS](https://tailwindcss.com), [BootStrap CSS](https://bootstrap.com)
+- **Frontend:** [Next.js](https://nextjs.org), [React](https://react.dev), [Tailwind CSS](https://tailwindcss.com)
 - **Backend:** [Node.js](https://nodejs.org), [Express.js](https://expressjs.com)
-- **Authentication:** [JWT] / [Auth0](https://auth0.com)
 - **Database:** [MongoDB Atlas](https://www.mongodb.com/atlas/database)
-- **Hosting:** [GitHub](https://github.com) / [Render](https://render.com)
+- **Authentication:** [JWT] / [Auth0](https://auth0.com)
+- **Version Control:** [Git / GitHub](https://github.com)
+- **Hosting:** [Render](https://render.com)
 - **SEO & Performance:** Next.js Optimization, Lighthouse & PWA
 
 ## 🚀 Getting Started

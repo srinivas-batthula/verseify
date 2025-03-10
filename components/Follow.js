@@ -23,14 +23,12 @@ const Follow = () => {
     useEffect(() => {
         // console.log('userId: '+user._id+'  q: '+q)
         const fetchFollowing = async () => {
-            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
             try {
                 setLoading(true)
                 let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/db/follow/${id}?q=${q}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        'Authorization': token,
                     },
                     credentials: "include",
                 })
@@ -65,7 +63,7 @@ const Follow = () => {
             <div className="flex items-center justify-center h-screen">
                 <div className={styles.loader}></div>
             </div>
-        );
+        )
     }
 
 

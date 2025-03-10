@@ -117,13 +117,11 @@ const Card = ({ data = {} }) => {
 
     const handleDelete = async (e) => {
         showSuccess("Post Deleted Successfully!")
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
         let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+`/api/db/blogs/${data._id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': token,
             },
             credentials: 'include',
         })
@@ -148,14 +146,12 @@ const Card = ({ data = {} }) => {
             
         showSuccess(isFollowing ? "UnFollowed!" : "Followed!")
 
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
         // console.log('user._id: '+user._id+'     data.author: '+data.author)
 
         let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+`/api/db/follow/${user._id}?q=${isFollowing ? 'unfollow' : 'follow'}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': token,
             },
             credentials: 'include',
             body: JSON.stringify({id : data.author})
@@ -182,13 +178,10 @@ const Card = ({ data = {} }) => {
         showSuccess("Liked Post!")
         setIsLiked(true)
 
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-
         let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+`/api/db/blogs/${data._id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': token,
             },
             credentials: 'include',
             body: JSON.stringify({id : user._id})

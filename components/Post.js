@@ -132,7 +132,6 @@ export default function Post() {
 
 
     const handlePost = async (e)=>{
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
         e.preventDefault()
         if(title === ''){
             showFailed("Enter a title to Post!")
@@ -155,9 +154,6 @@ export default function Post() {
         try {
             let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/blogs/${user._id}?q=${(file!==null) ? true : false}`, {
                 method: 'POST',
-                headers: {
-                    'Authorization': token,
-                },
                 credentials: 'include',
                 body: formData,
             })

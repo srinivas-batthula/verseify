@@ -1,8 +1,8 @@
 // const CACHE_NAME = `verseify-cache-v${process.env.NEXT_PUBLIC_CACHE_VERSION || '9'}`
 
 
-const CACHE_NAME = `verseify-cache-v32`                   //Change this to a new version before every New DEPLOY.............................
-const HOME = 'https://verseify.netlify.app'
+const CACHE_NAME = `verseify-cache-v33`                   //Change this to a new version before every New DEPLOY.............................
+const HOME = 'https://verseify.onrender.com'
 
 const STATIC_FILES = [
     HOME+"/",

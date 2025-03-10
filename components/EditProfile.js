@@ -67,7 +67,6 @@ const EditProfile = () => {
     }    
 
     const handleSubmit = async (e) => {
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
         e.preventDefault()
 
         if (profile.username === '' || profile.email === '') {
@@ -86,9 +85,6 @@ const EditProfile = () => {
         try {
             let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/users/${user._id}?q=${isFile}`, {
                 method: 'PATCH',
-                headers: {
-                    'Authorization': token,
-                },
                 credentials: 'include',
                 body: formData,
             })

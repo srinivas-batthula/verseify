@@ -95,14 +95,11 @@ export default function Profile() {
 
     useEffect(() => {
         const getUser = async () => {
-            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-
             try {
                 let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/users/${id}`, {
                     method: 'GET',
                     headers: {
-                        'Content-Type': 'application',
-                        'Authorization': token,
+                        'Content-Type': 'application/json',
                     },
                     credentials: 'include',
                 })
@@ -141,14 +138,12 @@ export default function Profile() {
 
         showSuccess(isFollowing ? "UnFollowed!" : "Followed!")
 
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
         // console.log('user._id: '+user._id+'     data.author: '+data.author)
 
         let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/db/follow/${user._id}?q=${isFollowing ? 'unfollow' : 'follow'}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': token,
             },
             credentials: 'include',
             body: JSON.stringify({ id: users._id })
@@ -166,13 +161,10 @@ export default function Profile() {
     }
 
     const handleLogout = async () => {
-        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-
         let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/auth/signOut`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': token,
             },
             credentials: 'include',
         })
