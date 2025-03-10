@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from '@/styles/Saved.module.css'
 import Card from "./Card"
-import useUserStore from '@/stores/useUserStore'
 import { useParams } from 'next/navigation'
 
 
@@ -12,7 +11,6 @@ export default function MyBlogs(){
     const params = useParams()
 
     const [blogs, setBlogs] = useState([])
-    const {user} = useUserStore()
 
 
     useEffect(()=>{
@@ -44,7 +42,7 @@ export default function MyBlogs(){
 
     return(
         <div className={styles.main}>
-            <div className={styles.head}>({blogs ? `${blogs[0].authorName}'s` : "User's"}) Blogs ({(blogs) ? blogs.length : 0})</div>
+            <div className={styles.head}>User's Blogs ({(blogs) ? blogs.length : 0})</div>
                 {
                     (!blogs || blogs.length===0)?(<div >No Blogs Created Yet!</div>):(
                         <div className={styles.Cards}>
