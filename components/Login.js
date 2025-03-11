@@ -26,6 +26,8 @@ export default function Login() {
 
     useEffect(() => {             // Setting Token When User logged in via Google...
         if (google === 'true') {
+            showSuccess("Login successful!")
+            
             typeof window !== 'undefined' ? localStorage.setItem('login', true) : null
             typeof window !== 'undefined' ? localStorage.setItem('token', tokenT) : null
 
