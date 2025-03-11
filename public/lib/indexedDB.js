@@ -58,9 +58,9 @@ export const saveResponse = async ({ id, response, store = 'saved' }) => {
 if ((isBrowser) && ('serviceWorker' in navigator)) {
     // Listen for messages from the Service Worker
     navigator.serviceWorker.addEventListener('message', async (event) => {
-        if (event.data?.type === 'SAVE_NOTIFICATION') {
+        if (event.data.type === 'SAVE_NOTIFICATION') {
             // console.log('Saving notification:', event.data.data)
-            await saveResponse({ id: event.data.id, response: event.data.data, store: 'notify' })
+            await saveResponse({ id: event.data.data.id, response: event.data.data, store: 'notify' })
         }
     })
 }

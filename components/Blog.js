@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter, useParams } from "next/navigation";
 import styles from "@/styles/Blog.module.css"; // Import CSS file
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from 'react-share';
 import CommentCard from "./CommentCard";
 import { showSuccess, showFailed } from "@/utils/Toasts";
@@ -401,7 +401,7 @@ const Blog = () => {
                 {/* Post Content */}
                 <div className={styles.content}>
                     {/* {editor && <EditorContent editor={editor} />} */}
-                    {editor && <div dangerouslySetInnerHTML={{ __html: post.content }} />}
+                    <div dangerouslySetInnerHTML={{ __html: post.content }} />
                 </div>
 
                 {/* Comment Section */}
