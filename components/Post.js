@@ -312,6 +312,8 @@ export default function Post() {
             </div>
 
             <button onClick={handlePost} className="btn" title="create post">Create</button>
+            
+            <p>Note:  Maximum letter count in 'content' field is '400'</p>
         </div>
     )
 }
