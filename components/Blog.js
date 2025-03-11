@@ -13,14 +13,14 @@ import { saveResponse } from "@/public/lib/indexedDB";
 import useSavedStore from "@/stores/useSavedStore";
 import useTokenStore from "@/stores/useTokenStore";
 
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import TextAlign from "@tiptap/extension-text-align";
-import Heading from "@tiptap/extension-heading";
-import BulletList from "@tiptap/extension-bullet-list";
-import OrderedList from "@tiptap/extension-ordered-list";
-import Underline from "@tiptap/extension-underline";
-import Highlight from "@tiptap/extension-highlight";
+// import { EditorContent, useEditor } from "@tiptap/react";
+// import StarterKit from "@tiptap/starter-kit";
+// import TextAlign from "@tiptap/extension-text-align";
+// import Heading from "@tiptap/extension-heading";
+// import BulletList from "@tiptap/extension-bullet-list";
+// import OrderedList from "@tiptap/extension-ordered-list";
+// import Underline from "@tiptap/extension-underline";
+// import Highlight from "@tiptap/extension-highlight";
 
 
 
@@ -326,22 +326,22 @@ const Blog = () => {
 
 
 
-    const editor = useEditor({
-        extensions: [
-            StarterKit.configure(),
-            TextAlign.configure({ types: ["heading", "paragraph"] }),
-            Heading.configure({ levels: [1, 2, 3] }),
-            BulletList.configure({ HTMLAttributes: { class: "list-disc ml-3" } }),
-            OrderedList.configure({ HTMLAttributes: { class: "list-decimal ml-3" } }),
-            Underline,
-            Highlight,
-        ],
-        content: post.content || "<p>Loading...</p>",
-        editable: false, // Make it read-only
-        editorProps: {
-            attributes: { class: "" },
-        },
-    })
+    // const editor = useEditor({
+    //     extensions: [
+    //         StarterKit.configure(),
+    //         TextAlign.configure({ types: ["heading", "paragraph"] }),
+    //         Heading.configure({ levels: [1, 2, 3] }),
+    //         BulletList.configure({ HTMLAttributes: { class: "list-disc ml-3" } }),
+    //         OrderedList.configure({ HTMLAttributes: { class: "list-decimal ml-3" } }),
+    //         Underline,
+    //         Highlight,
+    //     ],
+    //     content: post.content || "<p>Loading...</p>",
+    //     editable: false, // Make it read-only
+    //     editorProps: {
+    //         attributes: { class: "" },
+    //     },
+    // })
 
 
     return (
