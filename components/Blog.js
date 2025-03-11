@@ -137,7 +137,7 @@ const Blog = () => {
                     // credentials: 'include',
                 })
                 res = await res.json()
-                console.log(res)
+                // console.log(res)
 
                 if (!res || !res.success) {
                     return
@@ -188,6 +188,7 @@ const Blog = () => {
             setIsLiked((post.likes.includes(user._id)) ? true : false)
             authorCheck = (post.author === user._id) ? true : false
         }
+        console.log(post)
     }, [user, post])
 
 
