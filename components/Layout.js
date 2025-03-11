@@ -90,14 +90,16 @@ const Layout = ({ children }) => {
         }
 
         try {
+            const formData = new FormData()
+            formData.append('data', JSON.stringify(subscription))
+
             let r = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/db/users/${uid}?q=false`, {
                 method: 'PATCH',
                 // credentials:'include',
                 headers: {
                     'Authorization': tokenU,
-                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ 'subscription': subscription })
+                body: formData,
             })
             r = await r.json()
 
@@ -135,7 +137,9 @@ const Layout = ({ children }) => {
                 setUser(res.user)
 
                                             //Subscribe the User to Push Notifications...
-                await subscribeToNotifications(res.user._id, `Bearer ${token}`)
+                if(!res.user.subscription){
+                    await subscribeToNotifications(res.user._id, `Bearer ${token}`)
+                }
             }
             // else {
             //     typeof window !== 'undefined' ? localStorage.setItem('login', false) : null
