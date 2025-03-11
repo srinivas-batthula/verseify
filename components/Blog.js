@@ -188,7 +188,7 @@ const Blog = () => {
             setIsLiked((post.likes.includes(user._id)) ? true : false)
             authorCheck = (post.author === user._id) ? true : false
         }
-        console.log(post)
+        // console.log(post.content)
     }, [user, post])
 
 
@@ -400,7 +400,8 @@ const Blog = () => {
 
                 {/* Post Content */}
                 <div className={styles.content}>
-                    {editor && <EditorContent editor={editor} />}
+                    {/* {editor && <EditorContent editor={editor} />} */}
+                    {editor && <div dangerouslySetInnerHTML={{ __html: post.content }} />}
                 </div>
 
                 {/* Comment Section */}
