@@ -163,7 +163,7 @@ export default function Post() {
                 body: formData,
             })
             res = await res.json()
-            console.log(res)
+            // console.log(res)
     
             if (!res || !res.success) {
                 showFailed("Failed to Post!")
@@ -313,7 +313,7 @@ export default function Post() {
 
             <button onClick={handlePost} className="btn" title="create post">Create</button>
             
-            <p style={{color:'red'}}>Note:  Maximum letter count in 'content' field is '400'  &  Max. lines are '8'</p>
+            <p style={{color:'red'}}>Note:  Maximum letter count in 'content' field is '400'  &  Max. lines are '8'  <span style={{fontSize:'1.2rem'}}>Please write as lesser as possible...</span></p>
         </div>
     )
 }
