@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter, useParams } from "next/navigation";
 import styles from "@/styles/Blog.module.css"; // Import CSS file
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FacebookShareButton, TwitterShareButton, WhatsappShareButton } from 'react-share';
 import CommentCard from "./CommentCard";
 import { showSuccess, showFailed } from "@/utils/Toasts";
@@ -330,17 +330,18 @@ const Blog = () => {
             StarterKit.configure(),
             TextAlign.configure({ types: ["heading", "paragraph"] }),
             Heading.configure({ levels: [1, 2, 3] }),
-            BulletList.configure({ HTMLAttributes: { class: "list-disc ml-3" } }),
-            OrderedList.configure({ HTMLAttributes: { class: "list-decimal ml-3" } }),
+            BulletList,
+            OrderedList,
             Underline,
             Highlight,
         ],
-        content: post.content,
+        content: post.content || "<p>Loading...</p>",
         editable: false, // Make it read-only
         editorProps: {
             attributes: { class: "" },
         },
-    })
+    });
+    
 
 
     return (
