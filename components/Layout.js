@@ -90,7 +90,7 @@ const Layout = ({ children }) => {
         }
 
         try {
-            let r = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}+/api/db/users/${uid}?q=false`, {
+            let r = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/db/users/${uid}?q=false`, {
                 method: 'PATCH',
                 // credentials:'include',
                 headers: {
