@@ -91,7 +91,8 @@ const Layout = ({ children }) => {
 
         try {
             const formData = new FormData()
-            formData.append('data', JSON.stringify(subscription))
+            formData.append('file', null)
+            formData.append('data', JSON.stringify({subscription}))
 
             let r = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/db/users/${uid}?q=false`, {
                 method: 'PATCH',
@@ -103,11 +104,11 @@ const Layout = ({ children }) => {
             })
             r = await r.json()
 
-            if (r.status === 'success') {
+            if (r.success) {
                 console.log('User is subscribed to notifications...')
             }
             else {
-                console.log("An error occurred while Sending Notification : ")
+                console.log("An error occurred while Sending Notification")
             }
         }
         catch (err) {

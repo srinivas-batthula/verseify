@@ -399,7 +399,7 @@ const Blog = () => {
 
                 {/* Post Content */}
                 <div className={styles.content}>
-                    <EditorContent editor={editor} />
+                    {editor && <EditorContent editor={editor} />}
                 </div>
 
                 {/* Comment Section */}
