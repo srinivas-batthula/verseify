@@ -48,6 +48,7 @@ self.addEventListener('push', async(event) => {
     console.log("Push received...")
     let data = event.data ? event.data.json() : { id: '1', title: 'You have a new Notification!', body: 'You have a new notification alert from ~Verseify.' }
     url = (data.url!=='')?data.url : url
+    data.date = new Date()
 
     const options = {
         body: data.body,
