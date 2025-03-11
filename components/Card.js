@@ -207,7 +207,7 @@ const Card = ({ data = {} }) => {
             <div className={styles.postHeader} title="open profile">
                 <div onClick={() => { router.push(`/profile/${data.author}`) }} className={styles.userDetails}>
                     <Image
-                        src={(data.authorPic && data.authorPic.secure_url!=='') ? data.authorPic.secure_url : (theme === 'black' ? '/user_default_dark.png' : '/user_default_light.png')}
+                        src={(data.authorPic && data.authorPic.secure_url!=='') ? data.authorPic.secure_url : '/user_default_dark.png'}
                         alt={`${data.authorName}'s profile`}
                         width={100}
                         height={100}

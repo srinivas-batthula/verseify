@@ -127,6 +127,7 @@ const Search = () => {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     className={styles.searchInput}
+                    style={{color:'black'}}
                 />
                 <button type="submit" className={styles.searchButton}><i className="fa-solid fa-magnifying-glass"></i></button>
             </form>

@@ -365,7 +365,7 @@ const Blog = () => {
                 {/* Author Section */}
                 <div className={styles.authorSection}>
                     <div onClick={() => { router.push(`/profile/${post.author}`) }} className={styles.author}>
-                        <Image src={(post.authorPic && post.authorPic.secure_url !== '') ? post.authorPic.secure_url : (theme === 'black' ? '/user_default_dark.png' : '/user_default_light.png')} alt="Author's Profile pic" width={100} height={100} className={styles.avatar} style={{ borderRadius: "50%", objectFit: "cover" }} />
+                        <Image src={(post.authorPic && post.authorPic.secure_url !== '') ? post.authorPic.secure_url : '/user_default_dark.png'} alt="Author's Profile pic" width={100} height={100} className={styles.avatar} style={{ borderRadius: "50%", objectFit: "cover" }} />
                         <div className={styles.authorDetails}>
                             <h3 className={styles.authorName}>{authorCheck ? 'You' : post.authorName}</h3>
                             <p className={styles.authorBio}>{post.authorBio}</p>

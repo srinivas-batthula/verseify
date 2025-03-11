@@ -170,6 +170,10 @@ export default function Profile() {
         setToken('')
         showSuccess("Logged Out Successfully!")
 
+        setTimeout(()=>{
+            window.location.href = '/'
+        }, 600)
+
         
         // let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/auth/signOut`, {
         //     method: 'GET',
@@ -224,7 +228,7 @@ export default function Profile() {
                     {/* Profile Header */}
                     <div className={styles.header}>
                         <div className={styles.imageContainer} title="Update Profile Photo">
-                            <img src={(users.profile_pic && users.profile_pic.secure_url !== '') ? users.profile_pic.secure_url : (theme === 'white' ? 'user_default_dark.png' : '/user_default_light.png')} alt="Profile" className={styles.profileImage} />
+                            <img src={(users.profile_pic && users.profile_pic.secure_url !== '') ? users.profile_pic.secure_url : (theme === 'white' ? '/user_default_dark.png' : '/user_default_light.png')} alt="Profile" className={styles.profileImage} />
                         </div>
                         <div >
                             {/* <Edit className={styles.editProfile} style={{marginBottom:'0.8rem'}}>

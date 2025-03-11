@@ -48,6 +48,10 @@
     margin: 0;
 }
 
+.avatar:hover{
+    outline: gray solid 2px;
+}
+
 .authorName {
     margin: 0;
     font-size: 1.3rem;

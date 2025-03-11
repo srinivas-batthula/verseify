@@ -69,6 +69,10 @@ export default function Navbar() {
         setToken('')
         showSuccess("Logged Out Successfully!")
 
+        setTimeout(()=>{
+            window.location.href = '/'
+        }, 600)
+        
     
         // let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/auth/signOut`, {
         //     method: 'GET',

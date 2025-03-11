@@ -273,7 +273,7 @@ export default function Post() {
             <input
                 type="text"
                 className="tags-input"
-                placeholder="#tags (comma separated)"
+                placeholder="#tags (space separated)"
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
                 style={{color: 'black'}}
