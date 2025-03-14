@@ -1,0 +1,8 @@
+{
+            "imgUrl": "https://srinivas-batthula.github.io/portfolio/utils/todo_project.png",
+            "title": "Verseify",
+            "des": "'Verseify' is an innovative blogging platform (web-app) built with NextJs and MERN stack, designed to streamline task organization and productivity. The app features an intuitive UI, Notifications, Secure user-authentication and Offline functionality, ensuring accessibility on the go. Explore how it simplifies everyday planning, and feel free to reach out for any collaboration opportunities!",
+            "urlFront": "https://github.com/srinivas-batthula/verseify",
+            "urlBack": "https://github.com/srinivas-batthula/verseify_backend",
+            "urlLive": "https://verseify.netlify.app"
+}
