@@ -1,12 +1,112 @@
 'use client'
 
+import React, { useState, useRef, useEffect } from "react"
+import ReactMarkdown from "react-markdown"
+import { motion } from "framer-motion"
+import styles from '../styles/Ai.module.css'
 
-export default function Ai(){
 
-    return(
-        <div style={{background: 'linear-gradient(135deg, #6dd5ed, #00c851, #00796b)', width:'100%', height:'100vh', overflow:'hidden', textAlign:'center', display:'flex', justifyContent:'center', alignContent:'center', alignItems:'center'}}>
-            <div style={{fontWeight:'bold', fontSize:'1.8rem'}}>
-                Coming Soon...
+
+const Message = ({ text, sender }) => {
+    return (
+        <div className={`${styles.message} ${sender === "user" ? styles.user : styles.ai}`}>
+            <ReactMarkdown>{text}</ReactMarkdown>
+        </div>
+    )
+}
+
+
+export default function Ai() {
+    const [messages, setMessages] = useState([])
+    const [input, setInput] = useState("")
+    const chatBoxRef = useRef(null)
+
+
+    useEffect(() => {
+        chatBoxRef.current?.scrollTo(0, chatBoxRef.current.scrollHeight)
+    }, [messages])
+
+    const sendMessage = async () => {
+        if (!input.trim())
+            return
+
+        const userMessage = { text: input, sender: "user" }
+        setMessages([...messages, userMessage])
+
+        setInput("")
+
+        try {
+            // let response = await fetch("/api/chatbot", {
+            //     method: "POST",
+            //     headers: { "Content-Type": "application/json" },
+            //     body: JSON.stringify({ userInput: input }),
+            // })
+            // response = await response.json()
+            // const aiMessage = { text: data.response, sender: "ai" }
+
+            const aiMessage = { text: "Hello User, How can I help you today?", sender: "ai" }
+
+            setMessages((prev) => [...prev, aiMessage])
+        } catch (error) {
+            console.error("Error:", error)
+        }
+    }
+
+    return (
+        <div className={styles.chatContainer}>
+
+            {
+                // Messages...
+                (messages && messages.length !== 0) ?
+                    (
+                        <div className={styles.chatBox} ref={chatBoxRef}>
+                            {
+                                messages.map((msg, index) => (
+                                    <motion.div
+                                        key={index}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.3, ease: "easeOut" }}
+                                    >
+                                        <Message text={msg.text} sender={msg.sender} />
+                                    </motion.div>
+                                ))
+                            }
+                        </div>
+                    ) :
+                    (
+                        <div className={styles.chatUI}>
+                            <h1 className={styles.heading}>Post with AI</h1>
+                            <p className={styles.note}>
+                                <span className={styles.alert}>Note:</span> Type <b>`#`</b> & Enter your topic to use <b>'Post with AI'</b> feature.
+                            </p>
+                            <p className={styles.hashtags}>#healthcare <span style={{marginLeft:'6px'}}></span> #ai <span style={{marginLeft:'6px'}}></span> #webdev</p>
+                        </div>
+                    )
+            }
+
+            {/* Input Container... */}
+            <div className={styles.inputContainer}>
+                <input
+                    type="text"
+                    className={styles.inputField}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            e.preventDefault()     // Prevents newline in input
+                            return sendMessage()
+                        }
+                    }}
+                    placeholder="Ask anything   { #ai  #trends }"
+                />
+                <motion.button
+                    className={styles.sendButton}
+                    onClick={sendMessage}
+                    whileTap={{ scale: 0.9 }}
+                >
+                    ➤
+                </motion.button>
             </div>
         </div>
     )

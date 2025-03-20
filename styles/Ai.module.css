@@ -1,0 +1,226 @@
+/* Ai.module.css */
+
+.chatContainer {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #222326;
+    color: white;
+    font-family: "Inter", sans-serif;
+}
+
+.chatBox {
+    flex: 1;
+    width: 50rem;
+    overflow-y: auto;
+    margin-top: 1.8rem;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 1.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    scroll-behavior: smooth;
+}
+
+.chatBox::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chatBox::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.chatUI {
+    flex: 1;
+    width: 50rem;
+    padding: 3rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    animation: fadeIn 0.8s ease-in-out;
+    
+        /* Prevents text selection */
+    user-select: none;
+    -webkit-user-select: none; /* For Safari */
+    -moz-user-select: none; /* For Firefox */
+    -ms-user-select: none; /* For Internet Explorer */
+}
+
+.heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    background: -webkit-linear-gradient(left, #d7d7d7d2, #d7d7d7d2);
+    background-clip: content-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textGlow 1s infinite alternate;
+}
+
+.note {
+    font-size: 0.9rem;
+    color: rgb(176, 176, 176);
+    margin-top: 1.1rem;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.alert {
+    color: rgb(255, 121, 121);
+    font-weight: bold;
+}
+
+.hashtags {
+    font-size: 0.9rem;
+    color: rgb(208, 208, 208);
+    font-weight: 550;
+    animation: slideIn 1s ease-in-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes textGlow {
+    from { text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
+    to { text-shadow: 0 0 15px rgba(255, 255, 255, 0.6); }
+}
+
+
+.message {
+    /* width: 80%; */
+    padding: 0.8rem 1rem;
+    border-radius: 16px;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-left: auto;
+    margin-right: auto;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.user {
+    background-color: #a097977c;
+    color: white;
+    align-self: flex-end;
+    text-align: right;
+    border-bottom-right-radius: 2px;
+}
+
+.ai {
+    background-color: #444654;
+    color: white;
+    align-self: flex-start;
+    text-align: left;
+    border-bottom-left-radius: 2px;
+}
+
+.inputContainer {
+    width: 50rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    padding: 0.6rem;
+    background-color: #40414f;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    position: fixed;
+    bottom: 0;
+}
+
+.inputField {
+    flex: 1;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #343541;
+    color: white;
+    outline: none;
+}
+
+.sendButton {
+    margin-left: 0.3rem;
+    padding: 0.5rem 0.8rem;
+    font-size: 1.3rem;
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.sendButton:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width:800px) {
+    .chatBox{
+        width: 100%;
+    }
+
+    .chatUI{
+        width: 100%;
+    }
+
+    .inputContainer{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .chatBox{
+        padding: 2rem;
+    }
+
+    .inputContainer{
+        padding: 0.4rem;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .chatBox{
+        padding: 1rem;
+    }
+}

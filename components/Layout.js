@@ -185,7 +185,7 @@ const Layout = ({ children }) => {
                 </div>
 
                 {
-                    (pathname !== '/login/') ? <Footer /> : <div style={{ display: 'none' }}></div>
+                    !['/login/', '/ai/'].includes(pathname) ? <Footer /> : <div style={{ display: 'none' }}></div>
                 }
             </div>
         </Suspense>
