@@ -290,7 +290,7 @@
     }
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width:650px) {
     .chatBox{
         padding: 1.2rem;
         margin-top: 0rem;
@@ -298,6 +298,7 @@
 
     .box2{
         margin-top: 0.1rem;
+        max-height: 85%;
     }
 
     .inputContainer{

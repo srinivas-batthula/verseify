@@ -85,7 +85,7 @@ export default function Ai() {
 
             setMessages((prev) => [...prev, aiMessage])
         }
-        catch (error) {
+        catch(error) {
             console.error("Error:", error)
         }
         finally {
