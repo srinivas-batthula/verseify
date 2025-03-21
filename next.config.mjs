@@ -3,7 +3,7 @@
 const nextConfig = {
     // basePath:'/verseify',
     // assetPrefix:'/verseify',
-    trailingSlash: true,
+    // trailingSlash: true,
     reactStrictMode: true,
     images: {
         domains: ['res.cloudinary.com'], // Allow Cloudinary images

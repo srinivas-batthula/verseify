@@ -2,15 +2,44 @@
 
 import React, { useState, useRef, useEffect } from "react"
 import ReactMarkdown from "react-markdown"
+import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import styles from '../styles/Ai.module.css'
 
 
 
-const Message = ({ text, sender }) => {
+
+const Message = ({ data }) => {
+    const router = useRouter()
+
+    const handlePost = async () => {
+        if (data.q && data.q === true) {
+            const responseContent = data.text
+
+            // Extract title
+            const titleMatch = responseContent.match(/\*\*SEO-friendly 5-word title:\*\* "(.*?)"/)
+            const title = titleMatch ? titleMatch[1] : null
+
+            // Extract hashtags
+            const hashtagsList = responseContent.match(/#\w+/g) || []                        // Match hashtags
+            const hashtagsWithoutHash = hashtagsList.map(tag => encodeURIComponent(tag))     // Remove '#' by slicing
+            const hashtags = hashtagsWithoutHash.join(" ")                                   // Join them into a space-separated string
+
+            // Extract content snippet
+            const contentMatch = responseContent.match(/\*\*10-word engaging blog content snippet:\*\* "(.*?)"/)
+            const content = contentMatch ? contentMatch[1] : null
+
+            // console.log(hashtags)
+            return router.push(`/post?q=true&title=${title}&content=${content}&hashtags=${hashtags}`)
+        }
+    }
+
+
     return (
-        <div className={`${styles.message} ${sender === "user" ? styles.user : styles.ai}`}>
-            <ReactMarkdown>{text}</ReactMarkdown>
+        <div className={`${styles.message} ${data.sender === "user" ? styles.user : styles.ai}`}>
+            <ReactMarkdown>{data.text}</ReactMarkdown>
+
+            <button onClick={handlePost} type="button" className={styles.msgBtn} style={{ display: (data.sender === "ai" && data.q) ? 'flex' : 'none', color:'rgb(55, 212, 176)', justifyContent:'center', alignContent:'center', textAlign:'center', marginTop:'2rem' }}>Quick Post ➤</button>
         </div>
     )
 }
@@ -36,36 +65,34 @@ export default function Ai() {
         setMessages([...messages, userMessage])
         setInput("")
 
-        if(input.trim().includes('#')){
-            userMessage.q='true'
+        if (input.trim().includes('#')) {
+            userMessage.q = true
         }
-        else{
-            userMessage.q='false'
+        else {
+            userMessage.q = false
         }
-        
+
         try {
             let response = await fetch(`https://sambanova-ai-fastapi.onrender.com/verseify_ai?q=${userMessage.q}`, {
-               method: "POST",
-               headers: { "Content-Type": "application/json" },
-               body: JSON.stringify({ userInput: input }),
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userInput: input }),
             })
             response = await response.json()
-            const aiMessage = { text: response.response, sender: "ai" }
+            let aiMessage = { text: response.response, sender: "ai", q: userMessage.q }
 
             // const aiMessage = { text: "Hello User, How can I help you today?", sender: "ai" }
 
-            setTimeout(() => {
-                setMessages((prev) => [...prev, aiMessage])
-                setLoading(false)
-            }, 1000)
-
+            setMessages((prev) => [...prev, aiMessage])
         }
         catch (error) {
             console.error("Error:", error)
         }
-        // finally {
-        //     setLoading(false)
-        // }
+        finally {
+            setTimeout(() => {
+                setLoading(false)
+            }, 500)
+        }
     }
 
     return (
@@ -87,7 +114,7 @@ export default function Ai() {
                                             animate={{ opacity: 1, y: 0 }}
                                             transition={{ duration: 0.3, ease: "easeOut" }}
                                         >
-                                            <Message text={msg.text} sender={msg.sender} />
+                                            <Message data={msg} />
                                         </motion.div>
                                     ))
                                 }
@@ -126,7 +153,7 @@ export default function Ai() {
                     whileTap={{ scale: 0.9 }}
                 >
                     {
-                        (loading===true) ? (
+                        (loading === true) ? (
                             <div className={styles.loadingDots}>
                                 <div className={styles.dot}></div>
                                 <div className={styles.dot}></div>

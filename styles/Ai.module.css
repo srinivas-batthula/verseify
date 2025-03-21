@@ -130,14 +130,31 @@
 
 .message {
     /* width: 80%; */
-    padding: 0.8rem 1rem;
+    padding: 1.2rem 1.8rem;
     border-radius: 16px;
     font-size: 1rem;
+    font-family: var(--font-primary);
     line-height: 1.5;
     margin-left: auto;
     margin-right: auto;
     word-wrap: break-word;
     white-space: pre-wrap;
+}
+
+.msgBtn{
+    width: fit-content;
+    padding: 0.3rem;
+    border: none;
+    animation: BtnGlow 1s infinite alternate;
+}
+
+.msgBtn:hover{
+    outline: rgb(55, 212, 176) solid 3px;
+}
+
+@keyframes BtnGlow {
+    from { text-shadow: 0 0 5px rgba(255, 255, 255, 0.762); }
+    to { text-shadow: 0 0 25px rgb(44, 231, 187); }
 }
 
 .user {
@@ -150,7 +167,7 @@
 }
 
 .ai {
-    margin-bottom: 1.8rem;
+    margin-bottom: 2rem;
     background-color: #444654;
     color: white;
     align-self: flex-start;
@@ -288,8 +305,8 @@
     }
 }
 
-@media screen and (max-width:500px) {
+/* @media screen and (max-width:500px) {
     .chatBox{
         padding: 1rem;
     }
-}
+} */

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
     List, Heading1, Heading2, Heading3, Code, Bold, Italic, Strikethrough, AlignCenter, AlignLeft,
     AlignRight, Highlighter, ListOrdered, Undo, Redo, Underline
@@ -123,14 +123,16 @@ function ToolBar({ editor, onEmojiSelect, isSaving }) {
 // CustomEditor Component
 export default function Post() {
     const router = useRouter()
+    const query = useSearchParams()
+    const q = query.get('q') || 'false'
     const {user} = useUserStore()
     const {token} = useTokenStore()
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
-    const [title, setTitle] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogTitle") || '' : "")
-    const [tags, setTags] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogTags") || '' : "")
+    const [title, setTitle] = useState(q==='true' ? query.get('title') : (typeof window !== 'undefined' ? () => localStorage.getItem("blogTitle") || '' : ""))
+    const [tags, setTags] = useState(q==='true' ? query.get('hashtags') : (typeof window !== 'undefined' ? () => localStorage.getItem("blogTags") || '' : ""))
     const [file, setFile] = useState(null)
-    const [content, setContent] = useState(typeof window !== 'undefined' ? () => localStorage.getItem("blogContent") || '' : "")
+    const [content, setContent] = useState(q==='true' ? query.get('content') : (typeof window !== 'undefined' ? () => localStorage.getItem("blogContent") || '' : ""))
 
 
     const handlePost = async (e)=>{
@@ -191,6 +193,15 @@ export default function Post() {
             return
         }
     }, [])
+
+    useEffect(()=>{
+        if(q==='true'){
+            setTitle(query.get('title'))
+            setContent(query.get('content'))
+            setTags(query.get('hashtags'))
+            // console.log(query.get('hashtags'))
+        }
+    }, [query])
 
     // Auto-save effect
     useEffect(() => {
