@@ -69,8 +69,10 @@ export default function Ai() {
                 // Messages...
                 (messages && messages.length !== 0) ?
                     (
-                        <div className={styles.chatBox} ref={chatBoxRef}>
-                            <div className={styles.box2}>
+                        <div className={styles.chatBox}>
+                            <h1 className={styles.heading1}>Write with AI</h1>
+
+                            <div className={styles.box2} ref={chatBoxRef}>
                                 {
                                     messages.map((msg, index) => (
                                         <motion.div

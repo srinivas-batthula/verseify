@@ -14,7 +14,7 @@
 }
 
 .chatBox {
-    margin-top: 2.5rem;
+    margin-top: 0.6rem;
     width: 50rem;
     height: 100vh; /* Fixed height to prevent resizing */
     padding: 1rem;
@@ -26,6 +26,7 @@
 }
 
 .box2 {
+    margin-top: 0.6rem;
     width: 100%;
     max-height: 100%;
     overflow-y: auto; /* Only this part scrolls */
@@ -62,6 +63,17 @@
     -webkit-user-select: none; /* For Safari */
     -moz-user-select: none; /* For Firefox */
     -ms-user-select: none; /* For Internet Explorer */
+}
+
+.heading1{
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    background: -webkit-linear-gradient(left, #d7d7d7bf, #b3d66cbf);
+    background-clip: content-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textGlow 1s infinite alternate;
 }
 
 .heading {
@@ -119,7 +131,6 @@
 .message {
     /* width: 80%; */
     padding: 0.8rem 1rem;
-    margin: 1.5rem;
     border-radius: 16px;
     font-size: 1rem;
     line-height: 1.5;
@@ -130,6 +141,7 @@
 }
 
 .user {
+    margin-bottom: 1rem;
     background-color: #a097977c;
     color: white;
     align-self: flex-end;
@@ -138,6 +150,7 @@
 }
 
 .ai {
+    margin-bottom: 1.8rem;
     background-color: #444654;
     color: white;
     align-self: flex-start;
@@ -262,8 +275,12 @@
 
 @media screen and (max-width:600px) {
     .chatBox{
-        padding: 2rem;
-        margin-top: 1rem;
+        padding: 1.2rem;
+        margin-top: 0rem;
+    }
+
+    .box2{
+        margin-top: 0.1rem;
     }
 
     .inputContainer{
