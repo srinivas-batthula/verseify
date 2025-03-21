@@ -34,11 +34,17 @@ export default function Ai() {
         setLoading(true)
         const userMessage = { text: input, sender: "user" }
         setMessages([...messages, userMessage])
-
         setInput("")
 
+        if(input.trim().includes('#')){
+            userMessage.q='true'
+        }
+        else{
+            userMessage.q='false'
+        }
+        
         try {
-            let response = await fetch("https://sambanova-ai-fastapi.onrender.com/verseify_ai", {
+            let response = await fetch(`https://sambanova-ai-fastapi.onrender.com/verseify_ai?q=${userMessage.q}`, {
                method: "POST",
                headers: { "Content-Type": "application/json" },
                body: JSON.stringify({ userInput: input }),
