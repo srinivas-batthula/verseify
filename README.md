@@ -34,11 +34,11 @@
 Verseify is built with the latest technologies to ensure speed, security, and a great user experience:
 
 - **Frontend:** [Next.js](https://nextjs.org), [React](https://react.dev), [Tailwind CSS](https://tailwindcss.com)
-- **Backend:** [Node.js](https://nodejs.org), [Express.js](https://expressjs.com)
+- **Backend:** [Node.js](https://nodejs.org), [Express.js](https://expressjs.com), [FastAPI](https://fastapi.com)
 - **Database:** [MongoDB Atlas](https://www.mongodb.com/atlas/database)
 - **Authentication:** [JWT] / [Auth0](https://auth0.com)
 - **Version Control:** [Git / GitHub](https://github.com)
-- **Hosting:** [Render](https://render.com)
+- **Hosting:** [Render](https://render.com) & [Netlify](https://app.netlify.com)
 - **SEO & Performance:** Next.js Optimization, Lighthouse & PWA
 
 ## 🚀 Getting Started
