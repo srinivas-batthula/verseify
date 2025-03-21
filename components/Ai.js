@@ -38,20 +38,20 @@ export default function Ai() {
         setInput("")
 
         try {
-            // let response = await fetch("/api/chatbot", {
-            //     method: "POST",
-            //     headers: { "Content-Type": "application/json" },
-            //     body: JSON.stringify({ userInput: input }),
-            // })
-            // response = await response.json()
-            // const aiMessage = { text: data.response, sender: "ai" }
+            let response = await fetch("https://sambanova-ai-fastapi.onrender.com/verseify_ai", {
+               method: "POST",
+               headers: { "Content-Type": "application/json" },
+               body: JSON.stringify({ userInput: input }),
+            })
+            response = await response.json()
+            const aiMessage = { text: response.response, sender: "ai" }
 
-            const aiMessage = { text: "Hello User, How can I help you today?", sender: "ai" }
+            // const aiMessage = { text: "Hello User, How can I help you today?", sender: "ai" }
 
             setTimeout(() => {
                 setMessages((prev) => [...prev, aiMessage])
                 setLoading(false)
-            }, 2000)
+            }, 1000)
 
         }
         catch (error) {
