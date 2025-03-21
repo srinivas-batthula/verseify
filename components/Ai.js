@@ -19,6 +19,7 @@ const Message = ({ text, sender }) => {
 export default function Ai() {
     const [messages, setMessages] = useState([])
     const [input, setInput] = useState("")
+    const [loading, setLoading] = useState(false)
     const chatBoxRef = useRef(null)
 
 
@@ -30,6 +31,7 @@ export default function Ai() {
         if (!input.trim())
             return
 
+        setLoading(true)
         const userMessage = { text: input, sender: "user" }
         setMessages([...messages, userMessage])
 
@@ -46,10 +48,18 @@ export default function Ai() {
 
             const aiMessage = { text: "Hello User, How can I help you today?", sender: "ai" }
 
-            setMessages((prev) => [...prev, aiMessage])
-        } catch (error) {
+            setTimeout(() => {
+                setMessages((prev) => [...prev, aiMessage])
+                setLoading(false)
+            }, 2000)
+
+        }
+        catch (error) {
             console.error("Error:", error)
         }
+        // finally {
+        //     setLoading(false)
+        // }
     }
 
     return (
@@ -60,18 +70,20 @@ export default function Ai() {
                 (messages && messages.length !== 0) ?
                     (
                         <div className={styles.chatBox} ref={chatBoxRef}>
-                            {
-                                messages.map((msg, index) => (
-                                    <motion.div
-                                        key={index}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.3, ease: "easeOut" }}
-                                    >
-                                        <Message text={msg.text} sender={msg.sender} />
-                                    </motion.div>
-                                ))
-                            }
+                            <div className={styles.box2}>
+                                {
+                                    messages.map((msg, index) => (
+                                        <motion.div
+                                            key={index}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 0.3, ease: "easeOut" }}
+                                        >
+                                            <Message text={msg.text} sender={msg.sender} />
+                                        </motion.div>
+                                    ))
+                                }
+                            </div>
                         </div>
                     ) :
                     (
@@ -80,7 +92,7 @@ export default function Ai() {
                             <p className={styles.note}>
                                 <span className={styles.alert}>Note:</span> Type <b>`#`</b> & Enter your topic to use <b>'Post with AI'</b> feature.
                             </p>
-                            <p className={styles.hashtags}>#healthcare <span style={{marginLeft:'6px'}}></span> #ai <span style={{marginLeft:'6px'}}></span> #webdev</p>
+                            <p className={styles.hashtags}>#healthcare <span style={{ marginLeft: '6px' }}></span> #ai <span style={{ marginLeft: '6px' }}></span> #webdev</p>
                         </div>
                     )
             }
@@ -105,7 +117,14 @@ export default function Ai() {
                     onClick={sendMessage}
                     whileTap={{ scale: 0.9 }}
                 >
-                    ➤
+                    {
+                        (loading===true) ? (
+                            <div className={styles.loadingDots}>
+                                <div className={styles.dot}></div>
+                                <div className={styles.dot}></div>
+                                <div className={styles.dot}></div>
+                            </div>) : '➤'
+                    }
                 </motion.button>
             </div>
         </div>

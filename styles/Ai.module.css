@@ -1,40 +1,45 @@
 /* Ai.module.css */
-
 .chatContainer {
     width: 100%;
     height: 100vh;
+    position: fixed;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
-    margin-left: auto;
-    margin-right: auto;
     background-color: #222326;
     color: white;
     font-family: "Inter", sans-serif;
+    padding-bottom: 9rem; /* Ensures spacing above input */
 }
 
 .chatBox {
-    flex: 1;
+    margin-top: 2.5rem;
     width: 50rem;
-    overflow-y: auto;
-    margin-top: 1.8rem;
-    padding: 3rem;
+    height: 100vh; /* Fixed height to prevent resizing */
+    padding: 1rem;
     display: flex;
     flex-direction: column;
-    margin-left: auto;
-    margin-right: auto;
-    gap: 1.5rem;
+    align-items: center;
+    /* margin-bottom: 1rem; */
+    overflow: hidden; /* Prevents overall scrolling */
+}
+
+.box2 {
+    width: 100%;
+    max-height: 100%;
+    overflow-y: auto; /* Only this part scrolls */
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
     scroll-behavior: smooth;
+    padding-right: 0.5rem;
 }
 
-.chatBox::-webkit-scrollbar {
+.box2::-webkit-scrollbar {
     width: 6px;
 }
 
-.chatBox::-webkit-scrollbar-thumb {
+.box2::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.3);
     border-radius: 3px;
 }
@@ -52,7 +57,6 @@
     margin-right: auto;
     color: white;
     animation: fadeIn 0.8s ease-in-out;
-    
         /* Prevents text selection */
     user-select: none;
     -webkit-user-select: none; /* For Safari */
@@ -115,6 +119,7 @@
 .message {
     /* width: 80%; */
     padding: 0.8rem 1rem;
+    margin: 1.5rem;
     border-radius: 16px;
     font-size: 1rem;
     line-height: 1.5;
@@ -142,8 +147,6 @@
 
 .inputContainer {
     width: 50rem;
-    margin-left: auto;
-    margin-right: auto;
     display: flex;
     align-items: center;
     padding: 0.6rem;
@@ -166,6 +169,8 @@
 }
 
 .sendButton {
+    width: 3.3rem;
+    height: 3rem;
     margin-left: 0.3rem;
     padding: 0.5rem 0.8rem;
     font-size: 1.3rem;
@@ -180,6 +185,48 @@
 .sendButton:hover {
     background-color: #0056b3;
 }
+
+.loadingDots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    gap: 0.3rem;
+}
+
+.dot {
+    width: 1rem;
+    height: 0.6rem;
+    background-color: white;
+    border-radius: 50%;
+    animation: bounce 1.5s infinite ease-in-out;
+}
+
+.dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateY(-1rem);
+        opacity: 1;
+    }
+}
+
+
 
 
 
@@ -196,6 +243,10 @@
 
 
 @media screen and (max-width:800px) {
+    .chatContainer{
+        padding-bottom: 7rem;
+    }
+
     .chatBox{
         width: 100%;
     }
@@ -212,6 +263,7 @@
 @media screen and (max-width:600px) {
     .chatBox{
         padding: 2rem;
+        margin-top: 1rem;
     }
 
     .inputContainer{
