@@ -42,7 +42,7 @@ export default function Subscribe() {
         try {
             // 📌 Step 1: Create Order
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/razorpay/order`, {
-                amount: 599, // Amount in INR
+                amount: 499, // Amount in INR
             })
 
             // console.log(`Request sent to /order,,,  response---> ${data}`)
@@ -112,7 +112,7 @@ export default function Subscribe() {
         <div style={{ width: '100%', height: '100vh', padding: '0.3rem', textAlign: 'center', display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>
             <div className={styles.card}>
                 <h2 className={styles.title}>Premium Plan</h2>
-                <p className={styles.price}>₹599/month</p>
+                <p className={styles.price}>₹499/month</p>
                 <ul className={styles.features}>
                     <li>✔️ Unlimited Access</li>
                     <li>✔️ AI-Powered Blog Writing</li>

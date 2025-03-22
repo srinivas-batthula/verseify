@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react"
 import ReactMarkdown from "react-markdown"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
+import { showFailed } from '@/utils/Toasts'
 import styles from '../styles/Ai.module.css'
 
 
@@ -52,13 +53,29 @@ export default function Ai() {
     const chatBoxRef = useRef(null)
 
 
+    useEffect(()=>{
+        fetch('https://sambanova-ai-fastapi.onrender.com/', {
+            method:'GET',
+            headers: { "Content-Type": "application/json" },
+        })
+
+        setTimeout(()=>{
+            fetch('https://sambanova-ai-fastapi.onrender.com/', {
+                method:'GET',
+                headers: { "Content-Type": "application/json" },
+            })
+        }, 1000)
+    }, [])
+
     useEffect(() => {
         chatBoxRef.current?.scrollTo(0, chatBoxRef.current.scrollHeight)
     }, [messages])
 
     const sendMessage = async () => {
-        if (!input.trim())
+        if (!input.trim()){
+            showFailed("Enter a Valid input(s)!")
             return
+        }
 
         setLoading(true)
         const userMessage = { text: input, sender: "user" }
@@ -81,11 +98,10 @@ export default function Ai() {
             response = await response.json()
             let aiMessage = { text: response.response, sender: "ai", q: userMessage.q }
 
-            // const aiMessage = { text: "Hello User, How can I help you today?", sender: "ai" }
-
             setMessages((prev) => [...prev, aiMessage])
         }
         catch(error) {
+            showFailed("Something went wrong!")
             console.error("Error:", error)
         }
         finally {
