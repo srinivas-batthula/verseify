@@ -2,7 +2,7 @@
 
 🚀 Welcome to **Verseify**, a modern and elegant **blogging platform** designed to empower writers, creators, and thinkers to **share their thoughts seamlessly** with the world. Whether you're writing articles, sharing ideas, or publishing creative content, **Verseify** is built to make blogging easy and enjoyable!
 
-![Verseify Banner](https://github.com/srinivas-batthula/verseify/blob/main/public/verseify.png)## 🌐 Live Demo  
+![Verseify Banner](https://github.com/srinivas-batthula/verseify/blob/main/public/verseify.png)
 
 
 ## 🚀 Live Demo
@@ -20,6 +20,7 @@
 - ✅ **Minimal & Elegant UI** – Clean and distraction-free design
 - ✅ **SEO Optimized** – Boosts visibility on search engines
 - ✅ **Fast Search** – Fast & Efficient Search
+- ✅ **Write with AI** – OpenAI integration into Verseify for Chatbot support
 - ✅ **Profile & Dashboard** – Smooth User Profiles & Attractive Dashboard
 - ✅ **Markdown Support** – Write blogs effortlessly
 - ✅ **Rich Text Editing** – WYSIWYG editor for a smooth experience
@@ -39,6 +40,7 @@ Verseify is built with the latest technologies to ensure speed, security, and a 
 - **Authentication:** [JWT] / [Auth0](https://auth0.com)
 - **Version Control:** [Git / GitHub](https://github.com)
 - **Hosting:** [Render](https://render.com) & [Netlify](https://app.netlify.com)
+- **API's** [OpenAI](https://openai.com/docs)
 - **SEO & Performance:** Next.js Optimization, Lighthouse & PWA
 
 ## 🚀 Getting Started
@@ -95,4 +97,4 @@ Need help?  Have suggestions?
 
 ---
 
-💙 **Made with love by [Srinivas Batthula](https://github.com/srinivas-batthula) 🚀**  
+💙 **Made with love by [Srinivas Batthula](https://portfolio-phi-three-63.vercel.app) 🚀**  
