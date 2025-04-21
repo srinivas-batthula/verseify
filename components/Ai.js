@@ -53,19 +53,12 @@ export default function Ai() {
     const chatBoxRef = useRef(null)
 
 
-    useEffect(()=>{
-        fetch('https://sambanova-ai-fastapi.onrender.com/', {
-            method:'GET',
-            headers: { "Content-Type": "application/json" },
-        })
-
-        setTimeout(()=>{
-            fetch('https://sambanova-ai-fastapi.onrender.com/', {
-                method:'GET',
-                headers: { "Content-Type": "application/json" },
-            })
-        }, 1000)
-    }, [])
+    // useEffect(()=>{
+    //     fetch('https://sambanova-ai-fastapi-ytj2.onrender.com/', {
+    //         method:'GET',
+    //         headers: { "Content-Type": "application/json" },
+    //     })
+    // }, [])
 
     useEffect(() => {
         chatBoxRef.current?.scrollTo(0, chatBoxRef.current.scrollHeight)
@@ -90,7 +83,7 @@ export default function Ai() {
         }
 
         try {
-            let response = await fetch(`https://sambanova-ai-fastapi.onrender.com/verseify_ai?q=${userMessage.q}`, {
+            let response = await fetch(`https://sambanova-ai-fastapi-ytj2.onrender.com/verseify_ai?q=${userMessage.q}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userInput: input }),
