@@ -83,7 +83,7 @@ export default function Ai() {
         }
 
         try {
-            let response = await fetch(`https://sambanova-ai-fastapi-ytj2.onrender.com/verseify_ai?q=${userMessage.q}`, {
+            let response = await fetch(`https://sambanova-ai-fastapi-pxsc.onrender.com/verseify_ai?q=${userMessage.q}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userInput: input }),
