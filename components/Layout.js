@@ -119,6 +119,9 @@ const Layout = ({ children }) => {
 
     useEffect(() => {
         const getUser = async () => {
+            await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+'/')    // Test request to verseify_backend...
+            await fetch(process.env.NEXT_PUBLIC_SAMBANOVA_URL+'/')    // Test request to sambanova-ai_fastapi...
+
             const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
             let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/db/user', {
                 method: 'GET',
