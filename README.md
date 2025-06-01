@@ -8,6 +8,7 @@
 ## 🚀 Live Demo
 🔗 **[Try Verseify Live](https://verseify.netlify.app)**
 🔗 **[Try Backend API Docs Live](https://verseify-backend-lwym.onrender.com/api-docs)**
+🔗 **[Try Sambanova-AI API Docs Live](https://sambanova-ai-fastapi-vwtq.onrender.com/docs)**
 
 
 ## 🔗 Project Links
