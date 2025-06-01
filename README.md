@@ -7,7 +7,7 @@
 
 ## 🚀 Live Demo
 🔗 **[Try Verseify Live](https://verseify.netlify.app)**
-🔗 **[Try Backend API Docs Live](https://verseify-backend-k9aa.onrender.com/api-docs)**
+🔗 **[Try Backend API Docs Live](https://verseify-backend-lwym.onrender.com/api-docs)**
 
 
 ## 🔗 Project Links
