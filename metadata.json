@@ -2,6 +2,7 @@
             "imgUrl": "https://srinivas-batthula.github.io/portfolio/utils/verseify_project.png",
             "title": "Verseify",
             "des": "'Verseify' is a smooth blogging platform built with Next.js and MERN stack, designed for seamless content creation and engagement. The app features an intuitive UI, likes, shares, comments, subscriptions via Razorpay, follow/unfollow, secure authentication, PWA support, and push notifications, ensuring accessibility on the go. Explore how it enhances blogging, and feel free to reach out for collaboration opportunities!",
+            "isOneRepo": "false",
             "urlFront": "https://github.com/srinivas-batthula/verseify",
             "urlBack": "https://github.com/srinivas-batthula/verseify_backend",
             "urlLive": "https://verseify.netlify.app"
