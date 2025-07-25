@@ -1,10 +1,22 @@
 {
-            "imgUrl": "https://srinivas-batthula.github.io/portfolio/utils/projects/verseify_project.png",
-            "title": "Verseify",
-            "des": "'Verseify' is a smooth blogging platform built with Next.js and MERN stack, designed for seamless content creation and engagement. The app features an intuitive UI, likes, shares, comments, subscriptions via Razorpay, follow/unfollow, secure authentication, PWA support, and push notifications, ensuring accessibility on the go. Explore how it enhances blogging, and feel free to reach out for collaboration opportunities!",
-            "isOneRepo": "false",
-            "isLiveLink": "true",
-            "urlFront": "https://github.com/srinivas-batthula/verseify",
-            "urlBack": "https://github.com/srinivas-batthula/verseify_backend",
-            "urlLive": "https://verseify.netlify.app"
+    "imgUrl": "https://srinivas-batthula.github.io/portfolio/utils/projects/verseify_project.png",
+    "title": "Verseify",
+    "description": "Verseify is a MERN+Next.js blog app with PWA, payments, auth, likes, comments & push notifications.",
+    "techStack": [
+        "Next.Js",
+        "ExpressJs",
+        "FastAPI",
+        "MongoDB",
+        "Git",
+        "OpenAI-API"
+    ],
+    "keyFeatures": [
+        "Subscription Payments with Razorpay",
+        "AI Chatbot via OpenAI Integration",
+        "PWA app with Offline Support",
+        "Fast Search with MongoDB Atlas Search"
+    ],
+    "isLiveLink": "true",
+    "githubLink": "https://github.com/srinivas-batthula/verseify",
+    "liveLink": "https://verseify.netlify.app"
 }
