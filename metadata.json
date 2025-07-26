@@ -14,10 +14,9 @@
     ],
     "keyFeatures": [
         "Built fullstack Blog app, Full-featured platform with profiles, likes, comments & AI-assisted writing",
-        "Enabled secure and robust payments system for subscriptions using Razorpay",
-        "Added full-text search (MongoDB Atlas) & PWA features for offline access",
-        "Improved site speed by 20% with optimization & service worker caching",
-        "Integrated Google OAuth & JWT for secure user authentication"
+        "Enabled secure payments system for subscriptions via Razorpay",
+        "Added full-text search using MongoDB Atlas & PWA features for offline access",
+        "Optimized PWA webapp using service worker caching"
     ],
     "isLiveLink": "true",
     "githubLink": "https://github.com/srinivas-batthula/verseify",
