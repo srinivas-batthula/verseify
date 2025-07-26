@@ -9,13 +9,15 @@
         "MongoDB",
         "web-push",
         "service-workers",
-        "OpenAI-API"
+        "OpenAI-API",
+        "Razorpay-API"
     ],
     "keyFeatures": [
-        "Subscription Payments with Razorpay",
-        "AI Chatbot via OpenAI Integration",
-        "PWA app with Offline Support",
-        "Fast Search with MongoDB Atlas Search"
+        "Built fullstack Blog app, Full-featured platform with profiles, likes, comments & AI-assisted writing",
+        "Enabled secure and robust payments system for subscriptions using Razorpay",
+        "Added full-text search (MongoDB Atlas) & PWA features for offline access",
+        "Improved site speed by 20% with optimization & service worker caching",
+        "Integrated Google OAuth & JWT for secure user authentication"
     ],
     "isLiveLink": "true",
     "githubLink": "https://github.com/srinivas-batthula/verseify",
