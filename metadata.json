@@ -1,5 +1,5 @@
 {
-    "imgUrl": "/utils/projects/verseify_project.png",
+    "imgUrl": "https://srinivas-batthula.github.io/portfolio/utils/projects/verseify_project.png",
     "title": "Verseify",
     "description": "Verseify is a MERN+Next.js blog app with PWA, payments, auth, likes, comments & push notifications.",
     "techStack": [
